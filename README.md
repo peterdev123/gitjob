@@ -16,6 +16,7 @@ A job portal connecting job seekers and employers with communication features.
    - Job Seekers and Employers should be notified of important events related to job postings, applications, and communications.
 
 [Functional Requirements Details](https://docs.google.com/document/d/1fcx8BHp9ccuUfAcsaLhkx3L7eIFhfOtr_9duQsFDgOA/edit)<br>
+---------------
 [Functional Requirement Document.pdf](https://github.com/user-attachments/files/17089572/Functional.Requirement.Document.pdf)
 ---------------
 [Gantt Chart](https://docs.google.com/spreadsheets/d/1h0T3ZGuNDg2fa2_iTYAqQqOD4cmHKSXTfp13jLAKFg8/edit?gid=230388173#gid=230388173)<br>
