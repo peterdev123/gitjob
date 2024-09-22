@@ -1,4 +1,4 @@
-# GitJob
+## GitJob
 A job portal connecting job seekers and employers with communication features.
 
 # Functional Requirements
