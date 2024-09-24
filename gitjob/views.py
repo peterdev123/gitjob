@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+def hero(request):
+    
+    return render(request, 'gitjob/hero.html')
