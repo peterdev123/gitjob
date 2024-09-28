@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'gitjob', # main app
+    'accounts',
+    'jobs',
 
     'tailwind', # For tailwind
     'theme',

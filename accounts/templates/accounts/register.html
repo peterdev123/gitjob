@@ -1,0 +1,49 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Page</title>
+    {% tailwind_css %}
+  </head>
+  <body class="flex min-h-screen">
+    <!-- Left Side -->
+    <div class="w-1/2 bg-gray-100 flex flex-col items-center justify-center">
+        <img src="{% static 'images/your-image.jpg' %}" alt="GitJob" class="w-full h-full object-cover">
+        <h1 class="text-4xl font-bold text-white absolute">GitJob</h1>
+    </div>
+
+    <!-- Right Side -->
+    <div class="w-1/2 flex items-center justify-center bg-white">
+        <form class="w-full max-w-md p-8 bg-gray-200 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Username</label>
+                <input type="text" id="username" name="username" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter your username">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
+                <input type="email" id="email" name="email" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter your email">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
+                <input type="password" id="password" name="password" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter your password">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Confirm your password">
+            </div>
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Register
+                </button>
+            </div>
+            <p class="mt-4 text-center text-gray-600 text-sm">
+                Already have an account? <a href="/accounts/login/" class="text-blue-500 hover:text-blue-700">Login here</a>.
+            </p>
+        </form>
+    </div>
+</body>
+</html>

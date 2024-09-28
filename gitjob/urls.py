@@ -3,4 +3,5 @@ from . import views
 
 urlpatterns = [
     path('', views.hero, name=""),
+    path('accounts/', include('accounts.urls')),
 ]
