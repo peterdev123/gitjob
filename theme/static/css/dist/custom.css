@@ -1,0 +1,30 @@
+.register_input {
+    display: block;
+    margin: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+    padding-bottom: 5px;
+    width: 100%;
+    font: 0.875rem;
+    line-height: 1.5rem;
+    color: black;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid gray;
+    appearance: none;
+  }
+  .register::placeholder {
+    color: gray
+  }
+  .register_input:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  
+  .register_input_label {
+    position: absolute;
+    font: 0.875rem;
+    line-height: 1.25rem;
+    color: black;
+  }

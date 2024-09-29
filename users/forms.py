@@ -7,47 +7,47 @@ class LoginForm(forms.Form):
 class RegisterForm(forms.Form):
     fname = forms.CharField(
         label="First Name", 
-        max_length=100,
+        max_length=50,
         widget=forms.TextInput(attrs={
             'class': 'register_input',
-            'placeholder': 'First Name'
+            'placeholder': 'First Name...'
         })
     )
     lname = forms.CharField(
         label="Last Name", 
-        max_length=100,
+        max_length=50,
         widget=forms.TextInput(attrs={
             'class': 'register_input',
-            'placeholder': 'Last Name'
+            'placeholder': 'Last Name...'
         })
     )
     email = forms.EmailField(
         label="Email Address", 
         widget=forms.EmailInput(attrs={
             'class': 'register_input',
-            'placeholder': 'Email'
+            'placeholder': 'Email Address...'
         })
     )
     username = forms.CharField(
         label="Username", 
-        max_length=100,
+        max_length=30,
         widget=forms.TextInput(attrs={
             'class': 'register_input',
-            'placeholder': 'Username'
+            'placeholder': 'Username...'
         })
     )
     password = forms.CharField(
         label="Password", 
         widget=forms.PasswordInput(attrs={
             'class': 'register_input',
-            'placeholder': 'Password'
+            'placeholder': 'Password...'
         })
     )
     retypepassword = forms.CharField(
         label="Retype Password", 
         widget=forms.PasswordInput(attrs={
             'class': 'register_input',
-            'placeholder': 'Retype Password'
+            'placeholder': 'Retype Password...'
         })
     )
 
