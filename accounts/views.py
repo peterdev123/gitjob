@@ -3,14 +3,14 @@ from .forms import LoginForm, RegisterForm
 
 # Create your views here.
 def login_view(request):
-    # if request.method == "POST":
-    #     form = LoginForm(request.POST)
-    #     if form.is_valid():
-    #         username = form.cleaned_data['username']
-    #         password = form.cleaned_data['password']
-    #         return render(request, 'jobs/home.html', {'username': username})
-    # else:
-    form = LoginForm()
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            return render(request, 'jobs/home.html', {'username': username})
+    else:
+        form = LoginForm()
     return render(request, 'accounts/login.html', {"form": form})
 
 def register_view(request):
