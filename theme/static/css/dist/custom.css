@@ -28,3 +28,18 @@
     line-height: 1.25rem;
     color: black;
   }
+
+  .login_input {
+    display: block;
+    margin: 1rem;
+    width: 75%;
+    color: black;
+    line-height: 1.5rem;
+    font: 0.875rem;
+  }
+
+  form div {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
