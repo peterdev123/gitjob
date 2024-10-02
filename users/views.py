@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from django.contrib import auth, messages
-from django.contrib.auth import get_user_model
+from django.contrib import messages
+from django.contrib.auth import get_user_model, authenticate ,login
 from .forms import LoginForm, RegisterForm
 
 # Create your views here.
@@ -11,10 +11,10 @@ def login_view(request):
             username_input = form.cleaned_data['username']
             password_input = form.cleaned_data['password']
 
-            user_login = auth.authenticate(username=username_input, password=password_input)
+            user_login = authenticate(username=username_input, password=password_input)
 
             if user_login is not None:
-                auth.login(request, user_login)
+                login(request, user_login)
                 return redirect('/jobs/home/')
             else:
                 messages.info(request, "Incorrect credentials")
@@ -46,11 +46,18 @@ def register_view(request):
                         email=email_input,
                         username=username_input,
                         password=password_input,
+                        first_name=fname_input,
+                        last_name=lname_input,
                     )
-                    user.first_name = fname_input
-                    user.last_name = lname_input
                     user.save()
-                    return redirect('jobs/home')            
+
+                    #auth the user after making account
+                    user_login = authenticate(username=username_input, password=password_input)
+                    if user_login is not None:
+                        login(request, user_login)
+                        return redirect('/jobs/home/')
+                    else:
+                        messages.info(request, "Error: Cannot log in registered account...")
 
     else:
         form = RegisterForm()
