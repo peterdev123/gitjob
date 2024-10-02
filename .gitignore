@@ -1,2 +1,10 @@
-/myenv
+env/
+myenv/
 
+*.py[cod]
+__pycache__/
+*.so
+
+*.log
+db.sqlite3
+/pip-log.txt
