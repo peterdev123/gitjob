@@ -1,8 +1,21 @@
 from django import forms
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label="Username", max_length=100)
-    password = forms.CharField(label="Password", widget=forms.PasswordInput)
+    username = forms.CharField(
+        label='',
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'class': 'login_input',
+            'placeholder': "Username..."
+        })
+    )
+    password = forms.CharField(
+        label='',
+        widget=forms.PasswordInput(attrs={
+            'class': 'login_input',
+            'placeholder': 'Password...'
+        })
+    )
 
 class RegisterForm(forms.Form):
     fname = forms.CharField(
