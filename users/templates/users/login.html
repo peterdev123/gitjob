@@ -6,19 +6,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register Page</title>
+    <title>Login Page</title>
     {% tailwind_css %}
     <link rel="stylesheet" href="{% static 'css/dist/custom.css' %}">
-
+    <script src="{% static 'script.js' %}" defer></script>
   </head>
-  <body class="w-screen h-screen flex flex-col items-center justify-center">
+
+    {% if messages %}
+        {% include 'includes/message_box.html' %}
+    {% endif %}
+  
+<body class="w-screen h-screen flex flex-col items-center justify-center">
     <h1 class="absolute top-4 left-4 text-white text-4xl font-bold"> GitJob </h1>
     <!-- Center Div -->
     <div class="top-1/2 left-1/2 h-3/4 w-3/4 flex">
 
         <!-- Left Form -->
         <div class="w-1/2 h-full bg-gray-200">
-            <p class="m-4">Not a member? <a class="text-blue-500 hover:text-blue-700" href="{% url 'register' %}">Register now</a></p>
+            <p class="m-4">Not a member? <a href="{% url 'register' %}">Register now</a></p>
             <div class="div flex flex-col text-center">
                 <h1 class="text-4xl m-3 font-bold">Login</h1>
                 <h3 class="text-xl m-3 font-bold">Sign in to your account</h3>

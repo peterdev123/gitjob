@@ -43,3 +43,10 @@
     justify-content: center;
     width: 100%;
   }
+
+  a {
+    color: #2563EB;
+  }
+  a:hover {
+    color: #1D4ED8;
+  }
