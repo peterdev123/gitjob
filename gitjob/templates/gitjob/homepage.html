@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="min-h-screen mx-auto">
+        <nav class="flex items-center justify-between bg-cyan-500 h-[100px]">
+
+            <!-- GitJob -->
+            <div class="flex items-center">
+                <ul class="flex space-x-4 text-center">
+                    <li class="list-none pl-16 text-4xl font-bold"><a href="#">GitJob</a></li>
+                </ul>
+            </div>
+            
+            <!-- Find Jobs, Messages, and Job History -->
+            <div class="flex justify-center flex-grow">
+                <ul class="flex space-x-8 text-center">
+                    <li class="list-none text-xl font-bold"><a href="#">Find Jobs</a></li>
+                    <li class="list-none text-xl font-bold"><a href="#">Messages</a></li>
+                    <li class="list-none text-xl font-bold"><a href="#">Job History</a></li>
+                </ul>
+            </div>
+
+            <!-- Notification icon and profile picture -->
+            <div class="flex items-center space-x-4 pr-16"> 
+                <img src="{% static 'images/notification_icon_1.png' %}" 
+                     alt="Sample Image" 
+                     class="w-8 h-8 object-cover">
+                <img src="{% static 'images/notification_icon_1.png' %}" 
+                     alt="Sample Image" 
+                     class="w-8 h-8 object-cover">
+            </div>
+        </nav>
+
+        <!-- Search Bar Section -->
+        <div class="flex justify-center items-center bg-slate-200 h-[100px]">
+            <div class="relative bg-white border border-black w-[515px] h-[50px] rounded-[25px] flex items-center px-6 border">
+                <!-- Search Icon -->
+                <img src="{% static 'images/search_icon.png' %}" alt="Search Icon" class="w-6 h-6 mr-4">
+    
+                <!-- Search Placeholder Text -->
+                <span class="text-gray-500 text-lg">What job are you looking for?</span>
+            </div>
+        </div>
+        
+        <!-- Filter and Explore Section -->
+        <div class="flex w-full max-w-[515px]">
+            <!-- Filter -->
+            <div class="w-[150px] flex flex-col ml-16">
+                <h2 class="text-lg font-bold">Filter</h2>
+                <ul class="mt-4">
+                    <li class="text-s font-bold text-slate-500">Schedule
+
+                    </li>
+                    <li class="text-s">
+                        <input type="radio" id="full-time" name="full-time"/>
+                        <label for="full-time" class="text-s ">Full Time</label>
+                    </li>
+                    <li class="text-s">
+                        <input type="radio" id="part-time" name="part-time"/>
+                        <label for="part-time" class="text-s ">Part Time</label>
+                    </li>
+                    <li class="text-s ">
+                        <input type="radio" id="internship" name="internship"/>
+                        <label for="full-time" class="text-s ">Internship</label>
+                    </li>
+                    <li class="text-s ">
+                        <input type="radio" id="full-time" name="Job-type"/>
+                        <label for="full-time" class="text-s ">Full Time</label>
+                    </li>
+                </ul>
+
+                <!-- salary range -->
+                <h2 class="text-s font-bold text-slate-500 mt-4">Salary Range</h2>
+                <div class="mt-4">
+                    <div class="flex justify-between mb-2">
+                        <div>
+                            <label for="min-salary" class="text-s text-slate-500 font-bold">Min Salary: </label>
+                            <input type="number" id="min-salary" class="border border-gray-300 rounded p-1 w-24" min="0" value="0">
+                        </div>
+                        <div>
+                            <label for="max-salary" class="text-s text-slate-500 font-bold">Max Salary: </label>
+                            <input type="number" id="max-salary" class="border border-gray-300 rounded p-1 w-24" min="0" value="100000">
+                        </div>
+                    </div>
+                
+                    <div class="relative w-full">
+                        <!-- Slider Track -->
+                        <div class="h-2 bg-gray-300 rounded-full"></div>
+                        <!-- Slider Range Highlight -->
+                        <div id="slider-range" class="absolute h-2 bg-cyan-500 rounded-full top-0 transform translate-y-0.5"></div>
+                
+                        <!-- Min and Max slider controls -->
+                        <input type="range" id="slider-min" min="0" max="100000" value="0" step="1000"
+                            class="absolute w-full h-2 bg-transparent appearance-none pointer-events-none top-0"
+                            style="pointer-events: auto;" />
+                        <input type="range" id="slider-max" min="0" max="100000" value="100000" step="1000"
+                            class="absolute w-full h-2 bg-transparent appearance-none pointer-events-none top-0"
+                            style="pointer-events: auto;" />
+                    </div>
+                </div>
+                
+                
+                <div class="flex w-full max-w-[515px] mt-4 mx-auto">
+                    <!-- Job Field Dropdown -->
+                    <div class=" flex flex-col">
+                        <label for="job-field" class="text-s text-slate-500 font-bold mb-4">Job Field</label>
+                        <div class="relative">
+                            <select id="job-field" class="appearance-none w-[100px] bg-gray-200 border border-black rounded-[25px] h-[25px] pl-4 pr-10">
+                                <option value="" class="text-center">Any</option>
+                                <option value="IT">Information Technology</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Engineering">Engineering</option>
+                                <option value="Health">Health Care</option>
+                            </select>
+                            <!-- Arrow Icon -->
+                            <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M5.23 7.21a.75.75 0 011.06 0L10 10.73l3.71-3.52a.75.75 0 011.06 1.06l-4.25 4a.75.75 0 01-1.06 0l-4.25-4a.75.75 0 010-1.06z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <!-- Separator Line -->
+            <div class="h-screen w-[1px] bg-gray-400 mx-4"></div>
+            <!-- Explore -->
+            <div class="flex-grow text-center">
+                <h2 class="text-lg font-bold">Explore</h2>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
