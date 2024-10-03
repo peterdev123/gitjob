@@ -1,3 +1,6 @@
+{% load static %}
+{% load static tailwind_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    
 </head>
 <body>
     <div class="min-h-screen mx-auto">
@@ -28,12 +32,12 @@
 
             <!-- Notification icon and profile picture -->
             <div class="flex items-center space-x-4 pr-16"> 
-                <img src="{% static 'images/notification_icon_1.png' %}" 
+                <img src="{% static 'images/notif_icon.png' %}" 
                      alt="Sample Image" 
                      class="w-8 h-8 object-cover">
-                <img src="{% static 'images/notification_icon_1.png' %}" 
+                <img src="{% static 'images/register_page_bg.png' %}" 
                      alt="Sample Image" 
-                     class="w-8 h-8 object-cover">
+                     class="w-8 h-8 object-cover rounded-full">
             </div>
         </nav>
 
