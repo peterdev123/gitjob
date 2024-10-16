@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Homepage</title>
+    <title>Gitjob</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
@@ -49,7 +49,7 @@
               alt="Sample Image"
               class="w-8 h-8 object-cover"
             />
-            <a href="#" class="ml-8">Messages</a>
+            <a href="{% url 'messages' %}" class="ml-8">Messages</a>
           </li>
           <li class="px-6 py-2 text-lg hover:bg-gray-200 rounded flex">
             <img
@@ -125,9 +125,11 @@
           />
 
           <!-- Search Placeholder Text -->
-          <span class="text-gray-500 text-lg"
-            >What job are you looking for?</span
-          >
+          <input
+            type="text"
+            placeholder="Search"
+            class="ml-2 bg-transparent outline-none"
+          />
         </div>
       </div>
 
