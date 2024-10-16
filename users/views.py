@@ -15,7 +15,7 @@ def login_view(request):
 
             if user_login is not None:
                 login(request, user_login)
-                return redirect('/jobs/home/')
+                return redirect('/home/')
             else:
                 messages.info(request, "Incorrect credentials")
     else:
@@ -55,7 +55,7 @@ def register_view(request):
                     user_login = authenticate(username=username_input, password=password_input)
                     if user_login is not None:
                         login(request, user_login)
-                        return redirect('/jobs/home/')
+                        return redirect('/home/')
                     else:
                         messages.info(request, "Error: Cannot log in registered account...")
 
