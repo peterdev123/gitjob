@@ -1,0 +1,377 @@
+{% load static %}
+{% load static tailwind_tags %}
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @layer utilities {
+            input[type="range"]::-webkit-slider-thumb {
+                height: 12px;
+                width: 12px;
+                border-radius: 50%;
+                background: black;
+                pointer-events: auto;
+                appearance: none;
+                box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+                position: relative;
+                top: 2px;
+            }
+     
+            input[type="range"]::-moz-range-thumb {
+                height: 12px;
+                width: 12px;
+                border-radius: 50%;
+                background: black;
+                pointer-events: auto;
+                border: none;
+                box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+                position: relative;
+                top: 2px;
+            }
+     
+            input[type="range"]::-webkit-slider-runnable-track {
+                height: 5px;
+                background: transparent;
+            }
+     
+            input[type="range"]::-moz-range-track {
+                height: 5px;
+                background: transparent;
+            }
+     
+            input[type="range"] {
+                -webkit-appearance: none;
+                appearance: none;
+                background: transparent;
+                position: relative;
+                top: -4px;
+            }
+        }
+    </style>
+     
+</head>
+<body>
+ 
+ 
+   
+    <!-- Sidebar -->
+    <!-- Backdrop dim effect -->
+    <div id="backdrop" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+ 
+    <div id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-[#e2e2e2] text-black z-50 transform -translate-x-full transition-transform duration-300">
+        <div class="flex flex-col items-start p-6 space-y-6">
+            <!-- GitJob -->
+            <h2 class="text-3xl font-bold pl-12">GitJob</h2>
+            <hr class="border-t border-gray-600 w-full">
+            <!-- Sidebar Links -->
+            <ul class="space-y-4">
+                <li class="pb-6">
+                    <a href="#" class="text-lg font-bold flex items-center">
+                    <img src="{% static 'images/findjob_sidebar.png' %}"
+                        alt="Sample Image"
+                        class="w-7 h-6 object-cover mr-16"
+                        id="findjob-sidebarpic">
+                    Find Job</a></li>
+                <li class="flex items-center pb-6">
+                    <a href="#" class="text-lg font-bold flex items-center">
+                    <img src="{% static 'images/messages_sidebar.png' %}"
+                        alt="Sample Image"
+                        class="w-7 h-6 object-cover mr-16"
+                        id="messages-sidebarpic">
+                    Messages</a></li>
+                <li class="flex items-center mb-10">
+                    <a href="#" class="text-lg font-bold flex items-center">
+                    <img src="{% static 'images/application_sidebar.png' %}"
+                        alt="Sample Image"
+                        class="w-7 h-6 object-cover mr-16"
+                        id="application-sidebarpic">
+                    Application</a></li>
+            </ul>
+        </div>
+    </div>
+ 
+    <!-- Notification Sidebar -->
+    <div id="notif-sidebar" class="fixed right-0 top-0 h-full w-64 bg-[#e2e2e2] text-black z-50 transform translate-x-full transition-transform duration-300">
+        <div class="flex flex-col items-start p-6 space-y-6">
+            <!-- Notifications Header -->
+            <div class = "flex justify-between justify-center items-center w-full">
+                <h2 class="text-xl font-bold text-left mr-6">Notifications</h2>
+                <img src="{% static 'images/close.png' %}"
+                    alt="Sample Image"
+                    class="w-4 h-4 object-cover"
+                    id="close-toggle-notif-sidebar">
+            </div>
+            <hr class="border-t border-gray-600 w-full">
+            <!-- Example Notifications -->
+            <ul class="space-y-4">
+                <li class="text-lg font-bold">You have a new message!</li>
+                <li class="text-lg font-bold">Your job application was viewed.</li>
+                <li class="text-lg font-bold">Interview scheduled for Friday.</li>
+            </ul>
+        </div>
+    </div>
+ 
+ 
+    <!-- navbar -->
+    <div class="min-h-screen mx-auto">
+        <nav class="flex items-center justify-between bg-cyan-500 h-[100px]">
+            <!-- GitJob and menu button -->
+            <div class="flex items-center">
+                <ul class="flex space-x-4 items-center">
+                    <li class="list-none pl-8 text-4xl font-bold">
+                        <img src="{% static 'images/menu.png' %}"
+                        alt="Sample Image"
+                        class="w-7 h-6 object-cover"
+                        id="menu-toggle">
+                    </li>
+                    <li class="list-none pl-2 text-4xl font-bold"><a href="#">GitJob</a></li>
+                </ul>
+            </div>
+           
+            <!-- other navbar links(Find Jobs, Messages, and Job History) -->
+            <div class="flex justify-center flex-grow pr-10">
+                <ul class="flex space-x-8 text-center">
+                    <li class="list-none text-xl font-bold"><a href="#">Find Jobs</a></li>
+                    <li class="list-none text-xl font-bold"><a href="#">Messages</a></li>
+                    <li class="list-none text-xl font-bold"><a href="#">Job History</a></li>
+                </ul>
+            </div>
+ 
+            <!-- Notification icon and profile picture -->
+            <div class="flex items-center space-x-4 pr-16">
+                <img src="{% static 'images/notif_icon.png' %}"
+                     alt="Sample Image"
+                     class="w-8 h-8 object-cover ring-2 ring-black rounded-3xl"
+                     id="notif-toggle">
+                <img src="{% static 'images/register_page_bg.png' %}"
+                     alt="Sample Image"
+                     class="w-8 h-8 object-cover rounded-full">
+            </div>
+        </nav>
+ 
+        <!-- Search Bar Section -->
+        <div class="flex justify-center items-center bg-slate-200 h-[100px]">
+            <div class="relative bg-white border border-black w-[515px] h-[50px] rounded-[25px] flex items-center px-6 border">
+                <!-- Search Icon -->
+                <img src="{% static 'images/search_icon.png' %}" alt="Search Icon" class="w-6 h-6 mr-4">
+   
+                <!-- Search Placeholder Text -->
+                <span class="text-gray-500 text-lg">What job are you looking for?</span>
+            </div>
+        </div>
+       
+        <!-- Filter and Explore Section -->
+        <div class="flex w-full max-w-[515px]">
+            <!-- Filter -->
+            <div class="w-[150px] flex flex-col ml-16">
+                <h2 class="text-lg font-bold pt-5">Filter</h2>
+                <ul class="mt-4">
+                    <li class="text-s font-bold text-slate-500">Schedule</li>
+                    <li class="text-s">
+                        <input type="radio" id="full-time" name="full-time"/>
+                        <label for="full-time" class="text-s ">Full Time</label>
+                    </li>
+                    <li class="text-s">
+                        <input type="radio" id="part-time" name="part-time"/>
+                        <label for="part-time" class="text-s ">Part Time</label>
+                    </li>
+                    <li class="text-s ">
+                        <input type="radio" id="internship" name="internship"/>
+                        <label for="full-time" class="text-s ">Internship</label>
+                    </li>
+                    <li class="text-s ">
+                        <input type="radio" id="full-time" name="Job-type"/>
+                        <label for="full-time" class="text-s ">Full Time</label>
+                    </li>
+                </ul>
+ 
+        <!-- Salary range -->
+    <div>
+        <div class="text-s font-bold text-slate-500 mt-4">Salary Range</div>
+        <div class="price-input flex justify-between">
+            <div class="field flex items-center">
+                <input type="number" class="input-min w-full h-10 text-s font-bold text-center border-0 outline-none" value="25000">
+            </div>
+            <div class="separator w-28 text-s font-bold flex items-center justify-center">-</div>
+            <div class="field flex items-center">
+                <input type="number" class="input-max w-full h-10 text-s font-bold text-center border-0 outline-none" value="75000">
+            </div>
+        </div>
+        <div class="slider relative h-1 bg-gray-300 rounded-md">
+            <div class="progress absolute left-1/4 right-1/4 h-full bg-black rounded-md"></div>
+        </div>
+        <div class="range-input relative mt-3">
+            <input type="range" class="range-min absolute w-full h-1 top-[-20px] pointer-events-none appearance-none" min="0" max="100000" value="25000" step="1000">
+            <input type="range" class="range-max absolute w-full h-1 top-[-20px] pointer-events-none appearance-none" min="0" max="100000" value="75000" step="1000">
+        </div>
+    </div>
+ 
+    <script>
+        const rangeInputs = document.querySelectorAll(".range-input input"),
+              priceInputs = document.querySelectorAll(".price-input input"),
+              range = document.querySelector(".slider .progress");
+ 
+        let priceGap = 10000; // Minimum gap between min and max values
+ 
+        // Helper function to update the range slider's progress bar
+        const updateSlider = (minVal, maxVal) => {
+            range.style.left = ((minVal / rangeInputs[0].max) * 100).toFixed(2) + "%";
+            range.style.right = (100 - (maxVal / rangeInputs[1].max) * 100).toFixed(2) + "%";
+        };
+ 
+        // Initialize the slider positions on page load
+        window.addEventListener('load', () => {
+            let minPrice = parseInt(priceInputs[0].value),
+                maxPrice = parseInt(priceInputs[1].value);
+ 
+            rangeInputs[0].value = minPrice;
+            rangeInputs[1].value = maxPrice;
+            updateSlider(minPrice, maxPrice);
+        });
+ 
+        // Update slider and price inputs when the price input fields are changed
+        priceInputs.forEach(input => {
+            input.addEventListener("input", e => {
+                let minPrice = parseInt(priceInputs[0].value),
+                    maxPrice = parseInt(priceInputs[1].value);
+ 
+                // Ensure the gap between min and max is respected
+                if (maxPrice - minPrice >= priceGap) {
+                    if (e.target.classList.contains("input-min")) {
+                        rangeInputs[0].value = minPrice;
+                    } else {
+                        rangeInputs[1].value = maxPrice;
+                    }
+                    updateSlider(minPrice, maxPrice);
+                }
+            });
+        });
+ 
+        // Handle the range sliders when they are moved
+        rangeInputs.forEach(input => {
+            input.addEventListener("input", e => {
+                let minVal = parseInt(rangeInputs[0].value),
+                    maxVal = parseInt(rangeInputs[1].value);
+ 
+                // Prevent sliders from crossing over
+                if ((maxVal - minVal) < priceGap) {
+                    if (e.target.classList.contains("range-min")) {
+                        rangeInputs[0].value = maxVal - priceGap;
+                    } else {
+                        rangeInputs[1].value = minVal + priceGap;
+                    }
+                } else {
+                    priceInputs[0].value = minVal;
+                    priceInputs[1].value = maxVal;
+                    updateSlider(minVal, maxVal);
+                }
+            });
+        });
+    </script>
+ 
+               
+            <div class="flex w-full max-w-[515px] mt-4 mx-auto">
+                <!-- Job Field Dropdown -->
+                <div class=" flex flex-col">
+                    <label for="job-field" class="text-s text-slate-500 font-bold mb-4">Job Field</label>
+                        <div class="relative">
+                            <select id="job-field" class="appearance-none w-[100px] bg-gray-200 border border-black rounded-[25px] h-[25px] pl-4 pr-10">
+                                <option value="" class="text-center">Any</option>
+                                <option value="IT">Information Technology</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Engineering">Engineering</option>
+                                <option value="Health">Health Care</option>
+                            </select>
+                            <!-- Arrow Icon -->
+                            <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M5.23 7.21a.75.75 0 011.06 0L10 10.73l3.71-3.52a.75.75 0 011.06 1.06l-4.25 4a.75.75 0 01-1.06 0l-4.25-4a.75.75 0 010-1.06z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           
+            </div>
+            <!-- Separator Line -->
+            <div class="h-screen w-[1px] bg-gray-400 mx-4"></div>
+            <!-- Explore -->
+            <div class="flex-grow text-center">
+                <h2 class="text-lg font-bold pt-5">Explore</h2>
+            </div>
+        </div>
+ 
+    </div>
+    <script>
+        const sidebar = document.getElementById("sidebar");
+        const menuToggle = document.getElementById("menu-toggle");
+ 
+        // Toggle sidebar visibility
+        menuToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("-translate-x-full");
+            backdrop.classList.toggle("hidden");
+        });
+ 
+         // Close sidebar when clicking outside
+         backdrop.addEventListener("click", () => {
+            sidebar.classList.add("-translate-x-full");
+            backdrop.classList.add("hidden");
+        });
+ 
+        // Close sidebar when clicking anywhere but the sidebar
+        document.addEventListener("click", (event) => {
+            if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
+                sidebar.classList.add("-translate-x-full");
+                backdrop.classList.add("hidden");
+            }
+        });
+ 
+        // Prevent clicks inside the sidebar from closing it
+        sidebar.addEventListener("click", (event) => {
+            event.stopPropagation();
+        });
+    </script>
+ 
+    <script>
+        const notifSidebar = document.getElementById("notif-sidebar");
+        const notifToggle = document.getElementById("notif-toggle");
+        const close_sidebar = document.getElementById("close-toggle-notif-sidebar");
+        const backdrop = document.getElementById("backdrop");
+       
+        // Toggle notification sidebar visibility
+        notifToggle.addEventListener("click", () => {
+            notifSidebar.classList.toggle("translate-x-full");
+            backdrop.classList.toggle("hidden");
+        });
+       
+        // Close notification sidebar when clicking on the close button
+        close_sidebar.addEventListener("click", () => {
+            notifSidebar.classList.add("translate-x-full");
+            backdrop.classList.add("hidden");
+        });
+       
+        // Close notification sidebar when clicking anywhere but the sidebar
+        document.addEventListener("click", (event) => {
+            if (!notifSidebar.contains(event.target) && !notifToggle.contains(event.target)) {
+                notifSidebar.classList.add("translate-x-full");
+                backdrop.classList.add("hidden");
+            }
+        });
+       
+        // Prevent clicks inside the notification sidebar from closing it
+        notifSidebar.addEventListener("click", (event) => {
+            event.stopPropagation();
+        });
+    </script>
+ 
+   
+</body>
+</html>
+ 
+ 
