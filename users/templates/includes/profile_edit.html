@@ -1,0 +1,45 @@
+{% load static %}
+{% load static tailwind_tags %}
+
+<div id="profile_edit" class="absolute w-1/2 p-10 top-[4rem] left-1/2 translate-x-[-50%] rounded-2xl border-2 border-black border-solid bg-gray-200 z-10" style="display: none;">
+    <form method="POST" class="flex flex-col items-center">
+        {% csrf_token %}
+        <h1 class="text-2xl text-black text-center">Edit Profile Details</h1>
+        <img id="edit_profile_exit" src="{% static 'images/cross_mark_icon.png' %}" class="w-10 h-10 hover:cursor-pointer absolute top-6 right-6" alt="Exit Button">
+ 
+        <hr class="w-[96%] my-5 border-1 border-solid border-black">
+        
+        <label for="username">Username</label>
+        <input name="username" class="profile_edit_input" value="{{ user.username }}"></input>
+
+        <label for="job">Job</label>
+        <input name="job" class="profile_edit_input" value="{% if user.job %}{{ user.job }}{% endif %}"></input>
+
+        <label for="job_company">Job Company</label>
+        <input name="job_company" class="profile_edit_input" value="{% if user.job_company %}{{ user.job_company }}{% endif %}"></input>
+
+        <label for="home_address">Home Address</label>
+        <input name="home_address" class="profile_edit_input" value="{% if user.home_address %}{{ user.home_address }}{% endif %}"></input>
+
+        <label for="phone_number">Phone Number</label>
+        <input name="phone_number" class="profile_edit_input" value="{% if user.phone_number %}{{ user.phone_number }}{% endif %}"></input>
+
+        <label for="birthdate">Birthdate</label>
+        <input name="birthdate" class="mt-2 mb-4 w-[90%]" type="date" value="{% if user.birthdate%}{{ user.birthdate }}{% endif %}"></input>
+        
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender" class="w-[90%]" selected="{% if user.gender %}{{ user.gender }}{% endif %}" placeholder="Gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Others">Others</option>
+        </select>
+
+        <label for="description">Description</label>
+        <textarea name="description" class="profile_edit_input h-36" value="{% if user.description %}{{ user.description }}{% endif %}" placeholder="Description"></textarea>
+        
+        <div class="flex justify-end">
+            <button id="edit_profile_cancel" class="w-16 rounded-2xl border-2 border-black border-solid bg-white text-black" type="button">Cancel</button>
+            <button id="edit_profile_confirm" class="w-28 mx-5 rounded-2xl border-2 border-black border-solid bg-blue-600 text-white" type="submit">Save Changes</button>
+        </div>
+     </form>
+</div>
