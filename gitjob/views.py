@@ -7,3 +7,7 @@ def hero(request):
 def homepage(request):
 
     return render(request, 'gitjob/homepage.html')
+
+def messages(request):
+
+    return render(request, 'gitjob/messages.html')
