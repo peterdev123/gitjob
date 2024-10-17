@@ -67,6 +67,9 @@ MIDDLEWARE = [
     
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
+SESSION_COOKIE_AGE=1209600
+SESSION_COOKIE_SECURE=True
+SESSION_EXPIRE_AT_BROWSER_CLOSE=True
 
 ROOT_URLCONF = 'gitjobproject.urls'
 
@@ -109,6 +112,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 8,
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
