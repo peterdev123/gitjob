@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate ,login
+from django.contrib.auth import authenticate ,login, logout
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from .forms import LoginForm, RegisterForm, EditProfileForm
@@ -95,7 +95,7 @@ def profile_view(request):
                 user.save()
                 form = EditProfileForm()
                 skills_json = json.dumps(user.skills)
-                return render(request, "users/profile.html", {"user": request.user, "form": form, "skills_json": skills_json, "experiences_json": experiences_json})
+                return render(request, "users/profile.html", {"user": request.user, "birthdate": request.user.birthdate, "form": form, "skills_json": skills_json, "experiences_json": experiences_json})
             elif request.POST.get('form_type') == 'edit_experiences_form':
                 experiences_json_input = request.POST.get('experiences_json')
                 try:
@@ -107,8 +107,10 @@ def profile_view(request):
                 form = EditProfileForm()
                 experiences_json = json.dumps(user.experiences)
                 return render(request, "users/profile.html", {"user": request.user, "form": form, "skills_json": skills_json, "experiences_json": experiences_json})
-        else:
-            form = EditProfileForm()
-            return render(request, "users/profile.html", {"user": request.user, "form": form, "skills_json": skills_json, "experiences_json": experiences_json})
+            elif request.POST.get('form_type') == 'logout':
+                logout(request)
+                return redirect('login')
+        form = EditProfileForm()
+        return render(request, "users/profile.html", {"user": request.user, "form": form, "skills_json": skills_json, "experiences_json": experiences_json})
     else:
         return HttpResponse("User not logged in")

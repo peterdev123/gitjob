@@ -2,8 +2,8 @@
     display: block;
     width: 75%;
     color: black;
+    border-radius: 10px;
     line-height: 1.5rem;
-    font: 0.875rem;
   }
 
   form div {

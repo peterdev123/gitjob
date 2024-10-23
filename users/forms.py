@@ -62,9 +62,8 @@ class EditProfileForm(forms.ModelForm):
         model = GitJobUser
         fields = ['username', 'job', 'job_company', 'home_address', 'phone_number', 'birthdate', 'gender', 'description']
     
-    birthdate = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
+    birthdate = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), required=False)
     gender = forms.ChoiceField(choices=[('Male', 'Male'), ('Female', 'Female'), ('Others', 'Others')], required=False)
-    # description = forms.CharField(widget=forms.Textarea, required=False)
 
     def __init__(self, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)

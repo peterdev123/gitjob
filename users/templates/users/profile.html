@@ -206,11 +206,11 @@
                     <p id="edit_skills_btn" class="absolute top-2 right-2 hover:cursor-pointer">Edit</p>
                     <h1 class="mt-2 text-xl font-bold">Skills</h1>
                     {% if user.skills %}
-                    <ul>
-                        {% for skill in user.skills %}
-                        <li>{{skill}}</li>
-                        {% endfor %}
-                    </ul>
+                        <ul class="list-disc">
+                            {% for skill in user.skills %}
+                            <li>{{skill}}</li>
+                            {% endfor %}
+                        </ul>
                     {% else %}
                     <p class="mt-4">Not written any yet</p>
                     {% endif %}
@@ -219,7 +219,7 @@
                     <p id="edit_experiences_btn" class="absolute top-3 right-4 hover:cursor-pointer">Edit</p>
                     <h1 class="mt-2 text-xl font-bold">Experiences</h1>
                     {% if user.experiences %}
-                    <ul>
+                    <ul class="list-disc">
                         {% for experience in user.experiences %}
                         <li>{{experience}}</li>
                         {% endfor %}
@@ -273,7 +273,7 @@
                 {% if user.birthdate %} value="{{ user.birthdate }}"{% endif %}>
 
             <label for="id_gender">Gender</label>
-            <select name="gender" id="id_gender" class="mb-4" {% if user.gender %} selected="{user.gender}"{% endif %}>
+            <select name="gender" id="id_gender" class="mb-4" {% if user.gender %} selected="{{ user.gender }}"{% endif %}>
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -341,5 +341,10 @@
          <div id="experience_wrapper" class="m-2 max-h-[60vh] flex flex-col box-border">
         </div>
     </div>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="logout">
+        <button type="submit">Log out</button>
+    </form>
 </body>
 </html>

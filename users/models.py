@@ -7,6 +7,7 @@ from django.db import models
 #     string = models.CharField(max_length=100)
 
 class GitJobUser(AbstractUser):
+    is_business_manager = models.BooleanField(default=False)
     job = models.CharField(max_length=100, blank=True, null=True)
     job_company = models.CharField(max_length=100, blank=True, null=True)
     home_address = models.CharField(max_length=100, blank=True, null=True)
@@ -14,8 +15,6 @@ class GitJobUser(AbstractUser):
     birthdate = models.DateField(blank=True, null=True)
     gender = models.CharField(max_length=20, blank=True, null=True)
     description = models.TextField(max_length=500, blank=True, null=True)
-    # skills = models.ManyToManyField(Skill)
-    # experiences = models.ManyToManyField(Experience)
     skills = models.JSONField(default=list)
     experiences = models.JSONField(default=list)
 
