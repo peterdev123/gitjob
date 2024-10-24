@@ -72,3 +72,13 @@ class EditProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
         self.fields['username'].help_text = None
+
+class ResumeUploadForm(forms.Form):
+
+    resume_file = forms.FileField()
+
+    # def clean_resume_file(self, *args, **kwargs):
+    #     resume_file = self.cleaned_data.get("resume.file")
+    #     if not str(resume_file).endswith('.pdf'):
+    #         raise forms.ValidationError("This is not a valid resume file")
+    #     return resume_file

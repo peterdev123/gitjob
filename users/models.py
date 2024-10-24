@@ -22,5 +22,6 @@ class GitJobUser(AbstractUser):
         return self.username
 
 class Resume(models.Model):
+    filename = models.CharField(max_length=100, default="Unnamed Resume.pdf")
     file = models.FileField(upload_to="pdf")
     owner = models.ForeignKey(GitJobUser, on_delete=models.CASCADE)

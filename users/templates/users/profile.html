@@ -48,6 +48,11 @@
             $("#edit_experiences_btn").click((event)=>{showAddExperienceModal()})
             $("#edit_experiences_cancel").click((event)=>{hideAddExperienceModal()})
             $("#edit_experiences_exit").click((event)=>{hideAddExperienceModal()})
+
+            $("input[type='file']").change(function() { this.form.submit(); });
+            $("#delete_resume_btn").click((event)=>{
+                $(event.currentTarget).parent().submit();
+            })
         })
 
         function deleteItem(element){
@@ -64,7 +69,7 @@
             skill_wrapper.html("")
             if(Array.isArray(skills)){
                 skills.forEach(function(skill){
-                    const item = "<div class='skill-div w-full p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
+                    const item = "<div class='skill-div w-full m-0 mb-2 p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
                         + "<span class='align-middle'>" + skill +"</span>"
                         + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
                         + "</div>"
@@ -79,7 +84,7 @@
 
             if(inputVal){
                 const itemWrapper = $("#skill_wrapper")
-                const item = "<div class='skill-div w-full p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
+                const item = "<div class='skill-div w-full m-0 mb-2 p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
                     + "<span class='align-middle'>" + inputVal +"</span>"
                     + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
                     + "</div>"
@@ -109,7 +114,7 @@
             exp_wrapper.html("")
             if(Array.isArray(experiences)){
                 experiences.forEach(function(experience){
-                    const item = "<div class='experience-div w-full p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
+                    const item = "<div class='experience-div w-full m-0 mb-2 p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
                         + "<span class='align-middle'>" + experience +"</span>"
                         + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
                         + "</div>"
@@ -124,7 +129,7 @@
 
             if(inputVal){
                 const itemWrapper = $("#experience_wrapper")
-                const item = "<div class='experience-div w-full p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
+                const item = "<div class='experience-div w-full m-0 mb-2 p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
                     + "<span class='align-middle'>" + inputVal +"</span>"
                     + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
                     + "</div>"
@@ -148,6 +153,10 @@
             $("#experiences_json").val(experiencesJson);
         }
     </script>
+
+    {% if messages %}
+        {% include 'includes/message_box.html' %}
+    {% endif %}
 </head>
 <body class="w-screen h-screen">
     {% include 'includes/nav_bar.html' %}
@@ -201,7 +210,7 @@
         </div>
         <!-- Right Div -->
         <div class="w-2/5 h-5/6 m-10 mx-[0.75rem] flex flex-col justify-center">
-            <div class="w-full h-3/5 mb-6 bg-gray-300 rounded-2xl border-2 border-solid border-black flex justify-between">
+            <div class="w-full h-3/5 mb-6 bg-gray-200 rounded-2xl border-2 border-solid border-black flex justify-between">
                 <div class="relative w-[45%] p-4 h-5/6 m-6 mr-4 bg-green-200 rounded-2xl border-2 border-solid border-black flex flex-col items-center">
                     <p id="edit_skills_btn" class="absolute top-2 right-2 hover:cursor-pointer">Edit</p>
                     <h1 class="mt-2 text-xl font-bold">Skills</h1>
@@ -230,9 +239,32 @@
                 </div>
             </div>
 
-            <div class="w-full h-2/5 bg-gray-300 rounded-2xl border-2 border-solid border-black">
+            <div class="w-full h-2/5 bg-gray-200 rounded-2xl border-2 border-solid border-black flex flex-col items-center">
+                <h1 class="mx-auto my-2 text-xl font-bold">Resumes</h1>
+                <div class="resume_wrapper w-[80%] flex flex-col">
+                    {% for resume in resumes %}
+                    <div class="w-full h-[32px] mb-3 px-2 flex border-[2px] border-solid border-black rounded-xl bg-cyan-300 flex items-center justify-between">
+                        <a href="{{ resume.file }}">
+                            <p>{{ resume.filename }}</p>
+                        </a>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="form_type" value="resume_delete_form">
+                            <input type="hidden" name="id" value="{{ resume.id }}">
+                            <img id="delete_resume_btn" src="{% static 'images/delete-icon.png' %}"
+                            class="w-5 h-5 hover:cursor-pointer">
+                        </form>
+                    </div>
+                    {% endfor %}
 
-
+                </div>
+                <form method="post" enctype="multipart/form-data" class="w-[80%] mx-auto">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="resume_upload_form">
+                    <p class="w-full">
+                        {{ resume_upload_form.resume_file }}
+                    </p>
+                </form>
             </div>
         </div>
     </div>
@@ -291,8 +323,8 @@
     </div>
 
      <!-- Edit Skills -->
-     <div id="edit_skills_modal" class="absolute w-1/2 h-3/4 flex flex-col max-h-[80vh] p-10 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] rounded-2xl border-2 border-black border-solid bg-gray-200 z-10 overflow-hidden box-border" style="display: none;">
-        <form method="POST" class="w-full flex flex-col box-border">
+     <div id="edit_skills_modal" class="absolute w-1/2 h-3/4 flex flex-col max-h-[80vh] p-8 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] rounded-2xl border-2 border-black border-solid bg-gray-200 z-10 overflow-hidden box-border" style="display: none;">
+        <form method="POST" class="w-full h-full flex flex-col box-border">
             {% csrf_token %}
             <input type="hidden" name="form_type" value="edit_skills_form">
 
@@ -303,22 +335,19 @@
                 <input type="text" name="add_skill" id="add_skill" class="w-[80%] border border-gray-300 rounded-md p-2 h-10">
                 <button name="add_skill_btn" id="add_skill_btn" class="w-16 h-10 mx-4 rounded-2xl border-2 border-black border-solid bg-white text-black" onclick="addSkill()" type="button">Add</button>
             </div>
-
             <input type="hidden" name="skills_json" id="skills_json">
+            <div id="skill_wrapper" class="m-0 max-h-[60vh] flex flex-col box-border"></div>
 
             <div class="flex justify-end mt-auto">
-                <button id="edit_skills_cancel" class="w-16 rounded-2xl border-2 border-black border-solid bg-white text-black" type="button">Cancel</button>
-                <button id="edit_skills_confirm" class="w-28 mx-5 rounded-2xl border-2 border-black border-solid bg-blue-600 text-white" type="submit">Save Changes</button>
+                <button id="edit_skills_cancel" class="w-16 h-8 rounded-2xl border-2 border-black border-solid bg-white text-black" type="button">Cancel</button>
+                <button id="edit_skills_confirm" class="w-28 h-8 mx-5 rounded-2xl border-2 border-black border-solid bg-blue-600 text-white" type="submit">Save Changes</button>
             </div>
-         </form>
-
-         <div id="skill_wrapper" class="m-2 max-h-[60vh] flex flex-col box-border">
-        </div>
+        </form>
     </div>
 
      <!-- Edit Experiences -->
-     <div id="edit_experiences_modal" class="absolute w-1/2 h-3/4 flex flex-col max-h-[80vh] p-10 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] rounded-2xl border-2 border-black border-solid bg-gray-200 z-10 overflow-hidden box-border" style="display: none;">
-        <form method="POST" class="w-full flex flex-col box-border">
+     <div id="edit_experiences_modal" class="absolute w-1/2 h-3/4 flex flex-col max-h-[80vh] p-8 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] rounded-2xl border-2 border-black border-solid bg-gray-200 z-10 overflow-hidden box-border" style="display: none;">
+        <form method="POST" class="w-full h-full flex flex-col box-border">
             {% csrf_token %}
             <input type="hidden" name="form_type" value="edit_experiences_form">
 
@@ -332,14 +361,13 @@
 
             <input type="hidden" name="experiences_json" id="experiences_json">
 
+            <div id="experience_wrapper" class="m-2 max-h-[60vh] flex flex-col box-border"></div>
+
             <div class="flex justify-end mt-auto">
                 <button id="edit_experiences_cancel" class="w-16 rounded-2xl border-2 border-black border-solid bg-white text-black" type="button">Cancel</button>
                 <button id="edit_experiences_confirm" class="w-28 mx-5 rounded-2xl border-2 border-black border-solid bg-blue-600 text-white" type="submit">Save Changes</button>
             </div>
          </form>
-
-         <div id="experience_wrapper" class="m-2 max-h-[60vh] flex flex-col box-border">
-        </div>
     </div>
     <form method="POST">
         {% csrf_token %}
