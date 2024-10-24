@@ -6,191 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gitjob</title>
     <script src="https://cdn.tailwindcss.com"></script>
-<<<<<<< HEAD
+    <link rel="stylesheet" href="{% static 'css/dist/homepage.css' %}" />
   </head>
   <body>
     <div class="min-h-screen mx-auto">
       <!-- Sidebar -->
-      <div
-        id="sidebar"
-        class="fixed top-0 left-0 w-64 h-full bg-white shadow-lg z-50 transform -translate-x-full transition-transform duration-300 ease-in-out"
-      >
-        <div class="flex items-center mt-6">
-          <button
-            class="ml-4 p-2 text-white focus:outline-none"
-            onclick="toggleSidebar()"
-          >
-            <img
-              src="{% static 'images/three_lines.png' %}"
-              alt="Sample Image"
-              class="w-8 h-8 object-cover"
-            />
-          </button>
-          <ul class="flex space-y-4 text-center">
-            <li class="list-none pl-4 text-4xl font-bold text-black">
-              <a href="{% url 'home' %}">GitJob</a>
-            </li>
-          </ul>
-        </div>
-        <hr class="mt-6" />
-        <ul class="mt-10 space-y-5 m-1">
-          <li class="px-6 py-2 text-lg hover:bg-gray-200 rounded">
-            <div class="flex items-center group relative">
-              <img
-                src="{% static 'images/find_jobs.png' %}"
-                alt="Sample Image"
-                class="w-8 h-8 object-cover"
-              />
-              <a href="{% url 'home' %}" class="ml-8 z-10">Find Jobs</a>
-            </div>
-          </li>
-          <li class="px-6 py-2 text-lg hover:bg-gray-200 rounded flex">
-            <img
-              src="{% static 'images/messages.png' %}"
-              alt="Sample Image"
-              class="w-8 h-8 object-cover"
-            />
-            <a href="{% url 'messages' %}" class="ml-8">Messages</a>
-          </li>
-          <li class="px-6 py-2 text-lg hover:bg-gray-200 rounded flex">
-            <img
-              src="{% static 'images/application_image.png' %}"
-              alt="Sample Image"
-              class="w-8 h-8 object-cover"
-            />
-            <a href="#" class="ml-8">Application</a>
-          </li>
-        </ul>
-      </div>
- 
-      <!-- Navbar -->
-      <nav class="flex items-center justify-between bg-cyan-500 h-[100px]">
-        <div class="flex items-center">
-          <button
-            class="ml-4 p-2 text-white focus:outline-none"
-            onclick="toggleSidebar()"
-          >
-            <img
-              src="{% static 'images/three_lines.png' %}"
-              alt="Sample Image"
-              class="w-8 h-8 object-cover"
-            />
-          </button>
-          <ul class="flex space-x-4 text-center">
-            <li class="list-none pl-4 text-4xl font-bold text-black">
-              <a href="#">GitJob</a>
-            </li>
-          </ul>
-        </div>
- 
-        <!-- Navbar Links -->
-        <div class="flex justify-center flex-grow">
-          <ul class="flex space-x-8 text-center">
-            <li class="list-none text-xl font-bold text-black">
-              <a href="{% url 'home' %}">Home</a>
-            </li>
-            <li class="list-none text-xl font-bold text-black">
-              <a href="#">Contact Us</a>
-            </li>
-            <li class="list-none text-xl font-bold text-black">
-              <a href="#">About Us</a>
-            </li>
-          </ul>
-        </div>
- 
-        <!-- Notification icon and profile picture -->
-        <div class="flex items-center space-x-4 pr-16">
-          <img
-            src="{% static 'images/notif_icon.png' %}"
-            alt="Sample Image"
-            class="w-8 h-8 object-cover"
-          />
-          <img
-            src="{% static 'images/register_page_bg.png' %}"
-            alt="Sample Image"
-            class="w-8 h-8 object-cover rounded-full"
-          />
-        </div>
-      </nav>
- 
-      <!-- Search Bar Section -->
-      <div class="flex justify-center items-center bg-slate-200 h-[100px]">
-        <div
-          class="relative bg-white border border-black w-[515px] h-[50px] rounded-[25px] flex items-center px-6 border"
-        >
-          <!-- Search Icon -->
-          <img
-            src="{% static 'images/search_icon.png' %}"
-            alt="Search Icon"
-            class="w-6 h-6 mr-4"
-          />
- 
-          <!-- Search Placeholder Text -->
-          <input
-            type="text"
-            placeholder="Search"
-            class="ml-2 bg-transparent outline-none"
-          />
-        </div>
-      </div>
- 
-=======
-    <style>
-      @layer utilities {
-        input[type="range"]::-webkit-slider-thumb {
-          height: 12px;
-          width: 12px;
-          border-radius: 50%;
-          background: black;
-          pointer-events: auto;
-          appearance: none;
-          box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-          position: relative;
-          top: 2px;
-        }
-
-        input[type="range"]::-moz-range-thumb {
-          height: 12px;
-          width: 12px;
-          border-radius: 50%;
-          background: black;
-          pointer-events: auto;
-          border: none;
-          box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-          position: relative;
-          top: 2px;
-        }
-
-        input[type="range"]::-webkit-slider-runnable-track {
-          height: 5px;
-          background: transparent;
-        }
-
-        input[type="range"]::-moz-range-track {
-          height: 5px;
-          background: transparent;
-        }
-
-        input[type="range"] {
-          -webkit-appearance: none;
-          appearance: none;
-          background: transparent;
-          position: relative;
-          top: -4px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="min-h-screen mx-auto">
-      
-      <!-- Sidebar -->   
       {% if request.user.is_authenticated %}
         {% if request.user.is_business_manager %}
           {% include 'includes/manager_sidebar.html' %}
         {% else %}
           {% include 'includes/user_sidebar.html' %}
-      {% endif %}
+        {% endif %}
       {% endif %}
 
 
@@ -244,16 +70,11 @@
         </div>
       </div>
 
->>>>>>> main
       <!-- Filter and Explore Section -->
       <div class="flex w-full max-w-[515px]">
         <!-- Filter -->
         <div class="w-[150px] flex flex-col ml-16">
-<<<<<<< HEAD
-          <h2 class="text-lg font-bold">Filter</h2>
-=======
           <h2 class="text-lg font-bold pt-5">Filter</h2>
->>>>>>> main
           <ul class="mt-4">
             <li class="text-s font-bold text-slate-500">Schedule</li>
             <li class="text-s">
@@ -266,75 +87,6 @@
             </li>
             <li class="text-s">
               <input type="radio" id="internship" name="internship" />
-<<<<<<< HEAD
-              <label for="internship" class="text-s">Internship</label>
-            </li>
-          </ul>
- 
-          <!-- Salary Range -->
-          <h2 class="text-s font-bold text-slate-500 mt-4">Salary Range</h2>
-          <div class="mt-4">
-            <div class="flex justify-between mb-2">
-              <div>
-                <label for="min-salary" class="text-s text-slate-500 font-bold"
-                  >Min Salary:</label
-                >
-                <input
-                  type="number"
-                  id="min-salary"
-                  class="border border-gray-300 rounded p-1 w-24"
-                  min="0"
-                  value="0"
-                />
-              </div>
-              <div>
-                <label for="max-salary" class="text-s text-slate-500 font-bold"
-                  >Max Salary:</label
-                >
-                <input
-                  type="number"
-                  id="max-salary"
-                  class="border border-gray-300 rounded p-1 w-24"
-                  min="0"
-                  value="100000"
-                />
-              </div>
-            </div>
- 
-            <div class="relative w-full">
-              <!-- Slider Track -->
-              <div class="h-2 bg-gray-300 rounded-full"></div>
-              <!-- Slider Range Highlight -->
-              <div
-                id="slider-range"
-                class="absolute h-2 bg-cyan-500 rounded-full top-0 transform translate-y-0.5"
-              ></div>
- 
-              <!-- Min and Max slider controls -->
-              <input
-                type="range"
-                id="slider-min"
-                min="0"
-                max="100000"
-                value="0"
-                step="1000"
-                class="absolute w-full h-2 bg-transparent appearance-none pointer-events-none top-0"
-                style="pointer-events: auto"
-              />
-              <input
-                type="range"
-                id="slider-max"
-                min="0"
-                max="100000"
-                value="100000"
-                step="1000"
-                class="absolute w-full h-2 bg-transparent appearance-none pointer-events-none top-0"
-                style="pointer-events: auto"
-              />
-            </div>
-          </div>
- 
-=======
               <label for="full-time" class="text-s">Internship</label>
             </li>
             <li class="text-s">
@@ -392,72 +144,6 @@
             </div>
           </div>
 
-          <script>
-            const rangeInputs = document.querySelectorAll(".range-input input"),
-              priceInputs = document.querySelectorAll(".price-input input"),
-              range = document.querySelector(".slider .progress");
-
-            let priceGap = 10000; // Minimum gap between min and max values
-
-            // Helper function to update the range slider's progress bar
-            const updateSlider = (minVal, maxVal) => {
-              range.style.left =
-                ((minVal / rangeInputs[0].max) * 100).toFixed(2) + "%";
-              range.style.right =
-                (100 - (maxVal / rangeInputs[1].max) * 100).toFixed(2) + "%";
-            };
-
-            // Initialize the slider positions on page load
-            window.addEventListener("load", () => {
-              let minPrice = parseInt(priceInputs[0].value),
-                maxPrice = parseInt(priceInputs[1].value);
-
-              rangeInputs[0].value = minPrice;
-              rangeInputs[1].value = maxPrice;
-              updateSlider(minPrice, maxPrice);
-            });
-
-            // Update slider and price inputs when the price input fields are changed
-            priceInputs.forEach((input) => {
-              input.addEventListener("input", (e) => {
-                let minPrice = parseInt(priceInputs[0].value),
-                  maxPrice = parseInt(priceInputs[1].value);
-
-                // Ensure the gap between min and max is respected
-                if (maxPrice - minPrice >= priceGap) {
-                  if (e.target.classList.contains("input-min")) {
-                    rangeInputs[0].value = minPrice;
-                  } else {
-                    rangeInputs[1].value = maxPrice;
-                  }
-                  updateSlider(minPrice, maxPrice);
-                }
-              });
-            });
-
-            // Handle the range sliders when they are moved
-            rangeInputs.forEach((input) => {
-              input.addEventListener("input", (e) => {
-                let minVal = parseInt(rangeInputs[0].value),
-                  maxVal = parseInt(rangeInputs[1].value);
-
-                // Prevent sliders from crossing over
-                if (maxVal - minVal < priceGap) {
-                  if (e.target.classList.contains("range-min")) {
-                    rangeInputs[0].value = maxVal - priceGap;
-                  } else {
-                    rangeInputs[1].value = minVal + priceGap;
-                  }
-                } else {
-                  priceInputs[0].value = minVal;
-                  priceInputs[1].value = maxVal;
-                  updateSlider(minVal, maxVal);
-                }
-              });
-            });
-          </script>
-
->>>>>>> main
           <div class="flex w-full max-w-[515px] mt-4 mx-auto">
             <!-- Job Field Dropdown -->
             <div class="flex flex-col">
@@ -496,18 +182,6 @@
             </div>
           </div>
         </div>
-<<<<<<< HEAD
- 
-        <!-- Explore -->
-        <div class="flex-grow text-center">
-          <h2 class="text-lg font-bold">Explore</h2>
-        </div>
-      </div>
-    </div>
-    <script src="{% static 'js/sidebar.js' %}"></script>
-  </body>
-</html>
-=======
         <!-- Separator Line -->
         <div class="h-screen w-[1px] bg-gray-400 mx-4"></div>
         <!-- Explore -->
@@ -519,6 +193,6 @@
     <script src="{% static 'js/notifications.js' %}"></script>
     <script src="{% static 'js/view_profile.js' %}"></script>
     <script src="{% static 'js/sidebar.js' %}"></script>
+    <script src="{% static 'js/salary_slider.js' %}"></script>
   </body>
 </html>
->>>>>>> main
