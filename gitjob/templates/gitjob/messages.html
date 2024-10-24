@@ -1,0 +1,165 @@
+{% load static %} {% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gitjob</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <!--Sidebar-->
+    <div class="min-h-screen mx-auto">
+      {% if request.user.is_authenticated %}
+        {% if request.user.is_business_manager %}
+          {% include 'includes/manager_sidebar.html' %}
+        {% else %}
+          {% include 'includes/user_sidebar.html' %}
+      {% endif %}
+      {% endif %}
+
+      <!--Navbar-->
+      <nav class="flex items-center justify-between bg-cyan-500 h-[100px]">
+        <div class="flex items-center">
+          <button
+            class="ml-4 p-2 text-white focus:outline-none"
+            onclick="toggleSidebar()"
+          >
+            <img
+              src="{% static 'images/three_lines.png' %}"
+              alt="Sample Image"
+              class="w-8 h-8 object-cover"
+            />
+          </button>
+          <ul class="flex space-x-4 text-center">
+            <li class="list-none pl-4 text-4xl font-bold text-black">
+              <a href="#">GitJob</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Navbar Links -->
+        <div class="flex justify-center flex-grow">
+          <ul class="flex space-x-8 text-center">
+            <li class="list-none text-xl font-bold text-black">
+              <a href="#">Home</a>
+            </li>
+            <li class="list-none text-xl font-bold text-black">
+              <a href="#">Contact Us</a>
+            </li>
+            <li class="list-none text-xl font-bold text-black">
+              <a href="#">About Us</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Notification icon and profile picture -->
+        <div class="flex items-center space-x-4 pr-16">
+          <img
+            src="{% static 'images/notif_icon.png' %}"
+            alt="Sample Image"
+            class="w-8 h-8 object-cover"
+          />
+          <img
+            src="{% static 'images/register_page_bg.png' %}"
+            alt="Sample Image"
+            class="w-8 h-8 object-cover rounded-full"
+          />
+        </div>
+      </nav>
+
+      <!--Current contents are placeholders for now-->
+      <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-1/4 bg-white shadow-lg border-r">
+          <div class="p-5 border-b bg-gray-200 border-r">
+            <!-- Search Bar -->
+            <div class="flex items-center bg-white rounded-full p-2">
+              <img
+                src="{% static 'images/search_icon.png' %}"
+                class="w-6 h-6"
+              />
+              <input
+                type="text"
+                placeholder="Search for people"
+                class="ml-2 bg-transparent outline-none"
+              />
+            </div>
+          </div>
+
+          <!-- User List -->
+          <div class="mt-4">
+            <div class="flex items-center px-4 py-2 hover:bg-gray-100">
+              <img
+                src="{% static 'images/user_icon.png' %}"
+                class="w-12 h-12 rounded-full"
+              />
+              <div class="ml-4">
+                <p class="font-bold">Vivian Cross</p>
+                <p class="text-gray-600 text-sm">
+                  HyperX is excited to learn more...
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Chat Window -->
+        <div class="w-3/4 flex flex-col bg-white">
+          <!-- Chat Header -->
+          <div class="flex items-center p-4 border-b bg-gray-200">
+            <img
+              src="{% static 'images/user_icon.png' %}"
+              alt="User Profile"
+              class="w-12 h-12 rounded-full"
+            />
+            <div class="ml-4">
+              <p class="font-bold text-lg">Vivian Cross</p>
+            </div>
+          </div>
+          <!-- Chat Messages -->
+          <div class="flex-1 p-4 overflow-y-auto">
+            <div class="flex flex-col space-y-2">
+              <p class="text-sm text-gray-500">5/9/2024 9:20PM</p>
+
+              <div class="bg-gray-200 rounded-lg p-4 max-w-md">
+                <p>
+                  Hello John Doe! I am Vivian Cross, the hiring manager of
+                  HyperX.
+                </p>
+              </div>
+
+              <div class="bg-gray-200 rounded-lg p-4 max-w-md">
+                <p>
+                  After reviewing your application, we were impressed with your
+                  qualifications and would like to invite you for an interview
+                  to further discuss the Junior Software Engineer role.
+                </p>
+              </div>
+
+              <div class="bg-gray-200 rounded-lg p-4 max-w-md">
+                <p>
+                  HyperX is excited to learn more about you. We look forward to
+                  meeting you.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Message Input -->
+          <div class="p-4 border-t flex items-center">
+            <input
+              type="text"
+              placeholder="Write a message..."
+              class="flex-1 px-4 py-2 border rounded-full focus:outline-none"
+            />
+            <button class="ml-2 p-2 bg-gray-300 rounded-full">
+              <img src="{% static 'images/enter_icon.png' %}" class="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="{% static 'js/sidebar.js' %}"></script>
+</html>

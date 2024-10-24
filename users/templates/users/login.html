@@ -1,11 +1,51 @@
+{% load static %}
+{% load static tailwind_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    {% tailwind_css %}
+    <link rel="stylesheet" href="{% static 'css/dist/custom.css' %}">
+    <script src="{% static 'script.js' %}" defer></script>
+  </head>
+
+    {% if messages %}
+        {% include 'includes/message_box.html' %}
+    {% endif %}
+  
+<body class="w-screen h-screen flex flex-col items-center justify-center">
+    <h1 class="absolute top-4 left-4 text-black text-4xl font-bold"> GitJob </h1>
+    <!-- Center Div -->
+    <div class="top-1/2 left-1/2 h-3/4 w-3/4 flex">
+
+        <!-- Left Form -->
+        <div class="w-1/2 h-full bg-gradient-to-b from-gray-200 to-sky-300">
+            <p class="m-4">Not a member? <a class="blue_link" href="{% url 'register' %}">Register now</a></p>
+            <div class="div flex flex-col text-center">
+                <h1 class="text-4xl m-3 font-bold">Login</h1>
+                <h3 class="text-xl m-3 font-bold">Sign in to your account</h3>
+            </div>
+            <form class="w-full h-full p-3" method="post">
+                {% csrf_token %}
+                
+                {{ form.as_div }}
     
+                <div class="relative w-full flex pr-6 left-1/4">
+                    <a class="text-black hover:text-sky-700">Forgot password?</a>
+                </div>
+                <div class="flex justify-center">
+                    <button type="submit" class="w-3/4 py-2 mt-4 border-solid border-2 border-black text-black font-bold bg-white hover:bg-sky-500 rounded-2xl">Sign in</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Right image -->
+        <div class="w-1/2 h-full">
+            <img src="{% static 'images/login_page_img.jpg' %}" alt="Abstract Painting" class="w-full h-full">
+        </div>
+    </div>
 </body>
 </html>

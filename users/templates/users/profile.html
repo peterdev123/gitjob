@@ -1,0 +1,361 @@
+{% load static %}
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    {% tailwind_css %}
+    <!-- <link rel="stylesheet" href="{% static 'css/dist/custom.css' %}"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            initEditSkills();
+            initEditExperiences();
+            function showEditProfileModal() {
+                $("#edit_profile_modal").show()
+            }
+            function hideEditProfileModal() {
+                $("#edit_profile_modal").hide()
+            }
+            $("#edit_profile_btn").click((event)=>{showEditProfileModal()})
+            $("#edit_profile_cancel").click((event)=>{hideEditProfileModal()})
+            $("#edit_profile_exit").click((event)=>{hideEditProfileModal()})
+
+            function showAddSkillModal(){
+                initEditSkills()
+                updateSkills()
+                $("#edit_skills_modal").show()
+            }
+            function hideAddSkillModal(){
+                $("#edit_skills_modal").hide()
+            }
+
+            $("#edit_skills_btn").click((event)=>{showAddSkillModal()})
+            $("#edit_skills_cancel").click((event)=>{hideAddSkillModal()})
+            $("#edit_skills_exit").click((event)=>{hideAddSkillModal()})
+        
+            function showAddExperienceModal(){
+                initEditExperiences()
+                updateExperiences()
+                $("#edit_experiences_modal").show()
+            }
+            function hideAddExperienceModal(){
+                $("#edit_experiences_modal").hide()
+            }
+            $("#edit_experiences_btn").click((event)=>{showAddExperienceModal()})
+            $("#edit_experiences_cancel").click((event)=>{hideAddExperienceModal()})
+            $("#edit_experiences_exit").click((event)=>{hideAddExperienceModal()})
+        })
+
+        function deleteItem(element){
+            const div = $(element).parent()
+            div.remove()
+
+            updateSkills()
+            updateExperiences()
+        }
+
+        function initEditSkills(){
+            const skills = {{ skills_json|safe }};
+            const skill_wrapper = $("#skill_wrapper")
+            skill_wrapper.html("")
+            if(Array.isArray(skills)){
+                skills.forEach(function(skill){
+                    const item = "<div class='skill-div w-full p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
+                        + "<span class='align-middle'>" + skill +"</span>"
+                        + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
+                        + "</div>"
+                    skill_wrapper.append(item)
+                })
+            }
+        }
+
+        function addSkill(){
+            const input = $("#add_skill");
+            const inputVal = input.val()
+
+            if(inputVal){
+                const itemWrapper = $("#skill_wrapper")
+                const item = "<div class='skill-div w-full p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
+                    + "<span class='align-middle'>" + inputVal +"</span>"
+                    + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
+                    + "</div>"
+                input.val("")
+                itemWrapper.append(item)
+            }
+
+            updateSkills()
+        }
+
+        function updateSkills(){
+            const skills = []
+
+            $("#skill_wrapper .skill-div").each(function() {
+                const skillText = $(this).find("span").text();
+                skills.push(skillText);
+            });
+
+            const skillsJson = JSON.stringify(skills);
+
+            $("#skills_json").val(skillsJson);
+        }
+
+        function initEditExperiences(){
+            const experiences = {{ experiences_json|safe }};
+            const exp_wrapper = $("#experience_wrapper")
+            exp_wrapper.html("")
+            if(Array.isArray(experiences)){
+                experiences.forEach(function(experience){
+                    const item = "<div class='experience-div w-full p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
+                        + "<span class='align-middle'>" + experience +"</span>"
+                        + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
+                        + "</div>"
+                        exp_wrapper.append(item)
+                })
+            }
+        }
+
+        function addExperience(){
+            const input = $("#add_experience");
+            const inputVal = input.val()
+
+            if(inputVal){
+                const itemWrapper = $("#experience_wrapper")
+                const item = "<div class='experience-div w-full p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
+                    + "<span class='align-middle'>" + inputVal +"</span>"
+                    + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
+                    + "</div>"
+                input.val("")
+                itemWrapper.append(item)
+            }
+
+            updateExperiences()
+        }
+
+        function updateExperiences(){
+            const experiences = []
+
+            $("#experience_wrapper .experience-div").each(function() {
+                const experienceText = $(this).find("span").text();
+                experiences.push(experienceText);
+            });
+
+            const experiencesJson = JSON.stringify(experiences);
+
+            $("#experiences_json").val(experiencesJson);
+        }
+    </script>
+</head>
+<body class="w-screen h-screen">
+
+    <!-- Sidebar -->   
+    {% if request.user.is_authenticated %}
+        {% if request.user.is_business_manager %}
+            {% include 'includes/manager_sidebar.html' %}
+        {% else %}
+            {% include 'includes/user_sidebar.html' %}
+        {% endif %}
+    {% endif %}
+
+    <!-- Navbar -->
+    {% include 'includes/nav_bar.html' %}
+
+    <div class="w-full h-[calc(100%-100px)] px-15 flex justify-center">
+        <!-- Left Div -->
+        <div class="relative w-1/5 h-5/6 m-10 mx-[0.75rem] bg-cyan-200 rounded-xl border-2 border-solid border-black flex flex-col items-center">
+
+            <p id="edit_profile_btn" class="absolute top-3 right-3 hover:cursor-pointer">Edit</p>
+            <img src="{% static 'images/register_page_bg.png' %}" 
+                 alt="Sample Profile" 
+                 class="w-24 h-24 mt-[2.5rem] object-cover rounded-full border-2 border-black border-solid">
+                 <div class="flex justify-between">
+                    <h1 id="first_name" class="mt-2 text-2xl font-bold underline">{{ user.first_name }}</h1>
+                    <h1 class="mt-2 text-2xl font-bold underline"> </h1>
+                    <h1 id="last_name" class="mt-2 text-2xl font-bold underline">{{ user.last_name }}</h1>
+                 </div>
+                 <h1 id="username" class="mt-2 text-xl font-medium">{{ user.username }}</h1>
+
+                 {% if user.job %}
+                 <div class="flex justify-between">
+                    <h1 id="job" class="mt-2 text-l font-medium">{{ user.job }}</h1>
+                    <h1 class="mt-2 mx-1 text-l font-medium"> at </h1>
+                    <h1 id="job_company" class="mt-2 text-l font-medium">{{ user.job_company }}</h1>
+                 </div>
+                 {% endif %}
+
+                 {% if user.home_address %}
+                 <h1 id="home_address" class="mt-2 text-l font-medium">{{ user.home_address }}</h1>
+                 {% endif %}
+
+                 {% if user.phone_number %}
+                 <h1 id="phone_number" class="mt-2 text-l font-medium">{{ user.phone_number }}</h1>
+                 {% endif %}
+
+                 <h1 id="email" class="mt-2 text-l font-medium">{{ user.email }}</h1>
+
+                 <hr>
+
+                 {% if user.birthdate %}
+                 <h1 id="birthdate" class="mt-2 text-l font-medium">{{ user.birthdate }}</h1>
+                 {% endif %}
+
+                 {% if user.gender %}
+                 <h1 id="gender" class="mt-2 text-l font-medium">{{ user.gender }}</h1>
+                 {% endif %}
+
+                 {% if user.description %}
+                 <h1 id="description" class="mt-2 text-l font-medium">{{ user.description }}</h1>
+                 {% endif %}
+        </div>
+        <!-- Right Div -->
+        <div class="w-2/5 h-5/6 m-10 mx-[0.75rem] flex flex-col justify-center">
+            <div class="w-full h-3/5 mb-6 bg-gray-300 rounded-2xl border-2 border-solid border-black flex justify-between">
+                <div class="relative w-[45%] p-4 h-5/6 m-6 mr-4 bg-green-200 rounded-2xl border-2 border-solid border-black flex flex-col items-center">
+                    <p id="edit_skills_btn" class="absolute top-2 right-2 hover:cursor-pointer">Edit</p>
+                    <h1 class="mt-2 text-xl font-bold">Skills</h1>
+                    {% if user.skills %}
+                        <ul class="list-disc">
+                            {% for skill in user.skills %}
+                            <li>{{skill}}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                    <p class="mt-4">Not written any yet</p>
+                    {% endif %}
+                </div>
+                <div class="relative w-[45%] p-4 h-5/6 m-6 ml-4 bg-green-200 rounded-2xl border-2 border-solid border-black flex flex-col items-center">
+                    <p id="edit_experiences_btn" class="absolute top-3 right-4 hover:cursor-pointer">Edit</p>
+                    <h1 class="mt-2 text-xl font-bold">Experiences</h1>
+                    {% if user.experiences %}
+                    <ul class="list-disc">
+                        {% for experience in user.experiences %}
+                        <li>{{experience}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p class="mt-4">Not written any yet</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="w-full h-2/5 bg-gray-300 rounded-2xl border-2 border-solid border-black">
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Details -->
+    <div id="edit_profile_modal" class="absolute w-1/2 p-10 top-[4rem] left-1/2 translate-x-[-50%] rounded-2xl border-2 border-black border-solid bg-gray-200 z-10" style="display: none;">
+        <form method="POST" class="flex flex-col items-center">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="edit_profile_form">
+
+            <h1 class="text-2xl text-black text-center">Edit Profile Details</h1>
+            <img id="edit_profile_exit" src="{% static 'images/cross_mark_icon.png' %}" class="w-8 h-8 hover:cursor-pointer absolute top-6 right-6" alt="Exit Button">
+     
+            <hr class="w-[96%] my-5 border-1 border-solid border-black">
+            
+            <label for="id_username">Username</label>
+            <input type="text" name="username" id="id_username" class="profile_edit_input" 
+                value="{{ user.username }}">
+
+            <label for="id_job">Job</label>
+            <input type="text" name="job" id="id_job" class="profile_edit_input" 
+                {% if user.job %} value="{{ user.job }}"{% endif %}>
+
+            <label for="id_job_company">Job Company</label>
+            <input type="text" name="job_company" id="id_job_company" class="profile_edit_input" 
+                {% if user.job_company %} value="{{ user.job_company }}"{% endif %}>
+
+            <label for="id_home_address">Home Address</label>
+            <input type="text" name="home_address" id="id_home_address" class="profile_edit_input" 
+                {% if user.home_address %} value="{{ user.home_address }}"{% endif %}>
+            
+            <label for="id_phone_number">Phone Number</label>
+            <input type="text" name="phone_number" id="id_phone_number" class="profile_edit_input" 
+                {% if user.phone_number %} value="{{ user.phone_number }}"{% endif %}>
+
+            <label for="id_birthdate">Birthdate</label>
+            <input type="date" name="birthdate" id="id_birthdate" class="profile_edit_input" 
+                {% if user.birthdate %} value="{{ user.birthdate }}"{% endif %}>
+
+            <label for="id_gender">Gender</label>
+            <select name="gender" id="id_gender" class="mb-4" {% if user.gender %} selected="{{ user.gender }}"{% endif %}>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Others">Others</option>
+            </select>
+            
+            <label for="id_description">Description</label>
+            <textarea name="description" id="id_description" class="mb-4">{% if user.description %}{{ user.description }}{% endif %}</textarea>
+            
+            <div class="flex justify-end">
+                <button id="edit_profile_cancel" class="w-16 rounded-2xl border-2 border-black border-solid bg-white text-black" type="button">Cancel</button>
+                <button id="edit_profile_confirm" class="w-28 mx-5 rounded-2xl border-2 border-black border-solid bg-blue-600 text-white" type="submit">Save Changes</button>
+            </div>
+         </form>
+    </div>
+
+     <!-- Edit Skills -->
+     <div id="edit_skills_modal" class="absolute w-1/2 h-3/4 flex flex-col max-h-[80vh] p-10 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] rounded-2xl border-2 border-black border-solid bg-gray-200 z-10 overflow-hidden box-border" style="display: none;">
+        <form method="POST" class="w-full flex flex-col box-border">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="edit_skills_form">
+
+            <h1 class="text-2xl text-black text-center">Edit Skills</h1>
+            <img id="edit_skills_exit" src="{% static 'images/cross_mark_icon.png' %}" class="w-8 h-8 hover:cursor-pointer absolute top-6 right-6" alt="Exit Button">
+
+            <div class="w-full flex items-center p-0">
+                <input type="text" name="add_skill" id="add_skill" class="w-[80%] border border-gray-300 rounded-md p-2 h-10">
+                <button name="add_skill_btn" id="add_skill_btn" class="w-16 h-10 mx-4 rounded-2xl border-2 border-black border-solid bg-white text-black" onclick="addSkill()" type="button">Add</button>
+            </div>
+
+            <input type="hidden" name="skills_json" id="skills_json">
+
+            <div class="flex justify-end mt-auto">
+                <button id="edit_skills_cancel" class="w-16 rounded-2xl border-2 border-black border-solid bg-white text-black" type="button">Cancel</button>
+                <button id="edit_skills_confirm" class="w-28 mx-5 rounded-2xl border-2 border-black border-solid bg-blue-600 text-white" type="submit">Save Changes</button>
+            </div>
+         </form>
+
+         <div id="skill_wrapper" class="m-2 max-h-[60vh] flex flex-col box-border">
+        </div>
+    </div>
+
+     <!-- Edit Experiences -->
+     <div id="edit_experiences_modal" class="absolute w-1/2 h-3/4 flex flex-col max-h-[80vh] p-10 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] rounded-2xl border-2 border-black border-solid bg-gray-200 z-10 overflow-hidden box-border" style="display: none;">
+        <form method="POST" class="w-full flex flex-col box-border">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="edit_experiences_form">
+
+            <h1 class="text-2xl text-black text-center">Edit Experiences</h1>
+            <img id="edit_experiences_exit" src="{% static 'images/cross_mark_icon.png' %}" class="w-8 h-8 hover:cursor-pointer absolute top-6 right-6" alt="Exit Button">
+
+            <div class="w-full flex items-center p-0">
+                <input type="text" name="add_experience" id="add_experience" class="w-[80%] border border-gray-300 rounded-md p-2 h-10">
+                <button name="add_experience_btn" id="add_experience_btn" class="w-16 h-10 mx-4 rounded-2xl border-2 border-black border-solid bg-white text-black" onclick="addExperience()" type="button">Add</button>
+            </div>
+
+            <input type="hidden" name="experiences_json" id="experiences_json">
+
+            <div class="flex justify-end mt-auto">
+                <button id="edit_experiences_cancel" class="w-16 rounded-2xl border-2 border-black border-solid bg-white text-black" type="button">Cancel</button>
+                <button id="edit_experiences_confirm" class="w-28 mx-5 rounded-2xl border-2 border-black border-solid bg-blue-600 text-white" type="submit">Save Changes</button>
+            </div>
+         </form>
+
+         <div id="experience_wrapper" class="m-2 max-h-[60vh] flex flex-col box-border">
+        </div>
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="logout">
+        <button type="submit">Log out</button>
+    </form>
+</body>
+</html>

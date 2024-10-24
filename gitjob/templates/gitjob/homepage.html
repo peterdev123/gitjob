@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gitjob</title>
     <script src="https://cdn.tailwindcss.com"></script>
+<<<<<<< HEAD
   </head>
   <body>
     <div class="min-h-screen mx-auto">
@@ -133,11 +134,126 @@
         </div>
       </div>
  
+=======
+    <style>
+      @layer utilities {
+        input[type="range"]::-webkit-slider-thumb {
+          height: 12px;
+          width: 12px;
+          border-radius: 50%;
+          background: black;
+          pointer-events: auto;
+          appearance: none;
+          box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+          position: relative;
+          top: 2px;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+          height: 12px;
+          width: 12px;
+          border-radius: 50%;
+          background: black;
+          pointer-events: auto;
+          border: none;
+          box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+          position: relative;
+          top: 2px;
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+          height: 5px;
+          background: transparent;
+        }
+
+        input[type="range"]::-moz-range-track {
+          height: 5px;
+          background: transparent;
+        }
+
+        input[type="range"] {
+          -webkit-appearance: none;
+          appearance: none;
+          background: transparent;
+          position: relative;
+          top: -4px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="min-h-screen mx-auto">
+      
+      <!-- Sidebar -->   
+      {% if request.user.is_authenticated %}
+        {% if request.user.is_business_manager %}
+          {% include 'includes/manager_sidebar.html' %}
+        {% else %}
+          {% include 'includes/user_sidebar.html' %}
+      {% endif %}
+      {% endif %}
+
+
+      <!--Notifications-->
+      <div
+        id="notif-sidebar"
+        class="fixed right-0 top-0 h-full w-64 bg-[#e2e2e2] text-black z-50 transform translate-x-full transition-transform duration-300"
+      >
+        <div class="flex flex-col items-start p-6 space-y-6">
+          <!-- Notifications Header -->
+          <div class="flex justify-between justify-center items-center w-full">
+            <h2 class="text-xl font-bold text-left mr-6">Notifications</h2>
+            <img
+              src="{% static 'images/close.png' %}"
+              alt="Sample Image"
+              class="w-4 h-4 object-cover"
+              id="close-toggle-notif-sidebar"
+            />
+          </div>
+          <hr class="border-t border-gray-600 w-full" />
+          <!-- Example Notifications -->
+          <ul class="space-y-4">
+            <li class="text-lg font-bold">You have a new message!</li>
+            <li class="text-lg font-bold">Your job application was viewed.</li>
+            <li class="text-lg font-bold">Interview scheduled for Friday.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Navbar -->
+      {% include 'includes/nav_bar.html' %}
+
+      <!-- Search Bar Section -->
+      <div class="flex justify-center items-center bg-slate-200 h-[100px]">
+        <div
+          class="relative bg-white border border-black w-[515px] h-[50px] rounded-[25px] flex items-center px-6 border"
+        >
+          <!-- Search Icon -->
+          <img
+            src="{% static 'images/search_icon.png' %}"
+            alt="Search Icon"
+            class="w-6 h-6 mr-4"
+          />
+
+          <!-- Search Placeholder Text -->
+          <input
+            type="text"
+            placeholder="Search"
+            class="ml-2 bg-transparent outline-none"
+          />
+        </div>
+      </div>
+
+>>>>>>> main
       <!-- Filter and Explore Section -->
       <div class="flex w-full max-w-[515px]">
         <!-- Filter -->
         <div class="w-[150px] flex flex-col ml-16">
+<<<<<<< HEAD
           <h2 class="text-lg font-bold">Filter</h2>
+=======
+          <h2 class="text-lg font-bold pt-5">Filter</h2>
+>>>>>>> main
           <ul class="mt-4">
             <li class="text-s font-bold text-slate-500">Schedule</li>
             <li class="text-s">
@@ -150,6 +266,7 @@
             </li>
             <li class="text-s">
               <input type="radio" id="internship" name="internship" />
+<<<<<<< HEAD
               <label for="internship" class="text-s">Internship</label>
             </li>
           </ul>
@@ -217,6 +334,130 @@
             </div>
           </div>
  
+=======
+              <label for="full-time" class="text-s">Internship</label>
+            </li>
+            <li class="text-s">
+              <input type="radio" id="full-time" name="Job-type" />
+              <label for="full-time" class="text-s">Full Time</label>
+            </li>
+          </ul>
+
+          <!-- Salary range -->
+          <div>
+            <div class="text-s font-bold text-slate-500 mt-4">Salary Range</div>
+            <div class="price-input flex justify-between">
+              <div class="field flex items-center">
+                <input
+                  type="number"
+                  class="input-min w-full h-10 text-s font-bold text-center border-0 outline-none"
+                  value="25000"
+                />
+              </div>
+              <div
+                class="separator w-28 text-s font-bold flex items-center justify-center"
+              >
+                -
+              </div>
+              <div class="field flex items-center">
+                <input
+                  type="number"
+                  class="input-max w-full h-10 text-s font-bold text-center border-0 outline-none"
+                  value="75000"
+                />
+              </div>
+            </div>
+            <div class="slider relative h-1 bg-gray-300 rounded-md">
+              <div
+                class="progress absolute left-1/4 right-1/4 h-full bg-black rounded-md"
+              ></div>
+            </div>
+            <div class="range-input relative mt-3">
+              <input
+                type="range"
+                class="range-min absolute w-full h-1 top-[-20px] pointer-events-none appearance-none"
+                min="0"
+                max="100000"
+                value="25000"
+                step="1000"
+              />
+              <input
+                type="range"
+                class="range-max absolute w-full h-1 top-[-20px] pointer-events-none appearance-none"
+                min="0"
+                max="100000"
+                value="75000"
+                step="1000"
+              />
+            </div>
+          </div>
+
+          <script>
+            const rangeInputs = document.querySelectorAll(".range-input input"),
+              priceInputs = document.querySelectorAll(".price-input input"),
+              range = document.querySelector(".slider .progress");
+
+            let priceGap = 10000; // Minimum gap between min and max values
+
+            // Helper function to update the range slider's progress bar
+            const updateSlider = (minVal, maxVal) => {
+              range.style.left =
+                ((minVal / rangeInputs[0].max) * 100).toFixed(2) + "%";
+              range.style.right =
+                (100 - (maxVal / rangeInputs[1].max) * 100).toFixed(2) + "%";
+            };
+
+            // Initialize the slider positions on page load
+            window.addEventListener("load", () => {
+              let minPrice = parseInt(priceInputs[0].value),
+                maxPrice = parseInt(priceInputs[1].value);
+
+              rangeInputs[0].value = minPrice;
+              rangeInputs[1].value = maxPrice;
+              updateSlider(minPrice, maxPrice);
+            });
+
+            // Update slider and price inputs when the price input fields are changed
+            priceInputs.forEach((input) => {
+              input.addEventListener("input", (e) => {
+                let minPrice = parseInt(priceInputs[0].value),
+                  maxPrice = parseInt(priceInputs[1].value);
+
+                // Ensure the gap between min and max is respected
+                if (maxPrice - minPrice >= priceGap) {
+                  if (e.target.classList.contains("input-min")) {
+                    rangeInputs[0].value = minPrice;
+                  } else {
+                    rangeInputs[1].value = maxPrice;
+                  }
+                  updateSlider(minPrice, maxPrice);
+                }
+              });
+            });
+
+            // Handle the range sliders when they are moved
+            rangeInputs.forEach((input) => {
+              input.addEventListener("input", (e) => {
+                let minVal = parseInt(rangeInputs[0].value),
+                  maxVal = parseInt(rangeInputs[1].value);
+
+                // Prevent sliders from crossing over
+                if (maxVal - minVal < priceGap) {
+                  if (e.target.classList.contains("range-min")) {
+                    rangeInputs[0].value = maxVal - priceGap;
+                  } else {
+                    rangeInputs[1].value = minVal + priceGap;
+                  }
+                } else {
+                  priceInputs[0].value = minVal;
+                  priceInputs[1].value = maxVal;
+                  updateSlider(minVal, maxVal);
+                }
+              });
+            });
+          </script>
+
+>>>>>>> main
           <div class="flex w-full max-w-[515px] mt-4 mx-auto">
             <!-- Job Field Dropdown -->
             <div class="flex flex-col">
@@ -255,6 +496,7 @@
             </div>
           </div>
         </div>
+<<<<<<< HEAD
  
         <!-- Explore -->
         <div class="flex-grow text-center">
@@ -265,3 +507,18 @@
     <script src="{% static 'js/sidebar.js' %}"></script>
   </body>
 </html>
+=======
+        <!-- Separator Line -->
+        <div class="h-screen w-[1px] bg-gray-400 mx-4"></div>
+        <!-- Explore -->
+        <div class="flex-grow text-center">
+          <h2 class="text-lg font-bold pt-5">Explore</h2>
+        </div>
+      </div>
+    </div>
+    <script src="{% static 'js/notifications.js' %}"></script>
+    <script src="{% static 'js/view_profile.js' %}"></script>
+    <script src="{% static 'js/sidebar.js' %}"></script>
+  </body>
+</html>
+>>>>>>> main

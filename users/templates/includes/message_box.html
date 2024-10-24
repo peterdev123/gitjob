@@ -1,0 +1,7 @@
+<div id="message-box" class="fixed top-4 left-1/2 transform -translate-x-1/2 z-20">
+    {% for message in messages %}
+        <div class="message {{ message.tags }} bg-blue-500 text-white p-4 rounded mb-4 shadow-lg">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
