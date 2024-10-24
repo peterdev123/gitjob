@@ -51,11 +51,15 @@ class RegisterForm(forms.Form):
         label="Retype Password", 
         widget=forms.PasswordInput(attrs=input_attrs("Retype Password..."))
     )
+    is_business_manager = forms.BooleanField(
+        label="Register as Business Manager", required=False
+    )
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
-            field.label = ""
+            if not isinstance(field, forms.BooleanField):
+                field.label = ""
 
 class EditProfileForm(forms.ModelForm):
     class Meta:
