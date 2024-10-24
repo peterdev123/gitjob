@@ -7,6 +7,14 @@ from .forms import LoginForm, RegisterForm, EditProfileForm
 from .models import GitJobUser
 import json
 
+def parse_context(user, form, skills_json, experiences_json):
+    return {
+        "user": user, 
+        "form": form, 
+        "skills_json": skills_json, 
+        "experiences_json": experiences_json, 
+    }
+
 # Create your views here.
 def login_view(request):
     if request.method == "POST":
@@ -36,6 +44,7 @@ def register_view(request):
             username_input = form.cleaned_data['username']
             password_input = form.cleaned_data['password']
             retypepassword_input = form.cleaned_data['retypepassword']
+            is_business_manager_input = form.cleaned_data['is_business_manager']
 
             if password_input != retypepassword_input:
                 messages.info(request, "Passwords do NOT match")
@@ -50,6 +59,7 @@ def register_view(request):
                         username=username_input,
                         first_name=fname_input,
                         last_name=lname_input,
+                        is_business_manager=is_business_manager_input
                     )
                     user.set_password(password_input)
                     user.save()
