@@ -66,7 +66,7 @@
         }
 
         function initEditSkills(){
-            const skills = {{ skills_json|safe }};
+            const skills = JSON.parse("{{ skills_json|escapejs }}")
             const skill_wrapper = $("#skill_wrapper")
             skill_wrapper.html("")
             if(Array.isArray(skills)){
@@ -81,7 +81,7 @@
         }
 
         function addSkill(){
-            const input = $("#add_skill");
+            const input = $("#add_skill")
             const inputVal = input.val()
 
             if(inputVal){
@@ -105,13 +105,13 @@
                 skills.push(skillText);
             });
 
-            const skillsJson = JSON.stringify(skills);
+            const skillsJson = JSON.stringify(skills)
 
-            $("#skills_json").val(skillsJson);
+            $("#skills_json").val(skillsJson)
         }
 
         function initEditExperiences(){
-            const experiences = {{ experiences_json|safe }};
+            const experiences = JSON.parse("{{ experiences_json|escapejs }}")
             const exp_wrapper = $("#experience_wrapper")
             exp_wrapper.html("")
             if(Array.isArray(experiences)){
