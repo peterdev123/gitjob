@@ -1,13 +1,13 @@
 from django import forms
 from .models import GitJobUser, Resume
 
-def input_attrs(placeholder):
-    return {
-        'class': 'login_register_input',
-        'placeholder': placeholder
-    }
-
 class LoginForm(forms.Form):
+    def input_attrs(placeholder):
+        return {
+            'class': 'login_input',
+            'placeholder': placeholder
+        }
+    
     username = forms.CharField(
         label='',
         max_length=100,
@@ -24,6 +24,11 @@ class LoginForm(forms.Form):
             field.label = ""
 
 class RegisterForm(forms.Form):
+    def input_attrs(placeholder):
+        return {
+            'class': 'register_input',
+            'placeholder': placeholder
+        }
     fname = forms.CharField(
         label='', 
         max_length=50,

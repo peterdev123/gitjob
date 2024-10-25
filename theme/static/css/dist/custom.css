@@ -1,16 +1,21 @@
- .login_register_input {
+ .login_input, .register_input {
     display: block;
     width: 75%;
     color: black;
     border-radius: 10px;
     line-height: 1.5rem;
   }
+  .register_input {
+    line-height: 1rem;
+  }
+  
 
   form div {
     display: flex;
     justify-content: center;
     width: 100%;
     margin: 1rem;
+    margin-bottom: 0;
   }
 
   .blue_link {
