@@ -1,45 +1,53 @@
-{% load static %}
-{% load static tailwind_tags %}
+{% load static %} {% load static tailwind_tags %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    {% tailwind_css %}
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="{% static 'css/dist/custom.css' %}">
-</head>
-<body>
-    <nav class="flex items-center justify-between bg-cyan-500 h-[100px]">
-        <!-- GitJob -->
-        <div class="flex items-center">
-            <ul class="flex space-x-4 text-center">
-                <li class="list-none pl-16 text-4xl font-bold"><a href="{% url 'home'%}">GitJob</a></li>
-            </ul>
-        </div>
-        
-        <!-- Find Jobs, Messages, and Job History -->
-        <div class="flex justify-center flex-grow">
-            <ul class="flex space-x-8 text-center">
-                <li class="list-none text-xl font-bold"><a href="#">Find Jobs</a></li>
-                <li class="list-none text-xl font-bold"><a href="#">Messages</a></li>
-                <li class="list-none text-xl font-bold"><a href="#">Job History</a></li>
-            </ul>
-        </div>
+<nav class="flex items-center justify-between bg-cyan-400 h-[100px]">
+  <div class="flex items-center">
+    <button
+      class="ml-4 p-2 text-white focus:outline-none"
+      onclick="toggleSidebar()"
+    >
+      <img
+        src="{% static 'images/three_lines.png' %}"
+        alt="Sample Image"
+        class="w-8 h-8 object-cover"
+      />
+    </button>
+    <ul class="flex space-x-4 text-center">
+      <li class="list-none pl-4 text-4xl font-bold text-black">
+        <a href="{% url 'home' %}">GitJob</a>
+      </li>
+    </ul>
+  </div>
 
-        <!-- Notification icon and profile picture -->
-        <div class="flex items-center space-x-4 pr-16"> 
-            <img src="{% static 'images/notif_icon.png' %}" 
-                 alt="Sample Image" 
-                 class="w-8 h-8 object-cover">
-            <img src="{% static 'images/register_page_bg.png' %}" 
-                 alt="Sample Image" 
-                 class="w-8 h-8 object-cover rounded-full"
-                 onclick="view_profile()">
-        </div>
-    </nav>
-    <script src="{% static 'js/view_profile.js' %}"></script>
-</body>
-</html>
+  <!-- Navbar Links -->
+  <div class="flex justify-center flex-grow">
+    <ul class="flex space-x-8 text-center">
+      <li class="list-none text-xl font-bold text-black">
+        <a href="{% url 'home' %}">Home</a>
+      </li>
+      <li class="list-none text-xl font-bold text-black">
+        <a href="#">Contact Us</a>
+      </li>
+      <li class="list-none text-xl font-bold text-black">
+        <a href="#">About Us</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Notification icon and profile picture -->
+  <div class="flex items-center space-x-4 pr-16">
+    <img
+      src="{% static 'images/notif_icon.png' %}"
+      alt="Sample Image"
+      class="w-8 h-8 object-cover ring-2 ring-black rounded-3xl"
+      id="notif-toggle"
+    />
+    <img
+      src="{% static 'images/register_page_bg.png' %}"
+      alt="Sample Image"
+      class="w-8 h-8 object-cover rounded-full"
+      onclick="view_profile()"
+    />
+  </div>
+</nav>
+<script src="{% static 'js/view_profile.js' %}"></script>

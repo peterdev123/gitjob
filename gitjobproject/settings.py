@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'gitjob', # main app
     'users',
     'jobs',
+    'manager',
 
+    'crispy_forms',
     'tailwind', # For tailwind
     'theme',
 
@@ -50,6 +52,7 @@ INSTALLED_APPS = [
 ]
 
 TAILWIND_APP_NAME = 'theme'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 INTERNAL_IPS = [
     "127.0.0.1",
