@@ -10,152 +10,19 @@
     {% tailwind_css %}
     <link rel="stylesheet" href="{% static 'css/dist/custom.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{% static 'js/message_box.js' %}"></script>
+    <script src="{% static 'js/profile.js' %}" defer></script>
     <script>
-        $(document).ready(function(){
-            initEditSkills();
-            initEditExperiences();
-            function showEditProfileModal() {
-                $("#edit_profile_modal").show()
-            }
-            function hideEditProfileModal() {
-                $("#edit_profile_modal").hide()
-            }
-            $("#edit_profile_btn").click((event)=>{showEditProfileModal()})
-            $("#edit_profile_cancel").click((event)=>{hideEditProfileModal()})
-            $("#edit_profile_exit").click((event)=>{hideEditProfileModal()})
-
-            function showAddSkillModal(){
-                initEditSkills()
-                updateSkills()
-                $("#edit_skills_modal").show()
-            }
-            function hideAddSkillModal(){
-                $("#edit_skills_modal").hide()
-            }
-
-            $("#edit_skills_btn").click((event)=>{showAddSkillModal()})
-            $("#edit_skills_cancel").click((event)=>{hideAddSkillModal()})
-            $("#edit_skills_exit").click((event)=>{hideAddSkillModal()})
-        
-            function showAddExperienceModal(){
-                initEditExperiences()
-                updateExperiences()
-                $("#edit_experiences_modal").show()
-            }
-            function hideAddExperienceModal(){
-                $("#edit_experiences_modal").hide()
-            }
-            $("#edit_experiences_btn").click((event)=>{showAddExperienceModal()})
-            $("#edit_experiences_cancel").click((event)=>{hideAddExperienceModal()})
-            $("#edit_experiences_exit").click((event)=>{hideAddExperienceModal()})
-
-            $("#profile-pic").click(()=>{ $("#profile-pic-input").click() })
-            $("#profile-pic-input").change(function() { this.form.submit() })
-            $("input[type='file']").change(function() { this.form.submit() })
-            $("#delete_resume_btn").click((event)=>{
-                $(event.currentTarget).parent().submit();
-            })
-        })
-
-        function deleteItem(element){
-            const div = $(element).parent()
-            div.remove()
-
-            updateSkills()
-            updateExperiences()
-        }
-
-        function initEditSkills(){
+        function preParseSkills(){
             const skills = JSON.parse("{{ skills_json|escapejs }}")
-            const skill_wrapper = $("#skill_wrapper")
-            skill_wrapper.html("")
-            if(Array.isArray(skills)){
-                skills.forEach(function(skill){
-                    const item = "<div class='skill-div w-full m-0 mb-2 p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
-                        + "<span class='align-middle'>" + skill +"</span>"
-                        + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
-                        + "</div>"
-                    skill_wrapper.append(item)
-                })
-            }
+            initEditSkills(skills)
         }
 
-        function addSkill(){
-            const input = $("#add_skill")
-            const inputVal = input.val()
-
-            if(inputVal){
-                const itemWrapper = $("#skill_wrapper")
-                const item = "<div class='skill-div w-full m-0 mb-2 p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
-                    + "<span class='align-middle'>" + inputVal +"</span>"
-                    + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
-                    + "</div>"
-                input.val("")
-                itemWrapper.append(item)
-            }
-
-            updateSkills()
-        }
-
-        function updateSkills(){
-            const skills = []
-
-            $("#skill_wrapper .skill-div").each(function() {
-                const skillText = $(this).find("span").text();
-                skills.push(skillText);
-            });
-
-            const skillsJson = JSON.stringify(skills)
-
-            $("#skills_json").val(skillsJson)
-        }
-
-        function initEditExperiences(){
+        function preParseExperiences(){
             const experiences = JSON.parse("{{ experiences_json|escapejs }}")
-            const exp_wrapper = $("#experience_wrapper")
-            exp_wrapper.html("")
-            if(Array.isArray(experiences)){
-                experiences.forEach(function(experience){
-                    const item = "<div class='experience-div w-full m-0 mb-2 p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
-                        + "<span class='align-middle'>" + experience +"</span>"
-                        + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
-                        + "</div>"
-                        exp_wrapper.append(item)
-                })
-            }
-        }
-
-        function addExperience(){
-            const input = $("#add_experience");
-            const inputVal = input.val()
-
-            if(inputVal){
-                const itemWrapper = $("#experience_wrapper")
-                const item = "<div class='experience-div w-full m-0 mb-2 p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
-                    + "<span class='align-middle'>" + inputVal +"</span>"
-                    + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
-                    + "</div>"
-                input.val("")
-                itemWrapper.append(item)
-            }
-
-            updateExperiences()
-        }
-
-        function updateExperiences(){
-            const experiences = []
-
-            $("#experience_wrapper .experience-div").each(function() {
-                const experienceText = $(this).find("span").text();
-                experiences.push(experienceText);
-            });
-
-            const experiencesJson = JSON.stringify(experiences);
-
-            $("#experiences_json").val(experiencesJson);
+            initEditExperiences(experiences)
         }
     </script>
-
     {% if messages %}
         {% include 'includes/message_box.html' %}
     {% endif %}
@@ -189,13 +56,8 @@
                         style="cursor: pointer;"
                         class="w-24 h-24 mt-[2.5rem] object-cover rounded-full border-2 border-black border-solid">
             </form>
-
-                 <div class="flex justify-between">
-                    <h1 id="first_name" class="mt-2 text-2xl font-bold underline">{{ user.first_name }}</h1>
-                    <h1 class="mt-2 text-2xl font-bold underline"> </h1>
-                    <h1 id="last_name" class="mt-2 text-2xl font-bold underline">{{ user.last_name }}</h1>
-                 </div>
-                 <h1 id="username" class="mt-2 text-xl font-medium">{{ user.username }}</h1>
+                <h1 id="username" class="mt-2 text-xl font-bold">{{ user.username }}</h1>
+                <h1 id="first_name" class="mt-2 text-lg font-medium">{{ user.first_name }} {{ user.last_name }}</h1>
 
                  {% if user.job %}
                  <div class="flex justify-between">
@@ -228,6 +90,12 @@
                  {% if user.description %}
                  <h1 id="description" class="mt-2 text-l font-medium">{{ user.description }}</h1>
                  {% endif %}
+
+                 <form method="POST" class="absolute block bottom-0 mx-auto">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="logout">
+                    <button type="submit" class="w-20 h-7 mb-3 bg-red-600 text-white rounded-xl border-2 border-black border-solid">Log out</button>
+                </form>
         </div>
         <!-- Right Div -->
         <div class="w-2/5 h-5/6 m-10 mx-[0.75rem] flex flex-col justify-center">
@@ -390,10 +258,5 @@
             </div>
          </form>
     </div>
-    <form method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="form_type" value="logout">
-        <button type="submit">Log out</button>
-    </form>
 </body>
 </html>
