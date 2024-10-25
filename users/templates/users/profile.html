@@ -49,7 +49,9 @@
             $("#edit_experiences_cancel").click((event)=>{hideAddExperienceModal()})
             $("#edit_experiences_exit").click((event)=>{hideAddExperienceModal()})
 
-            $("input[type='file']").change(function() { this.form.submit(); });
+            $("#profile-pic").click(()=>{ $("#profile-pic-input").click() })
+            $("#profile-pic-input").change(function() { this.form.submit() })
+            $("input[type='file']").change(function() { this.form.submit() })
             $("#delete_resume_btn").click((event)=>{
                 $(event.currentTarget).parent().submit();
             })
@@ -166,9 +168,17 @@
         <div class="relative w-1/5 h-5/6 m-10 mx-[0.75rem] bg-cyan-200 rounded-xl border-2 border-solid border-black flex flex-col items-center">
 
             <p id="edit_profile_btn" class="absolute top-3 right-3 hover:cursor-pointer">Edit</p>
-            <img src="{% static 'images/register_page_bg.png' %}" 
-                 alt="Sample Profile" 
-                 class="w-24 h-24 mt-[2.5rem] object-cover rounded-full border-2 border-black border-solid">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="profile_pic_upload_form">
+                <input type="file" id="profile-pic-input" name="profile_picture" style="display: none;" accept="image/*">
+                <img src="{{ user.profile_picture.url }}" 
+                        alt="Profile Picture" 
+                        id="profile-pic"
+                        style="cursor: pointer;"
+                        class="w-24 h-24 mt-[2.5rem] object-cover rounded-full border-2 border-black border-solid">
+            </form>
+
                  <div class="flex justify-between">
                     <h1 id="first_name" class="mt-2 text-2xl font-bold underline">{{ user.first_name }}</h1>
                     <h1 class="mt-2 text-2xl font-bold underline"> </h1>
@@ -244,7 +254,7 @@
                 <div class="resume_wrapper w-[80%] flex flex-col">
                     {% for resume in resumes %}
                     <div class="w-full h-[32px] mb-3 px-2 flex border-[2px] border-solid border-black rounded-xl bg-cyan-300 flex items-center justify-between">
-                        <a href="{{ resume.file }}">
+                        <a href="{{ resume.file.url }}" target="_blank">
                             <p>{{ resume.filename }}</p>
                         </a>
                         <form method="post">

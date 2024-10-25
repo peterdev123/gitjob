@@ -1,5 +1,5 @@
 from django import forms
-from .models import GitJobUser
+from .models import GitJobUser, Resume
 
 def input_attrs(placeholder):
     return {
@@ -74,11 +74,7 @@ class EditProfileForm(forms.ModelForm):
         self.fields['username'].help_text = None
 
 class ResumeUploadForm(forms.Form):
+    resume_file = forms.FileField(widget=forms.FileInput(attrs={'accept': 'application/pdf'}))
 
-    resume_file = forms.FileField()
-
-    # def clean_resume_file(self, *args, **kwargs):
-    #     resume_file = self.cleaned_data.get("resume.file")
-    #     if not str(resume_file).endswith('.pdf'):
-    #         raise forms.ValidationError("This is not a valid resume file")
-    #     return resume_file
+class ProfilePicUploadForm(forms.Form):
+    profile_pic = forms.ImageField(required=False)
