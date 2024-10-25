@@ -11,7 +11,3 @@ def homepage(request):
 def messages(request):
 
     return render(request, 'gitjob/messages.html')
-
-def post_jobs(request):
-
-    return render(request, 'gitjob/post_jobs.html')

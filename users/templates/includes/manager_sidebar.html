@@ -1,63 +1,54 @@
 {% load static %} {% load static tailwind_tags %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GitJob</title>
-  </head>
-  <body>
-    <div
-      id="sidebar"
-      class="fixed top-0 left-0 w-64 h-full bg-white shadow-lg z-50 transform -translate-x-full transition-transform duration-300 ease-in-out"
+
+<div
+  id="sidebar"
+  class="fixed top-0 left-0 w-64 h-full bg-white shadow-lg z-50 transform -translate-x-full transition-transform duration-300 ease-in-out"
+>
+  <div class="flex items-center mt-6">
+    <button
+      class="ml-4 p-2 text-white focus:outline-none"
+      onclick="toggleSidebar()"
     >
-      <div class="flex items-center mt-6">
-        <button
-          class="ml-4 p-2 text-white focus:outline-none"
-          onclick="toggleSidebar()"
-        >
-          <img
-            src="{% static 'images/three_lines.png' %}"
-            alt="Sample Image"
-            class="w-8 h-8 object-cover"
-          />
-        </button>
-        <ul class="flex space-y-4 text-center">
-          <li class="list-none pl-4 text-4xl font-bold text-black">
-            <a href="{% url 'home' %}">GitJob</a>
-          </li>
-        </ul>
+      <img
+        src="{% static 'images/three_lines.png' %}"
+        alt="Sample Image"
+        class="w-8 h-8 object-cover"
+      />
+    </button>
+    <ul class="flex space-y-4 text-center">
+      <li class="list-none pl-4 text-4xl font-bold text-black">
+        <a href="{% url 'home' %}">GitJob</a>
+      </li>
+    </ul>
+  </div>
+  <hr class="mt-6" />
+  <ul class="mt-10 space-y-5 m-1">
+    <li class="px-6 py-2 text-lg hover:bg-gray-200 rounded">
+      <div class="flex items-center group relative">
+        <img
+          src="{% static 'images/post_jobs.png' %}"
+          alt="Sample Image"
+          class="w-8 h-8 object-cover"
+        />
+        <a href="{% url 'post_jobs' %}" class="ml-8 z-10">Post Jobs</a>
       </div>
-      <hr class="mt-6" />
-      <ul class="mt-10 space-y-5 m-1">
-        <li class="px-6 py-2 text-lg hover:bg-gray-200 rounded">
-          <div class="flex items-center group relative">
-            <img
-              src="{% static 'images/post_jobs.png' %}"
-              alt="Sample Image"
-              class="w-8 h-8 object-cover"
-            />
-            <a href="{% url 'post_jobs' %}" class="ml-8 z-10">Post Jobs</a>
-          </div>
-        </li>
-        <li class="px-6 py-2 text-lg hover:bg-gray-200 rounded flex">
-          <img
-            src="{% static 'images/messages.png' %}"
-            alt="Sample Image"
-            class="w-8 h-8 object-cover"
-          />
-          <a href="{% url 'messages' %}" class="ml-8">Messages</a>
-        </li>
-        <li class="px-6 py-2 text-lg hover:bg-gray-200 rounded flex">
-          <img
-            src="{% static 'images/job_post.png' %}"
-            alt="Sample Image"
-            class="w-8 h-8 object-cover"
-          />
-          <a href="#" class="ml-8">Job Postings</a>
-        </li>
-      </ul>
-    </div>
-    <script src="{% static 'js/sidebar.js' %}"></script>
-  </body>
-</html>
+    </li>
+    <li class="px-6 py-2 text-lg hover:bg-gray-200 rounded flex">
+      <img
+        src="{% static 'images/messages.png' %}"
+        alt="Sample Image"
+        class="w-8 h-8 object-cover"
+      />
+      <a href="{% url 'messages' %}" class="ml-8">Messages</a>
+    </li>
+    <li class="px-6 py-2 text-lg hover:bg-gray-200 rounded flex">
+      <img
+        src="{% static 'images/job_post.png' %}"
+        alt="Sample Image"
+        class="w-8 h-8 object-cover"
+      />
+      <a href="#" class="ml-8">Job Postings</a>
+    </li>
+  </ul>
+</div>
+<script src="{% static 'js/sidebar.js' %}"></script>

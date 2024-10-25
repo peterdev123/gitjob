@@ -4,6 +4,12 @@ myenv/
 *.py[cod]
 __pycache__/
 *.so
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.tiff
  
 *.log
 db.sqlite3
