@@ -79,7 +79,7 @@
       </div>
   
       <!-- Filter and Explore Section -->
-      <div class="flex w-full max-w-[515px]">
+      <div class="flex w-full">
         <!-- Filter -->
         <div class="w-[150px] flex flex-col ml-16">
           <h2 class="text-lg font-bold pt-5">Filter</h2>
@@ -258,8 +258,34 @@
         <!-- Separator Line -->
         <div class="h-screen w-[1px] bg-gray-400 mx-4"></div>
         <!-- Explore -->
-        <div class="flex-grow text-center">
-          <h2 class="text-lg font-bold pt-5">Explore</h2>
+        <div class="flex flex-col flex-grow">
+          <h2 class="text-lg font-bold pt-5 ml-10 mr-auto">Explore</h2>
+          <div class="flex flex-wrap justify-start p-5">
+            {% for job_posting in job_postings %}
+              <!-- Job-Posting Div -->
+              <div class="p-2 pb-5 m-1 w-80 rounded-xl bg-white shadow-xl">
+                <!-- Colored Section -->
+                <div class="relative p-5 pb-2 h-60 mb-5 bg-orange-300 rounded-xl">
+                  <h1 class="text-xl font-bold">{{ job_posting.job_title }}</h1>
+                  <!-- Tags Section -->
+                  <div class="flex flex-wrap">
+                    {% for tag in job_posting.tags %}
+                    <div class="min-w-10 h-6 m-2 px-5 flex justify-center items-center text-xs bg-orange-300 box-border rounded-2xl border-2 border-solid border-black">
+                      <p>{{ tag }}</p>
+                    </div>
+                    {% endfor %}
+                  </div>
+                  <p class="text-xs absolute bottom-2">Open until:</p>
+                  <p class="text-xs absolute bottom-2 right-5">{{ job_posting.hiring_deadline }}</p>
+                </div>
+                <div class="flex justify-between">
+                  <p class="font-bold ml-3">₱{{ job_posting.min_salary }} - ₱{{ job_posting.max_salary }}</p>
+                  <button class="w-20 h-8 mr-3 bg-black text-white rounded-2xl">Details</button>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          
         </div>
       </div>
     </div>
