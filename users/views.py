@@ -87,14 +87,14 @@ def profile_view(request, username):
     if not request.user.is_authenticated:
         return HttpResponse("User not logged in")
 
-    searchedUser = GitJobUser.objects.get(username=username)
+    searchedUser = GitJobUser.objects.filter(username=username)
 
     if not searchedUser.exists():
         messages.info(request, f"User {username} does not exist...")
         return redirect('home')
     
     if username != request.user.username:
-        return render(request, "users/profile.html", {'user': searchedUser})
+        return render(request, "users/profile.html", {'user': searchedUser[0]})
 
     # if searched user is the current user themselves
     edit_profile_form = EditProfileForm()

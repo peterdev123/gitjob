@@ -1,5 +1,5 @@
 {% load static %} {% load static tailwind_tags %}
-
+{{ request.user.username|json_script:"username" }}
 
 <nav class="flex items-center justify-between bg-cyan-400 h-[80px]">
   <div class="flex items-center">
