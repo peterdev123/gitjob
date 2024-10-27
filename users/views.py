@@ -69,7 +69,7 @@ def register_view(request):
         form = RegisterForm()
     return render(request, 'users/register.html', {"form": form})
 
-def profile_view(request):
+def profile_view(request, username):
     #helper method
     def parse_context(user, edit_profile_form, resume_upload_form, skills_json, experiences_json):
         resumes = Resume.objects.filter(owner=user) or []
@@ -87,6 +87,16 @@ def profile_view(request):
     if not request.user.is_authenticated:
         return HttpResponse("User not logged in")
 
+    searchedUser = GitJobUser.objects.get(username=username)
+
+    if not searchedUser.exists():
+        messages.info(request, f"User {username} does not exist...")
+        return redirect('home')
+    
+    if username != request.user.username:
+        return render(request, "users/profile.html", {'user': searchedUser})
+
+    # if searched user is the current user themselves
     edit_profile_form = EditProfileForm()
     resume_upload_form = ResumeUploadForm()
     profile_pic_upload_form = ProfilePicUploadForm()
@@ -148,6 +158,6 @@ def profile_view(request):
         elif request.POST.get('form_type') == 'logout':
             logout(request)
             return redirect('login')
-        return redirect('profile')
+        return redirect('profile', username=user.username)
     
-    return render(request, "users/profile.html", parse_context(request.user, edit_profile_form, resume_upload_form, skills_json, experiences_json))
+    return render(request, "users/own_profile.html", parse_context(request.user, edit_profile_form, resume_upload_form, skills_json, experiences_json))
