@@ -1,7 +1,7 @@
 {% load static %} {% load static tailwind_tags %}
 
 
-<nav class="flex items-center justify-between bg-cyan-400 h-[100px]">
+<nav class="flex items-center justify-between bg-cyan-400 h-[80px]">
   <div class="flex items-center">
     <button
       class="ml-4 p-2 text-white focus:outline-none"
@@ -48,7 +48,7 @@
         src="{{ user.profile_picture.url }}"
         alt="Sample Image"
         class="w-9 h-9 object-cover rounded-full border-2 border-black border-solid hover:cursor-pointer"
-        onclick="view_profile()"
+        onclick="view_own_profile()"
       />
     </div>
   {% else %}
@@ -56,4 +56,4 @@
     <a href="{% url 'register' %}" class="text-xl font-bold mr-10">Register</a>
   {% endif %}
 </nav>
-<script src="{% static 'js/view_profile.js' %}"></script>
+<script src="{% static 'js/view_own_profile.js' %}"></script>
