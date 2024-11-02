@@ -1,6 +1,4 @@
 $(document).ready(function(){
-    initEditSkills();
-    initEditExperiences();
     function showEditProfileModal() {
         $("#edit_profile_modal").show()
     }
@@ -52,34 +50,42 @@ function deleteItem(element){
     updateExperiences()
 }
 
-function initEditSkills(skills){
-    const skill_wrapper = $("#skill_wrapper")
-    skill_wrapper.html("")
-    if(Array.isArray(skills)){
-        skills.forEach(function(skill){
-            const item = "<div class='skill-div w-full m-0 mb-2 p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
-                + "<span class='align-middle'>" + skill +"</span>"
+function distributeInWrapper(array, wrapper, div_name){
+    if(Array.isArray(array)){
+        array.forEach(function(item){
+            const item_div = "<div class='"+div_name+"-div w-full m-0 mt-2 p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
+                + "<span class='align-middle'>" + item +"</span>"
                 + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
                 + "</div>"
-            skill_wrapper.append(item)
+            wrapper.append(item_div)
         })
+    }else{
+        console.log("Datatype of "+div_name+"_json: "+typeof(array))
     }
+}
+function addInWrapper(input_val, wrapper, div_name){
+    if(input_val){
+        const item = "<div class='"+div_name+"-div w-full m-0 mt-2 p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
+            + "<span class='align-middle'>" + input_val +"</span>"
+            + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
+            + "</div>"
+        wrapper.append(item)
+    }
+}
+
+function initEditSkills(){
+    //idk but this needs double parsing
+    const skills = JSON.parse(JSON.parse(document.getElementById("skills").textContent));
+    const skill_wrapper = $("#skill_wrapper")
+    skill_wrapper.html("")
+    distributeInWrapper(skills, skill_wrapper, "skill")
 }
 
 function addSkill(){
     const input = $("#add_skill")
-    const inputVal = input.val()
-
-    if(inputVal){
-        const itemWrapper = $("#skill_wrapper")
-        const item = "<div class='skill-div w-full m-0 mb-2 p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
-            + "<span class='align-middle'>" + inputVal +"</span>"
-            + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
-            + "</div>"
-        input.val("")
-        itemWrapper.append(item)
-    }
-
+    const input_val = input.val()
+    input.html("")
+    addInWrapper(input_val, $("#skill_wrapper"), "skill")
     updateSkills()
 }
 
@@ -96,33 +102,19 @@ function updateSkills(){
     $("#skills_json").val(skillsJson)
 }
 
-function initEditExperiences(experiences){
+function initEditExperiences(){
+    const experiences = JSON.parse(JSON.parse(document.getElementById("experiences").textContent));
     const exp_wrapper = $("#experience_wrapper")
     exp_wrapper.html("")
-    if(Array.isArray(experiences)){
-        experiences.forEach(function(experience){
-            const item = "<div class='experience-div w-full m-0 mb-2 p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
-                + "<span class='align-middle'>" + experience +"</span>"
-                + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
-                + "</div>"
-                exp_wrapper.append(item)
-        })
-    }
+    distributeInWrapper(experiences, exp_wrapper, "experience")
 }
 
 function addExperience(){
     const input = $("#add_experience");
-    const inputVal = input.val()
+    const input_val = input.val()
 
-    if(inputVal){
-        const itemWrapper = $("#experience_wrapper")
-        const item = "<div class='experience-div w-full m-0 mb-2 p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
-            + "<span class='align-middle'>" + inputVal +"</span>"
-            + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
-            + "</div>"
-        input.val("")
-        itemWrapper.append(item)
-    }
+    addInWrapper(input_val, $("#experience_wrapper"), "experience")
+    input.html("")
 
     updateExperiences()
 }
