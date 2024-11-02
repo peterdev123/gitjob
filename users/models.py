@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+import os
 # class Skill(models.Model):
 #     string = models.CharField(max_length=100)
 
@@ -17,10 +18,12 @@ class GitJobUser(AbstractUser):
     description = models.TextField(max_length=500, blank=True, null=True)
     skills = models.JSONField(default=list)
     experiences = models.JSONField(default=list)
+    profile_picture = models.ImageField(upload_to="users/profile_pictures/", default="users/profile_pictures/default_profile_picture.png")
 
     def __str__(self):
         return self.username
 
 class Resume(models.Model):
-    file = models.FileField(upload_to="pdf")
+    filename = models.CharField(max_length=100, default="Unnamed Resume.pdf")
+    file = models.FileField(upload_to="users/resumes/")
     owner = models.ForeignKey(GitJobUser, on_delete=models.CASCADE)

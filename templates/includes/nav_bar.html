@@ -1,0 +1,59 @@
+{% load static %} {% load static tailwind_tags %}
+{{ request.user.username|json_script:"username" }}
+
+<nav class="flex items-center justify-between bg-cyan-400 h-[80px]">
+  <div class="flex items-center">
+    <button
+      class="ml-4 p-2 text-white focus:outline-none"
+      onclick="toggleSidebar()"
+    >
+      <img
+        src="{% static 'images/three_lines.png' %}"
+        alt="Sample Image"
+        class="w-8 h-8 object-cover"
+      />
+    </button>
+    <ul class="flex space-x-4 text-center">
+      <li class="list-none pl-4 text-4xl font-bold text-black">
+        <a href="{% url 'home' %}">GitJob</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Navbar Links -->
+  <div class="flex justify-center flex-grow">
+    <ul class="flex space-x-8 text-center">
+      <li class="list-none text-xl font-bold text-black">
+        <a href="{% url 'home' %}">Home</a>
+      </li>
+      <li class="list-none text-xl font-bold text-black">
+        <a href="{% url 'contactus' %}">Contact Us</a>
+      </li>
+      <li class="list-none text-xl font-bold text-black">
+        <a href="{% url 'aboutus' %}">About Us</a>
+      </li>
+    </ul>
+  </div>
+
+  {% if user.is_authenticated %}
+    <!-- Notification icon and profile picture -->
+    <div class="flex items-center space-x-4 pr-16">
+      <img
+        src="{% static 'images/notif_icon.png' %}"
+        alt="Sample Image"
+        class="w-8 h-8 object-cover ring-2 ring-black rounded-3xl hover:cursor-pointer"
+        id="notif-toggle"
+      />
+      <img
+        src="{{ user.profile_picture.url }}"
+        alt="Sample Image"
+        class="w-9 h-9 object-cover rounded-full border-2 border-black border-solid hover:cursor-pointer"
+        onclick="view_own_profile()"
+      />
+    </div>
+  {% else %}
+    <a href="{% url 'login' %}" class="text-xl font-bold mr-5">Login</a>
+    <a href="{% url 'register' %}" class="text-xl font-bold mr-10">Register</a>
+  {% endif %}
+</nav>
+<script src="{% static 'js/view_own_profile.js' %}"></script>

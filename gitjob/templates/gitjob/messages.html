@@ -6,67 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gitjob</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   </head>
+  <script>
+    $(document).ready(function(){
+      $("#searched_user_wrapper").hide();
+      $("#search_user_input").on('input', function(){
+        const input_keyword = $(this).val();
+        if (input_keyword.length == 0) {
+          $("#searched_user_wrapper").hide()
+          return;
+        }
+        $.ajax({
+          url: '/messages/',
+          type: 'POST',
+          data: {
+              'form_type': 'search_user',
+              'input_keyword': input_keyword,
+              'csrfmiddlewaretoken': '{{ csrf_token }}'
+          },
+          success: function(data) {
+            search_user_wrapper = $("#searched_user_wrapper")
+            search_user_wrapper.html("");
+            s_users = data.users;
+            if (s_users == []){
+              search_user_wrapper.hide();
+            }
+            else{
+              search_user_wrapper.show();
+              const profileURLBase = "{% url 'profile' username='placeholder' %}";
+                s_users.forEach(function(s_user){
+                  const profileURL = profileURLBase.replace('placeholder', s_user.username);
+                  const user_div = "<a href="+profileURL+"><div class='searched_user_div flex items-center'>"
+                    +                 "<img src='"+s_user.profile_pic_url+"' alt='Profile_Picture'"
+                    +                     "class='w-8 h-8 m-2 rounded-full'>"
+                    +                 "<p>" + s_user.first_name + " " + s_user.last_name + " (" + s_user.username + ")</p>"
+                    +               "</div></a>"
+
+                    search_user_wrapper.append(user_div)
+                })
+            }
+          },
+          error: function(xhr, status, error) {
+              $('#searched_user_wrapper').html(xhr.responseJSON.error || 'An error occurred');
+          }
+        });
+      })
+    });
+  </script>
   <body>
-    <!--Sidebar-->
     <div class="min-h-screen mx-auto">
-      {% if request.user.is_authenticated %}
-        {% if request.user.is_business_manager %}
-          {% include 'includes/manager_sidebar.html' %}
-        {% else %}
-          {% include 'includes/user_sidebar.html' %}
-      {% endif %}
-      {% endif %}
-
-      <!--Navbar-->
-      <nav class="flex items-center justify-between bg-cyan-500 h-[100px]">
-        <div class="flex items-center">
-          <button
-            class="ml-4 p-2 text-white focus:outline-none"
-            onclick="toggleSidebar()"
-          >
-            <img
-              src="{% static 'images/three_lines.png' %}"
-              alt="Sample Image"
-              class="w-8 h-8 object-cover"
-            />
-          </button>
-          <ul class="flex space-x-4 text-center">
-            <li class="list-none pl-4 text-4xl font-bold text-black">
-              <a href="#">GitJob</a>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Navbar Links -->
-        <div class="flex justify-center flex-grow">
-          <ul class="flex space-x-8 text-center">
-            <li class="list-none text-xl font-bold text-black">
-              <a href="#">Home</a>
-            </li>
-            <li class="list-none text-xl font-bold text-black">
-              <a href="#">Contact Us</a>
-            </li>
-            <li class="list-none text-xl font-bold text-black">
-              <a href="#">About Us</a>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Notification icon and profile picture -->
-        <div class="flex items-center space-x-4 pr-16">
-          <img
-            src="{% static 'images/notif_icon.png' %}"
-            alt="Sample Image"
-            class="w-8 h-8 object-cover"
-          />
-          <img
-            src="{% static 'images/register_page_bg.png' %}"
-            alt="Sample Image"
-            class="w-8 h-8 object-cover rounded-full"
-          />
-        </div>
-      </nav>
+      
+      <!-- Headings -->
+      {% include 'includes/headings.html' %}
 
       <!--Current contents are placeholders for now-->
       <div class="flex h-screen">
@@ -79,11 +71,17 @@
                 src="{% static 'images/search_icon.png' %}"
                 class="w-6 h-6"
               />
-              <input
-                type="text"
-                placeholder="Search for people"
-                class="ml-2 bg-transparent outline-none"
-              />
+              <form method="POST" class="relative w-full">
+                {% csrf_token %}
+                <input
+                  type="text"
+                  placeholder="Search for people"
+                  id="search_user_input"
+                  class="ml-2 bg-transparent outline-none"
+                />
+                <div id="searched_user_wrapper" class="absolute top-[110%] left-0 w-full bg-gray-100">
+                </div>
+              </form>
             </div>
           </div>
 

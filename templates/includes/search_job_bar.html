@@ -1,0 +1,20 @@
+{% load static %} {% load static tailwind_tags %}
+<div class="flex justify-center items-center bg-slate-200 h-[70px]">
+    <div
+        class="relative bg-white border border-black w-[515px] h-[40px] rounded-[25px] flex items-center px-6 border"
+    >
+        <!-- Search Icon -->
+        <img
+        src="{% static 'images/search_icon.png' %}"
+        alt="Search Icon"
+        class="w-6 h-6 mr-4"
+        />
+
+        <!-- Search Placeholder Text -->
+        <input
+        type="text"
+        placeholder="Search"
+        class="ml-2 bg-transparent outline-none border-none"
+        />
+    </div>
+</div>

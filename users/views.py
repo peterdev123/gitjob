@@ -3,17 +3,11 @@ from django.contrib import messages
 from django.contrib.auth import authenticate ,login, logout
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
-from .forms import LoginForm, RegisterForm, EditProfileForm
-from .models import GitJobUser
+from .forms import LoginForm, RegisterForm, EditProfileForm, ResumeUploadForm, ProfilePicUploadForm
+from .models import GitJobUser, Resume
+from .functions import remove_previous_profile_pic
 import json
-
-def parse_context(user, form, skills_json, experiences_json):
-    return {
-        "user": user, 
-        "form": form, 
-        "skills_json": skills_json, 
-        "experiences_json": experiences_json, 
-    }
+from datetime import datetime
 
 # Create your views here.
 def login_view(request):
@@ -76,51 +70,98 @@ def register_view(request):
         form = RegisterForm()
     return render(request, 'users/register.html', {"form": form})
 
-def profile_view(request):
-    if request.user.is_authenticated:
-        user = request.user
-
-        if user.skills:
-            skills_json = json.dumps(user.skills)
+def profile_view(request, username):
+    #helper method
+    def parse_context(user, edit_profile_form, resume_upload_form, skills_json, experiences_json):
+        resumes = Resume.objects.filter(owner=user) or []
+        if user.birthdate is not None:
+            formatted_birthdate = user.birthdate.strftime("%Y-%m-%d")
         else:
-            skills_json = json.dumps([])
-        if user.experiences:
-            experiences_json = json.dumps(user.experiences)
-        else:
-            experiences_json = json.dumps([])
+            formatted_birthdate = None
+        return {
+            "user": user,
+            "birthdate": formatted_birthdate,
+            "edit_profile_form": edit_profile_form,
+            "resume_upload_form": resume_upload_form,
+            "skills_json": skills_json, 
+            "experiences_json": experiences_json,
+            "resumes": resumes
+        }
 
-        if request.method == "POST":
-            if request.POST.get('form_type') == 'edit_profile_form':
-                form = EditProfileForm(request.POST, instance=user)
-                if form.is_valid():
-                    form.save()
-                    return redirect('profile')
-            elif request.POST.get('form_type') == 'edit_skills_form':
-                skills_json_input = request.POST.get('skills_json')
-                try:
-                    skills_list = json.loads(skills_json_input)
-                except json.JSONDecodeError:
-                    skills_list = []
-                user.skills = skills_list
-                user.save()
-                form = EditProfileForm()
-                skills_json = json.dumps(user.skills)
-                return render(request, "users/profile.html", {"user": request.user, "birthdate": request.user.birthdate, "form": form, "skills_json": skills_json, "experiences_json": experiences_json})
-            elif request.POST.get('form_type') == 'edit_experiences_form':
-                experiences_json_input = request.POST.get('experiences_json')
-                try:
-                    experiences_list = json.loads(experiences_json_input)
-                except json.JSONDecodeError:
-                    experiences_list = []
-                user.experiences = experiences_list
-                user.save()
-                form = EditProfileForm()
-                experiences_json = json.dumps(user.experiences)
-                return render(request, "users/profile.html", {"user": request.user, "form": form, "skills_json": skills_json, "experiences_json": experiences_json})
-            elif request.POST.get('form_type') == 'logout':
-                logout(request)
-                return redirect('login')
-        form = EditProfileForm()
-        return render(request, "users/profile.html", {"user": request.user, "form": form, "skills_json": skills_json, "experiences_json": experiences_json})
-    else:
+    if not request.user.is_authenticated:
         return HttpResponse("User not logged in")
+
+    searchedUser = GitJobUser.objects.filter(username=username)
+
+    if not searchedUser.exists():
+        messages.info(request, f"User {username} does not exist...")
+        return redirect('home')
+    
+    if username != request.user.username:
+        return render(request, "users/profile.html", {'user': searchedUser[0]})
+
+    # if searched user is the current user themselves
+    edit_profile_form = EditProfileForm()
+    resume_upload_form = ResumeUploadForm()
+    profile_pic_upload_form = ProfilePicUploadForm()
+    user = request.user
+
+    skills_json = json.dumps(user.skills) if user.skills else json.dumps([])
+    experiences_json = json.dumps(user.experiences) if user.experiences else json.dumps([])
+
+    if request.method == "POST":
+        if request.POST.get('form_type') == 'edit_profile_form':
+            edit_profile_form = EditProfileForm(request.POST, instance=user)
+            if edit_profile_form.is_valid():
+                edit_profile_form.save()
+        elif request.POST.get('form_type') == 'profile_pic_upload_form':
+            profile_pic_upload_form = ProfilePicUploadForm(request.POST, request.FILES)
+            print(request.FILES)
+            if profile_pic_upload_form.is_valid():
+                profile_picture = request.FILES['profile_picture']
+                if str(user.profile_picture) != "users/profile_pictures/default_profile_picture.png":
+                    remove_previous_profile_pic(user.profile_picture)
+                user.profile_picture = profile_picture
+                user.save()
+                messages.info(request, "Profile picture successfully updated")
+            else:
+                print(profile_pic_upload_form.errors)
+        elif request.POST.get('form_type') == 'resume_upload_form':
+            resume_upload_form = ResumeUploadForm(request.POST, request.FILES)
+            if resume_upload_form.is_valid():
+                resume_file = request.FILES['resume_file']
+                resume = Resume.objects.create(
+                    filename=str(resume_file),
+                    file=resume_file,
+                    owner=request.user
+                )
+                resume.save()
+                messages.info(request, f"Resume {str(resume_file)} uploaded successfully")
+        elif request.POST.get('form_type') == 'edit_skills_form':
+            skills_json_input = request.POST.get('skills_json')
+            try:
+                skills_list = json.loads(skills_json_input)
+            except json.JSONDecodeError:
+                skills_list = []
+            user.skills = skills_list
+            user.save()
+            skills_json = json.dumps(user.skills)
+        elif request.POST.get('form_type') == 'edit_experiences_form':
+            experiences_json_input = request.POST.get('experiences_json')
+            try:
+                experiences_list = json.loads(experiences_json_input)
+            except json.JSONDecodeError:
+                experiences_list = []
+            user.experiences = experiences_list
+            user.save()
+            experiences_json = json.dumps(user.experiences)
+        elif request.POST.get('form_type') == 'resume_delete_form':
+            id_to_delete = request.POST.get('id')
+            resume = Resume.objects.filter(id=id_to_delete)
+            resume.delete()
+        elif request.POST.get('form_type') == 'logout':
+            logout(request)
+            return redirect('login')
+        return redirect('profile', username=user.username)
+    
+    return render(request, "users/own_profile.html", parse_context(request.user, edit_profile_form, resume_upload_form, skills_json, experiences_json))
