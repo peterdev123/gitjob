@@ -1,5 +1,13 @@
 from django.shortcuts import render
+from manager.models import JobPost
 
 # Create your views here.
-def home_view(request):
-    return render(request, "jobs/home.html")
+def job_posting_view(request, id):
+    job_posting = JobPost.objects.get(id=id)
+    # Need to change this on create
+    job_posting.tags = job_posting.tags.split(',')
+
+    other_job_postings = JobPost.objects.all().exclude(id=id)
+    for other_job_posting in other_job_postings:
+        other_job_posting.tags = other_job_posting.tags.split(',')
+    return render(request, 'jobs/job_posting.html', {'job_posting': job_posting, 'other_job_postings': other_job_postings})

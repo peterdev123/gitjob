@@ -1,13 +1,13 @@
 from django import forms
-from .models import GitJobUser
-
-def input_attrs(placeholder):
-    return {
-        'class': 'login_register_input',
-        'placeholder': placeholder
-    }
+from .models import GitJobUser, Resume
 
 class LoginForm(forms.Form):
+    def input_attrs(placeholder):
+        return {
+            'class': 'login_input',
+            'placeholder': placeholder
+        }
+    
     username = forms.CharField(
         label='',
         max_length=100,
@@ -24,6 +24,11 @@ class LoginForm(forms.Form):
             field.label = ""
 
 class RegisterForm(forms.Form):
+    def input_attrs(placeholder):
+        return {
+            'class': 'register_input',
+            'placeholder': placeholder
+        }
     fname = forms.CharField(
         label='', 
         max_length=50,
@@ -72,3 +77,9 @@ class EditProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
         self.fields['username'].help_text = None
+
+class ResumeUploadForm(forms.Form):
+    resume_file = forms.FileField(widget=forms.FileInput(attrs={'accept': 'application/pdf'}))
+
+class ProfilePicUploadForm(forms.Form):
+    profile_pic = forms.ImageField(required=False)

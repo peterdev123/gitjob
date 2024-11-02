@@ -56,30 +56,13 @@
     <div class="min-h-screen mx-auto">
 
       {% include 'includes/headings.html' %}
+      {{ request.user.username|json_script:"username" }}
 
       <!-- Search Bar Section -->
-      <div class="flex justify-center items-center bg-slate-200 h-[100px]">
-        <div
-          class="relative bg-white border border-black w-[515px] h-[50px] rounded-[25px] flex items-center px-6 border"
-        >
-          <!-- Search Icon -->
-          <img
-            src="{% static 'images/search_icon.png' %}"
-            alt="Search Icon"
-            class="w-6 h-6 mr-4"
-          />
-
-          <!-- Search Placeholder Text -->
-          <input
-            type="text"
-            placeholder="Search"
-            class="ml-2 bg-transparent outline-none"
-          />
-        </div>
-      </div>
+      {% include 'includes/search_job_bar.html' %}
   
       <!-- Filter and Explore Section -->
-      <div class="flex w-full max-w-[515px]">
+      <div class="flex w-full">
         <!-- Filter -->
         <div class="w-[150px] flex flex-col ml-16">
           <h2 class="text-lg font-bold pt-5">Filter</h2>
@@ -258,11 +241,37 @@
         <!-- Separator Line -->
         <div class="h-screen w-[1px] bg-gray-400 mx-4"></div>
         <!-- Explore -->
-        <div class="flex-grow text-center">
-          <h2 class="text-lg font-bold pt-5">Explore</h2>
+        <div class="flex flex-col flex-grow">
+          <h2 class="text-lg font-bold pt-5 ml-10 mr-auto">Explore</h2>
+          <div class="flex flex-wrap justify-start p-5">
+            {% for job_posting in job_postings %}
+              <!-- Job-Posting Div -->
+              <div class="p-2 pb-5 m-1 w-80 rounded-xl bg-white shadow-xl">
+                <!-- Colored Section -->
+                <div class="relative p-5 pb-2 h-60 mb-5 bg-orange-300 rounded-xl">
+                  <h1 class="text-xl font-bold">{{ job_posting.job_title }}</h1>
+                  <img src="{{ job_posting.company_logo.url }}" class="w-10 h-10 my-2">
+                  <!-- Tags Section -->
+                  <div class="flex flex-wrap">
+                    {% for tag in job_posting.tags %}
+                    <div class="min-w-10 h-6 m-2 px-3 flex justify-center items-center text-xs bg-orange-300 box-border rounded-2xl border-2 border-solid border-black">
+                      <p>{{ tag }}</p>
+                    </div>
+                    {% endfor %}
+                  </div>
+                  <p class="text-xs absolute bottom-2">Open until:</p>
+                  <p class="text-xs absolute bottom-2 right-5">{{ job_posting.hiring_deadline }}</p>
+                </div>
+                <div class="flex justify-between">
+                  <p class="font-bold ml-3">₱{{ job_posting.min_salary }} - ₱{{ job_posting.max_salary }}</p>
+                  <a href="{% url 'job_posting' id=job_posting.id %}"><button class="w-20 h-8 mr-3 bg-black text-white rounded-2xl">Details</button></a>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          
         </div>
       </div>
     </div>
-    <script src="{% static 'js/view_profile.js' %}"></script>
   </body>
 </html>
