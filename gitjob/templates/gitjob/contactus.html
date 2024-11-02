@@ -1,0 +1,83 @@
+{% load static %} {% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Gitjob</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/dist/homepage.css' %}" />
+  </head>
+  <body>
+    <div class="min-h-screen mx-auto">
+      <!-- Include Header -->
+      {% include 'includes/headings.html' %}
+
+      <!-- Contact Us Section -->
+      <div class="flex flex-col items-center py-10 px-5 bg-gray-100">
+        <h2 class="text-3xl font-bold text-gray-800 mb-5">Meet the Team</h2>
+        <p class="text-gray-600 text-center max-w-md">
+          Get in touch with the creators of Gitjob. Connect with us for inquiries, suggestions, or partnership opportunities.
+        </p>
+      </div>
+
+      <!-- Creator Cards Section -->
+      <div class="flex flex-wrap justify-center gap-8 px-5 py-10">
+        <!-- Creator Card 1 -->
+        <div class="bg-white shadow-lg rounded-xl p-6 w-80 text-center">
+          <img
+            src="{% static 'images/creator1.jpg' %}"
+            alt="Creator 1"
+            class="w-24 h-24 rounded-full mx-auto mb-4"
+          />
+          <h3 class="text-xl font-bold text-gray-800">Jorash Jonathan C. Robillos</h3>
+          <p class="text-gray-600 mb-2">Developer</p>
+          <p class="text-sm text-gray-500 mb-4">jorashjonathan.robillos@cit.edu</p>
+          <a
+            href="https://www.linkedin.com/in/jorash-jonathan-robillos-855aa5287/?external_page=LPC.Immersive&external_control=ViewProfileLink&external_app_instance=d9b83114-b6c9-4624-b840-dc43434479d1&external_page_instance=935f6fe3-16e5-4d75-9f86-e74f61606dc1&experiment=displayLinkedInDataPrebind"
+            target="_blank"
+            class="text-blue-600 hover:text-blue-800 font-semibold"
+            >LinkedIn Profile</a
+          >
+        </div>
+
+        <!-- Creator Card 2 -->
+        <div class="bg-white shadow-lg rounded-xl p-6 w-80 text-center">
+          <img
+            src="{% static 'images/creator2.jpg' %}"
+            alt="Creator 2"
+            class="w-24 h-24 rounded-full mx-auto mb-4"
+          />
+          <h3 class="text-xl font-bold text-gray-800">Peter Sylvan L. Vecina</h3>
+          <p class="text-gray-600 mb-2">Developer</p>
+          <p class="text-sm text-gray-500 mb-4">petersylvan.vecina@cit.edu</p>
+          <a
+            href="https://www.linkedin.com/in/vecina-peter-sylvan-l-560420257/"
+            target="_blank"
+            class="text-blue-600 hover:text-blue-800 font-semibold"
+            >LinkedIn Profile</a
+          >
+        </div>
+
+        <!-- Creator Card 3 -->
+        <div class="bg-white shadow-lg rounded-xl p-6 w-80 text-center">
+          <img
+            src="{% static 'images/creator3.jpg' %}"
+            alt="Creator 3"
+            class="w-24 h-24 rounded-full mx-auto mb-4"
+          />
+          <h3 class="text-xl font-bold text-gray-800">Ranz Matheu M. Lumayno</h3>
+          <p class="text-gray-600 mb-2">Developer</p>
+          <p class="text-sm text-gray-500 mb-4">ranzmatheu.lumayno@cit.edu</p>
+          <a
+            href=""
+            target="_blank"
+            class="text-blue-600 hover:text-blue-800 font-semibold"
+            >LinkedIn Profile</a
+          >
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
