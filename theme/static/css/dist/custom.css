@@ -33,6 +33,7 @@
     color: black;
     line-height: 1.75rem;
     font: 1rem medium;
+    border-radius: 0.25rem;
   }
 
   form div label {
@@ -52,5 +53,5 @@
     height: 32px;
     border: 2px solid black;
     border-radius: 0.75rem;
-    background-color: #67e8f9;
+    background-color: #a5f3fc;
   }

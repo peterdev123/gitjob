@@ -19,7 +19,7 @@
     <div class="bg-gray-300 h-full flex flex-col">
         <div class="w-full h-[400px] mt-5 flex justify-center">
             <!-- Job Posting Details -->
-            <div class="w-[650px] h-full m-3 p-7 bg-white rounded-xl">
+            <div class="max-w-[650px] w-[55%] h-full m-3 p-7 bg-white rounded-xl">
                 <!-- First row -->
                 <div class="flex mb-0">
                     <img src="{{ job_posting.company_logo.url }}" class="w-20 h-20 border-[1px] border-black border-solid rounded-lg">
@@ -27,7 +27,7 @@
                         <h1 class="text-xl font-bold ml-3">{{ job_posting.job_title }}</h1>
                         <div class="flex flex-wrap">
                             {% for tag in job_posting.tags %}
-                            <div class="min-w-10 h-6 m-3 px-3 flex justify-center items-center text-xs bg-orange-300 box-border rounded-2xl border-2 border-solid border-black">
+                            <div class="min-w-10 h-6 mx-3 mt-2 px-3 flex justify-center items-center text-xs bg-orange-300 box-border rounded-2xl border-2 border-solid border-black">
                               <p>{{ tag }}</p>
                             </div>
                             {% endfor %}
@@ -39,15 +39,15 @@
                 <!-- 2nd row -->
                 <div>
                     <h1 class="mt-4 mb-1 text-sm font-bold">Job Description</h1>
-                    <hr class="border-solid border-black">
-                    <p>{{ job_posting.job_description }}</p>
+                    <hr class="border-solid border-black text-lg">
+                    <p class="text-sm">{{ job_posting.job_description }}</p>
                     <h1 class="mt-4 mb-1 text-sm font-bold">Essential Knowledge Skills And Experience</h1>
                     <hr class="border-solid border-black">
-                    <p>{{ job_posting.core_competencies }}</p>
+                    <p class="text-sm">{{ job_posting.core_competencies }}</p>
                 </div>
 
             </div>
-            <div class="w-[280px] w-1/4 h-full m-3 p-7 bg-white rounded-xl">
+            <div class="max-w-[280px] w-[23%] w-1/4 h-full m-3 p-7 bg-white rounded-xl">
                 <div class="flex">
                     <img class="w-4 h-4 mr-1 my-auto" src="{% static 'images/info-icon.png' %}">
                     <h1 class="">More Information</h1>
@@ -64,7 +64,7 @@
         </div>
 
         <!-- Other Jobs Scrollable? -->
-        <div class="flex max-w-[1000px] w-[80%] mx-auto mt-6">
+        <div class="flex max-w-[970px] w-[80%] mx-auto mt-6 flex box-border">
             {% for job_posting in other_job_postings %}
               <!-- Job-Posting Div -->
               <div class="p-2 pb-5 m-1 w-80 rounded-xl bg-white shadow-xl">

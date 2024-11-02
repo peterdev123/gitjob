@@ -7,6 +7,7 @@ from .forms import LoginForm, RegisterForm, EditProfileForm, ResumeUploadForm, P
 from .models import GitJobUser, Resume
 from .functions import remove_previous_profile_pic
 import json
+from datetime import datetime
 
 # Create your views here.
 def login_view(request):
@@ -73,10 +74,13 @@ def profile_view(request, username):
     #helper method
     def parse_context(user, edit_profile_form, resume_upload_form, skills_json, experiences_json):
         resumes = Resume.objects.filter(owner=user) or []
-
+        if user.birthdate is not None:
+            formatted_birthdate = user.birthdate.strftime("%Y-%m-%d")
+        else:
+            formatted_birthdate = None
         return {
             "user": user,
-            "birthdate": user.birthdate,
+            "birthdate": formatted_birthdate,
             "edit_profile_form": edit_profile_form,
             "resume_upload_form": resume_upload_form,
             "skills_json": skills_json, 
