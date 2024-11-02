@@ -6,51 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gitjob</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      @layer utilities {
-        input[type="range"]::-webkit-slider-thumb {
-          height: 12px;
-          width: 12px;
-          border-radius: 50%;
-          background: black;
-          pointer-events: auto;
-          appearance: none;
-          box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-          position: relative;
-          top: 2px;
-        }
-
-        input[type="range"]::-moz-range-thumb {
-          height: 12px;
-          width: 12px;
-          border-radius: 50%;
-          background: black;
-          pointer-events: auto;
-          border: none;
-          box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-          position: relative;
-          top: 2px;
-        }
-
-        input[type="range"]::-webkit-slider-runnable-track {
-          height: 5px;
-          background: transparent;
-        }
-
-        input[type="range"]::-moz-range-track {
-          height: 5px;
-          background: transparent;
-        }
-
-        input[type="range"] {
-          -webkit-appearance: none;
-          appearance: none;
-          background: transparent;
-          position: relative;
-          top: -4px;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/dist/homepage.css' %}"/> 
   </head>
   <body>
     <div class="min-h-screen mx-auto">
@@ -78,11 +34,11 @@
             </li>
             <li class="text-s">
               <input type="radio" id="internship" name="internship" />
-              <label for="full-time" class="text-s">Internship</label>
+              <label for="internship" class="text-s">Internship</label>
             </li>
             <li class="text-s">
-              <input type="radio" id="full-time" name="Job-type" />
-              <label for="full-time" class="text-s">Full Time</label>
+              <input type="radio" id="project-work" name="project-work" />
+              <label for="project-work" class="text-s">Project Work</label>
             </li>
           </ul>
 
@@ -94,7 +50,7 @@
                 <input
                   type="number"
                   class="input-min w-full h-10 text-s font-bold text-center border-0 outline-none"
-                  value="25000"
+                  value="0"
                 />
               </div>
               <div
@@ -106,7 +62,7 @@
                 <input
                   type="number"
                   class="input-max w-full h-10 text-s font-bold text-center border-0 outline-none"
-                  value="75000"
+                  value="100000"
                 />
               </div>
             </div>
@@ -121,7 +77,7 @@
                 class="range-min absolute w-full h-1 top-[-20px] pointer-events-none appearance-none"
                 min="0"
                 max="100000"
-                value="25000"
+                value="0"
                 step="1000"
               />
               <input
@@ -129,76 +85,11 @@
                 class="range-max absolute w-full h-1 top-[-20px] pointer-events-none appearance-none"
                 min="0"
                 max="100000"
-                value="75000"
+                value="100000"
                 step="1000"
               />
             </div>
           </div>
-
-          <script>
-            const rangeInputs = document.querySelectorAll(".range-input input"),
-              priceInputs = document.querySelectorAll(".price-input input"),
-              range = document.querySelector(".slider .progress");
-
-            let priceGap = 10000; // Minimum gap between min and max values
-
-            // Helper function to update the range slider's progress bar
-            const updateSlider = (minVal, maxVal) => {
-              range.style.left =
-                ((minVal / rangeInputs[0].max) * 100).toFixed(2) + "%";
-              range.style.right =
-                (100 - (maxVal / rangeInputs[1].max) * 100).toFixed(2) + "%";
-            };
-
-            // Initialize the slider positions on page load
-            window.addEventListener("load", () => {
-              let minPrice = parseInt(priceInputs[0].value),
-                maxPrice = parseInt(priceInputs[1].value);
-
-              rangeInputs[0].value = minPrice;
-              rangeInputs[1].value = maxPrice;
-              updateSlider(minPrice, maxPrice);
-            });
-
-            // Update slider and price inputs when the price input fields are changed
-            priceInputs.forEach((input) => {
-              input.addEventListener("input", (e) => {
-                let minPrice = parseInt(priceInputs[0].value),
-                  maxPrice = parseInt(priceInputs[1].value);
-
-                // Ensure the gap between min and max is respected
-                if (maxPrice - minPrice >= priceGap) {
-                  if (e.target.classList.contains("input-min")) {
-                    rangeInputs[0].value = minPrice;
-                  } else {
-                    rangeInputs[1].value = maxPrice;
-                  }
-                  updateSlider(minPrice, maxPrice);
-                }
-              });
-            });
-
-            // Handle the range sliders when they are moved
-            rangeInputs.forEach((input) => {
-              input.addEventListener("input", (e) => {
-                let minVal = parseInt(rangeInputs[0].value),
-                  maxVal = parseInt(rangeInputs[1].value);
-
-                // Prevent sliders from crossing over
-                if (maxVal - minVal < priceGap) {
-                  if (e.target.classList.contains("range-min")) {
-                    rangeInputs[0].value = maxVal - priceGap;
-                  } else {
-                    rangeInputs[1].value = minVal + priceGap;
-                  }
-                } else {
-                  priceInputs[0].value = minVal;
-                  priceInputs[1].value = maxVal;
-                  updateSlider(minVal, maxVal);
-                }
-              });
-            });
-          </script>
 
           <div class="flex w-full max-w-[515px] mt-4 mx-auto">
             <!-- Job Field Dropdown -->
@@ -246,11 +137,19 @@
           <div class="flex flex-wrap justify-start p-5">
             {% for job_posting in job_postings %}
               <!-- Job-Posting Div -->
-              <div class="p-2 pb-5 m-1 w-80 rounded-xl bg-white shadow-xl">
+              <div class="job-posting p-2 pb-5 m-1 w-80 rounded-xl bg-white shadow-xl"
+              data-min-salary="{{ job_posting.min_salary }}"
+              data-max-salary="{{ job_posting.max_salary }}">
                 <!-- Colored Section -->
                 <div class="relative p-5 pb-2 h-60 mb-5 bg-orange-300 rounded-xl">
                   <h1 class="text-xl font-bold">{{ job_posting.job_title }}</h1>
+                  {% if job_posting.company_logo %}
                   <img src="{{ job_posting.company_logo.url }}" class="w-10 h-10 my-2">
+                  {% else %}
+                  <div class="w-10 h-10 my-2 bg-gray-200 rounded-full flex items-center justify-center">
+                  <p class="text-xs font-bold text-gray-500">No Logo</p>
+                  </div>
+                  {% endif %}
                   <!-- Tags Section -->
                   <div class="flex flex-wrap">
                     {% for tag in job_posting.tags %}
@@ -273,5 +172,102 @@
         </div>
       </div>
     </div>
+    <!-- <script src="{% static 'js/salary_slider.js' %}"></script> -->
+    <script>
+      console.log("JavaScript file loaded");
+
+const rangeInputs = document.querySelectorAll(".range-input input"),
+  priceInputs = document.querySelectorAll(".price-input input"),
+  range = document.querySelector(".slider .progress"),
+  jobPostings = document.querySelectorAll(".job-posting");
+
+const priceGap = 1000; // Minimum gap between min and max values
+
+// Helper function to update the range slider's progress bar
+const updateSlider = (minVal, maxVal) => {
+  range.style.left = ((minVal / rangeInputs[0].max) * 100).toFixed(2) + "%";
+  range.style.right = (100 - (maxVal / rangeInputs[1].max) * 100).toFixed(2) + "%";
+};
+
+// Function to filter job postings based on the selected salary range
+const filterJobPostings = () => {
+    console.log("filterJobPostings called");
+    const minSalary = parseInt(priceInputs[0].value, 10) || 0; // Fallback to 0
+    const maxSalary = parseInt(priceInputs[1].value, 10) || 100000; // Fallback to 100000
+    console.log(`Filtering with minSalary: ${minSalary}, maxSalary: ${maxSalary}`); // Debugging line
+  
+    jobPostings.forEach((job) => {
+      const jobMinSalary = parseInt(job.getAttribute("data-min-salary"), 10);
+      const jobMaxSalary = parseInt(job.getAttribute("data-max-salary"), 10);
+  
+      if (isNaN(jobMinSalary) || isNaN(jobMaxSalary)) {
+        console.warn("Skipping job with invalid salary range:", job); // Debugging line
+        job.style.display = "none"; 
+      } else if (jobMaxSalary >= minSalary && jobMinSalary <= maxSalary) {
+        job.style.display = "block"; 
+      } else {
+        job.style.display = "none";
+      }
+    });
+  };
+  
+
+// Initialize the slider positions on page load
+window.addEventListener("load", () => {
+  const minPrice = 0; // Initial min price
+  const maxPrice = 100000; // Initial max price
+
+  // Set initial values for both price and range inputs
+  priceInputs[0].value = minPrice;
+  priceInputs[1].value = maxPrice;
+  rangeInputs[0].value = minPrice;
+  rangeInputs[1].value = maxPrice;
+
+  updateSlider(minPrice, maxPrice);
+  filterJobPostings(); // Initial filter on page load
+});
+
+// Update slider and price inputs when price input fields are changed
+priceInputs.forEach((input) => {
+    input.addEventListener("input", (e) => {
+      console.log("Price input changed:", e.target.value); // Debugging line
+      const minPrice = parseInt(priceInputs[0].value, 10);
+      const maxPrice = parseInt(priceInputs[1].value, 10);
+  
+      if (maxPrice - minPrice >= priceGap) {
+        if (e.target.classList.contains("input-min")) {
+          rangeInputs[0].value = minPrice;
+        } else {
+          rangeInputs[1].value = maxPrice;
+        }
+        updateSlider(minPrice, maxPrice);
+        filterJobPostings(); // Ensure this line is here
+      }
+    });
+  });
+
+// Handle range sliders when moved
+rangeInputs.forEach((input) => {
+    input.addEventListener("input", (e) => {
+      console.log("Range input changed:", e.target.value); // Debugging line
+      const minVal = parseInt(rangeInputs[0].value, 10);
+      const maxVal = parseInt(rangeInputs[1].value, 10);
+  
+      if (maxVal - minVal < priceGap) {
+        if (e.target.classList.contains("range-min")) {
+          rangeInputs[0].value = maxVal - priceGap;
+        } else {
+          rangeInputs[1].value = minVal + priceGap;
+        }
+      } else {
+        priceInputs[0].value = minVal;
+        priceInputs[1].value = maxVal;
+        updateSlider(minVal, maxVal);
+        filterJobPostings(); // Ensure this line is here
+      }
+    });
+  });
+
+    </script>
   </body>
 </html>

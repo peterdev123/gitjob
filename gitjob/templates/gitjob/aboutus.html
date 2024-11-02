@@ -1,0 +1,118 @@
+{% load static %} {% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - Gitjob</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/dist/homepage.css' %}" />
+  </head>
+  <body>
+    <div class="min-h-screen mx-auto">
+      <!-- Include Header -->
+      {% include 'includes/headings.html' %}
+
+      <!-- About Us Section -->
+      <div class="flex flex-col items-center py-10 px-5 bg-gray-100">
+        <h2 class="text-3xl font-bold text-gray-800 mb-5">About Us</h2>
+        <p class="text-gray-600 text-center max-w-2xl">
+          Gitjob is a job-matching platform designed to connect job seekers with career opportunities that match their skills and ambitions. Our mission is to empower individuals by bridging the gap between talent and opportunity in the most efficient way possible.
+        </p>
+      </div>
+
+      <!-- Mission and Vision Section -->
+      <div class="flex flex-col items-center py-10 px-5">
+        <div class="max-w-3xl text-center mb-10">
+          <h3 class="text-2xl font-semibold text-gray-800">Our Mission</h3>
+          <p class="text-gray-600 mt-4">
+            To make meaningful employment accessible to everyone, regardless of their background or location, by providing an innovative and user-friendly platform.
+          </p>
+        </div>
+
+        <div class="max-w-3xl text-center mb-10">
+          <h3 class="text-2xl font-semibold text-gray-800">Our Vision</h3>
+          <p class="text-gray-600 mt-4">
+            To become the go-to platform for job-seeking professionals and companies, known for creating a seamless and efficient hiring experience.
+          </p>
+        </div>
+      </div>
+
+      <!-- Core Values Section -->
+      <div class="flex flex-col items-center py-10 px-5 bg-gray-100">
+        <h3 class="text-2xl font-semibold text-gray-800 mb-5">Our Core Values</h3>
+        <ul class="text-gray-600 text-center max-w-2xl list-disc list-inside">
+          <li>Empathy and Inclusion</li>
+          <li>Transparency and Integrity</li>
+          <li>Innovation and Creativity</li>
+          <li>Commitment to Quality</li>
+        </ul>
+      </div>
+
+      <!-- Team Introduction Section -->
+      <div class="flex flex-col items-center py-10 px-5">
+        <h2 class="text-3xl font-bold text-gray-800 mb-5">Meet Our Team</h2>
+        <p class="text-gray-600 text-center max-w-md">
+          Gitjob was created by a passionate team dedicated to improving the job search experience. Our developers bring their skills and expertise to provide users with a platform that is not only effective but also enjoyable to use.
+        </p>
+      </div>
+
+      <!-- Team Members Section -->
+      <div class="flex flex-wrap justify-center gap-8 px-5 py-10">
+        <!-- Team Member 1 -->
+        <div class="bg-white shadow-lg rounded-xl p-6 w-80 text-center">
+          <img
+            src="{% static 'images/creator1.jpg' %}"
+            alt="Jorash Jonathan C. Robillos"
+            class="w-24 h-24 rounded-full mx-auto mb-4"
+          />
+          <h3 class="text-xl font-bold text-gray-800">Jorash Jonathan C. Robillos</h3>
+          <p class="text-gray-600 mb-2">Developer</p>
+          <p class="text-sm text-gray-500 mb-4">jorashjonathan.robillos@cit.edu</p>
+          <a
+            href="https://www.linkedin.com/in/jorash-jonathan-robillos-855aa5287/"
+            target="_blank"
+            class="text-blue-600 hover:text-blue-800 font-semibold"
+            >LinkedIn Profile</a
+          >
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="bg-white shadow-lg rounded-xl p-6 w-80 text-center">
+          <img
+            src="{% static 'images/creator2.jpg' %}"
+            alt="Peter Sylvan L. Vecina"
+            class="w-24 h-24 rounded-full mx-auto mb-4"
+          />
+          <h3 class="text-xl font-bold text-gray-800">Peter Sylvan L. Vecina</h3>
+          <p class="text-gray-600 mb-2">Developer</p>
+          <p class="text-sm text-gray-500 mb-4">petersylvan.vecina@cit.edu</p>
+          <a
+            href="https://www.linkedin.com/in/vecina-peter-sylvan-l-560420257/"
+            target="_blank"
+            class="text-blue-600 hover:text-blue-800 font-semibold"
+            >LinkedIn Profile</a
+          >
+        </div>
+
+        <!-- Team Member 3 -->
+        <div class="bg-white shadow-lg rounded-xl p-6 w-80 text-center">
+          <img
+            src="{% static 'images/creator3.jpg' %}"
+            alt="Ranz Matheu M. Lumayno"
+            class="w-24 h-24 rounded-full mx-auto mb-4"
+          />
+          <h3 class="text-xl font-bold text-gray-800">Ranz Matheu M. Lumayno</h3>
+          <p class="text-gray-600 mb-2">Developer</p>
+          <p class="text-sm text-gray-500 mb-4">ranzmatheu.lumayno@cit.edu</p>
+          <a
+            href=""
+            target="_blank"
+            class="text-blue-600 hover:text-blue-800 font-semibold"
+            >LinkedIn Profile</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
