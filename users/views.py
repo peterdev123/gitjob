@@ -119,7 +119,7 @@ def profile_view(request, username):
             print(request.FILES)
             if profile_pic_upload_form.is_valid():
                 profile_picture = request.FILES['profile_picture']
-                if str(user.profile_picture) != "users/profile_pictures/default_profile_picture.png":
+                if str(user.profile_picture.url) != "media/users/profile_pictures/default_profile_picture.png":
                     remove_previous_profile_pic(user.profile_picture)
                 user.profile_picture = profile_picture
                 user.save()
