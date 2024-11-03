@@ -30,3 +30,11 @@ def messages(request):
                         for user in users]
             return JsonResponse({'users': user_list})
     return render(request, 'gitjob/messages.html')
+
+def contactus(request):
+
+    return render(request, 'gitjob/contactus.html')
+
+def aboutus(request):
+
+    return render(request, 'gitjob/aboutus.html')
