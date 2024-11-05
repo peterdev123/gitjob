@@ -62,7 +62,6 @@
 
       <!--Current contents are placeholders for now-->
       <div class="flex h-screen">
-        <!-- Sidebar -->
         <div class="w-1/4 bg-white shadow-lg border-r">
           <div class="p-5 border-b bg-gray-200 border-r">
             <!-- Search Bar -->
@@ -103,8 +102,8 @@
         </div>
 
         <!-- Main Chat Window -->
-        <div class="w-3/4 flex flex-col bg-white">
-          <!-- Chat Header -->
+        <!-- <div class="w-3/4 flex flex-col bg-white">
+          Chat Header
           <div class="flex items-center p-4 border-b bg-gray-200">
             <img
               src="{% static 'images/user_icon.png' %}"
@@ -115,7 +114,7 @@
               <p class="font-bold text-lg">Vivian Cross</p>
             </div>
           </div>
-          <!-- Chat Messages -->
+          Chat Messages
           <div class="flex-1 p-4 overflow-y-auto">
             <div class="flex flex-col space-y-2">
               <p class="text-sm text-gray-500">5/9/2024 9:20PM</p>
@@ -144,7 +143,7 @@
             </div>
           </div>
 
-          <!-- Message Input -->
+          Message Input
           <div class="p-4 border-t flex items-center">
             <input
               type="text"
@@ -155,7 +154,47 @@
               <img src="{% static 'images/enter_icon.png' %}" class="w-6 h-6" />
             </button>
           </div>
-        </div>
+        </div> -->
+
+        <div class="w-3/4 flex-col">
+          <!-- Chat Messages Display -->
+          <div id="messages" class="flex-1 p-4 overflow-y-auto border border-gray-300 rounded-lg bg-gray-50"></div>
+
+          <!-- Message Input Form -->
+          <form id="form" class="flex items-center p-4 border-t border-gray-300">
+              <input type="text" name="message" placeholder="Write a message..." class="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring focus:ring-blue-500" />
+              <button type="submit" class="ml-2 p-2 bg-blue-500 text-white rounded-full">
+                  <img src="{% static 'images/enter_icon.png' %}" class="w-6 h-6" />
+              </button>
+          </form>
+
+          <script type="text/javascript">
+              let url = `ws://${window.location.host}/ws/socket-server/`;
+              const chatSocket = new WebSocket(url);
+
+              chatSocket.onmessage = function(e) {
+                  let data = JSON.parse(e.data);
+                  console.log('Data:', data);
+
+                  if(data.type === 'chat') {
+                      let messages = document.getElementById('messages');
+
+                      // Insert the new message into the messages div
+                      messages.insertAdjacentHTML('beforeend', `<div class="mb-2"><p>${data.message}</p></div>`);
+                  }
+              }
+
+              let form = document.getElementById('form');
+              form.addEventListener('submit', (e) => {
+                  e.preventDefault();
+                  let message = e.target.message.value;
+                  chatSocket.send(JSON.stringify({
+                      'message': message
+                  }));
+                  form.reset(); // Clear the input field
+              });
+          </script>
+          </div>
       </div>
     </div>
   </body>

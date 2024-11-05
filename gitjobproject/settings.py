@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'users',
     'jobs',
     'manager',
+    'channels',
+    'user_messages',
 
     'crispy_forms',
     'tailwind', # For tailwind
@@ -50,6 +52,14 @@ INSTALLED_APPS = [
 
     'django_browser_reload' # For reload
 ]
+
+ASGI_APPLICATION = 'gitjobproject.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND':'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 TAILWIND_APP_NAME = 'theme'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

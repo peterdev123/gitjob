@@ -9,4 +9,5 @@ urlpatterns = [
     path('aboutus/', views.aboutus, name='aboutus'),
     path('users/', include('users.urls')),
     path('manager/', include('manager.urls')),
+    # path('user_messages/', include('user_messages.urls')),
 ]
