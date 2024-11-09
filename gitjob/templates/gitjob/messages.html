@@ -225,7 +225,7 @@
                       <form id="chat_message_form" class="w-full" 
                             hx-ext="ws"
                             ws-connect="/ws/chatroom/public-chat" 
-                            ws-send="{'body': this.body.value}"
+                            ws-send
                             _="on htmx:afterOnLoad reset() me">
                           {% csrf_token %}
                           {{ form.body }}
