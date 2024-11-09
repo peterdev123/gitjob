@@ -19,25 +19,16 @@ class ChatroomConsumer(WebsocketConsumer):
             'type': 'connection_established',
             'message': 'You are now connected'
         }))
-
-        print("connected")
-        
-        # add and update online users
-        if self.user not in self.chatroom.users_online.all():
-            self.chatroom.users_online.add(self.user)
-            self.update_online_count()
         
         self.accept()
+
+        print("connected")
         
         
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(
             self.chatroom_name, self.channel_name
         )
-        # remove and update online users
-        if self.user in self.chatroom.users_online.all():
-            self.chatroom.users_online.remove(self.user)
-            self.update_online_count() 
         
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
@@ -64,5 +55,5 @@ class ChatroomConsumer(WebsocketConsumer):
             'user': self.user,
             'chat_group': self.chatroom
         }
-        html = render_to_string("a_rtchat/partials/chat_message_p.html", context=context)
+        html = render_to_string("gitjob/partials/chat_message_p.html", context=context)
         self.send(text_data=html)
