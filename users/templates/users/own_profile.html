@@ -37,39 +37,51 @@
                         style="cursor: pointer;"
                         class="w-24 h-24 mt-[2.5rem] object-cover rounded-full border-2 border-black border-solid">
             </form>
-                <h1 id="username" class="mt-2 text-xl font-bold">{{ user.username }}</h1>
-                <h1 id="first_name" class="mt-2 text-lg font-medium">{{ user.first_name }} {{ user.last_name }}</h1>
+                <h1 id="name" class="mt-2 text-xl font-bold">{{ user.first_name }} {{ user.last_name }}</h1>
+                <h1 id="username" class="mt-2 text-md">Username: <span class="font-medium">{{ user.username }}</span></h1>
+                <h1 id="email" class="mt-2 text-md">Email: <span class="font-medium">{{ user.email }}</span></h1>
 
                  {% if user.job %}
-                 <div class="flex justify-between">
-                    <h1 id="job" class="mt-2 text-l font-medium">{{ user.job }}</h1>
-                    <h1 class="mt-2 mx-1 text-l font-medium"> at </h1>
-                    <h1 id="job_company" class="mt-2 text-l font-medium">{{ user.job_company }}</h1>
+                 <div class="m-0 flex">
+                    <h1 class="mt-2 mr-1 text-sm">Working as</h1>
+                    <h1 id="job" class="mt-2 text-sm font-medium">{{ user.job }}</h1>
+                    <h1 class="mt-2 mx-1 text-sm"> at </h1>
+                    <h1 id="job_company" class="mt-2 text-sm font-medium">{{ user.job_company }}</h1>
                  </div>
                  {% endif %}
 
-                 {% if user.home_address %}
-                 <h1 id="home_address" class="mt-2 text-l font-medium">{{ user.home_address }}</h1>
+                 {% if user.home_address or user.country %}
+                 <h1 id="home_address" class="mt-2 text-sm">Address: <span class="font-medium">
+                    {% if user.home_address %}
+                        {{ user.home_address }}
+                    {% endif %} 
+
+                    {% if user.home_address and user.country %}
+                        ({{ user.country }})
+                    {% else %}
+                        {{ user.country }}
+                    {% endif %}
+                        </span></h1>
                  {% endif %}
 
                  {% if user.phone_number %}
-                 <h1 id="phone_number" class="mt-2 text-l font-medium">{{ user.phone_number }}</h1>
+                 <h1 id="phone_number" class="mt-2 text-sm">Phone: <span class="font-medium">{{ user.phone_number }}</span></h1>
                  {% endif %}
 
-                 <h1 id="email" class="mt-2 text-l font-medium">{{ user.email }}</h1>
 
                  <hr>
 
                  {% if user.birthdate %}
-                 <h1 id="birthdate" class="mt-2 text-l font-medium">{{ user.birthdate }}</h1>
+                 <h1 id="birthdate" class="mt-2 text-sm">Birthdate: <span class="font-medium">{{ user.birthdate }}</span></h1>
                  {% endif %}
 
                  {% if user.gender %}
-                 <h1 id="gender" class="mt-2 text-l font-medium">{{ user.gender }}</h1>
+                 <h1 id="gender" class="mt-2 text-sm">Gender: <span class="font-medium">{{ user.gender }}</span></h1>
                  {% endif %}
 
                  {% if user.description %}
-                 <h1 id="description" class="mt-2 text-l font-medium">{{ user.description }}</h1>
+                 <h1 class="text-sm">Description</h1>
+                 <h1 id="description" class="mt-2 text-l text-sm">{{ user.description }}</h1>
                  {% endif %}
 
                  <form method="POST" class="absolute block bottom-0 mx-auto">
@@ -140,7 +152,7 @@
     </div>
 
     <!-- Edit Profile Details -->
-    <div id="edit_profile_modal" class="absolute w-3/5 p-10 top-[1rem] left-1/2 translate-x-[-50%] rounded-2xl border-2 border-black border-solid bg-gray-200 z-10" style="display: none;">
+    <div id="edit_profile_modal" class="absolute w-3/5 p-10 py-5 top-[2rem] left-1/2 translate-x-[-50%] rounded-2xl border-2 border-black border-solid bg-gray-200 z-10" style="display: none;">
         <form method="POST" class="flex flex-col items-center">
             {% csrf_token %}
             <input type="hidden" name="form_type" value="edit_profile_form">
@@ -150,52 +162,72 @@
      
             <hr class="w-[96%] mt-2 border-1 border-solid border-black">
             
-            <div class="flex m-0 justify-center">
-
-                <div class="flex flex-col justify-start">
-                    <label for="id_username">Username</label>
-                    <input type="text" name="username" id="id_username" class="profile_edit_input" 
-                        value="{{ user.username }}">
-
-                    <label for="id_job">Job</label>
-                    <input type="text" name="job" id="id_job" class="profile_edit_input" 
-                        {% if user.job %} value="{{ user.job }}"{% endif %}>
-
-                    <label for="id_job_company">Job Company</label>
-                    <input type="text" name="job_company" id="id_job_company" class="profile_edit_input" 
-                        {% if user.job_company %} value="{{ user.job_company }}"{% endif %}>
+            <!-- Short inputs container -->
+            <div class="flex flex-col m-0 justify-center">
+                <!-- row of inputs, two per row if space is available -->
+                <div class="mb-0 flex flex-wrap">
+                    <!-- input and their label containers -->
+                    <div class="m-0 flex flex-col flex-1 min-w-[250px]">
+                        <label for="id_username">Username</label>
+                        <input type="text" name="username" id="id_username" class="profile_edit_input" 
+                            value="{{ user.username }}">
+                    </div>
+                    <div class="m-0 flex flex-col flex-1 min-w-[250px]">
+                        <label for="id_phone_number">Phone Number</label>
+                        <input type="text" name="phone_number" id="id_phone_number" class="profile_edit_input" 
+                            {% if user.phone_number %} value="{{ user.phone_number }}"{% endif %}>
+                    </div>
                 </div>
-
-                <div class="flex flex-col">
-                    <label for="id_home_address">Home Address</label>
-                    <input type="text" name="home_address" id="id_home_address" class="profile_edit_input" 
-                        {% if user.home_address %} value="{{ user.home_address }}"{% endif %}>
-                    
-                    <label for="id_phone_number">Phone Number</label>
-                    <input type="text" name="phone_number" id="id_phone_number" class="profile_edit_input" 
-                        {% if user.phone_number %} value="{{ user.phone_number }}"{% endif %}>
-
-                    <label for="id_birthdate">Birthdate</label>
-                    <input type="date" name="birthdate" id="id_birthdate" class="profile_edit_input" 
-                        {% if user.birthdate %} value="{{ birthdate }}"{% endif %}>
-
-                    <label for="id_gender">Gender</label>
-                    <select name="gender" id="id_gender" class="profile_edit_input">
-                        <option value="">Select Gender</option>
-                        <option value="Male" {% if user.gender == "Male" %} selected {% endif %}>Male</option>
-                        <option value="Female" {% if user.gender == "Female" %} selected {% endif %}>Female</option>
-                        <option value="Others" {% if user.gender == "Others" %} selected {% endif %}>Others</option>
-                    </select>
+                <div class="my-0 flex flex-wrap">
+                    <div class="m-0 flex flex-col flex-1 min-w-[250px]">
+                        <label for="id_home_address">Home Address</label>
+                        <input type="text" name="home_address" id="id_home_address" class="profile_edit_input" 
+                            {% if user.home_address %} value="{{ user.home_address }}"{% endif %}>
+                    </div>
+                    <div class="m-0 flex flex-col flex-1 min-w-[250px]">
+                        <label for="id_country">Country</label>
+                        <input type="text" name="country" id="id_country" class="profile_edit_input" 
+                            {% if user.country %} value="{{ user.country }}"{% endif %}>
+                    </div>
                 </div>
-
+                <div class="my-0 flex flex-wrap">
+                    <div class="m-0 flex flex-col flex-1 min-w-[250px]">
+                        <label for="id_job">Job</label>
+                        <input type="text" name="job" id="id_job" class="profile_edit_input" 
+                            {% if user.job %} value="{{ user.job }}"{% endif %}>
+                    </div>
+                    <div class="m-0 flex flex-col flex-1 min-w-[250px]">
+                        <label for="id_job_company">Job Company</label>
+                        <input type="text" name="job_company" id="id_job_company" class="profile_edit_input" 
+                            {% if user.job_company %} value="{{ user.job_company }}"{% endif %}>
+                    </div>
+                </div>
+                <div class="my-0 flex flex-wrap">
+                    <div class="m-0 flex flex-col flex-1 min-w-[250px]">
+                        <label for="id_gender">Gender</label>
+                        <select name="gender" id="id_gender" class="profile_edit_input">
+                            <option value="">Select Gender</option>
+                            <option value="Male" {% if user.gender == "Male" %} selected {% endif %}>Male</option>
+                            <option value="Female" {% if user.gender == "Female" %} selected {% endif %}>Female</option>
+                            <option value="Others" {% if user.gender == "Others" %} selected {% endif %}>Others</option>
+                        </select>
+                    </div>
+                    <div class="m-0 flex flex-col flex-1 min-w-[250px]">
+                        <label for="id_birthdate">Birthdate</label>
+                        <input type="date" name="birthdate" id="id_birthdate" class="profile_edit_input" 
+                            {% if user.birthdate %} value="{{ birthdate }}"{% endif %}>
+                    </div>
+                </div>
+                <div class="my-0 mx-auto flex flex-col items-center">
+                    <label for="id_description">Description</label>
+                    <textarea name="description" id="id_description" class="rounded-xl w-[95%]">{% if user.description %}{{ user.description }}{% endif %}</textarea>
+                </div>
             </div>
             
-            <label for="id_description">Description</label>
-            <textarea name="description" id="id_description" class="mb-4 mt-[0.25rem] h-[100px] w-[80%]">{% if user.description %}{{ user.description }}{% endif %}</textarea>
-            
+            <!-- Buttons -->
             <div class="flex justify-end">
-                <button id="edit_profile_cancel" class="w-16 rounded-2xl border-2 border-black border-solid bg-white text-black" type="button">Cancel</button>
-                <button id="edit_profile_confirm" class="w-28 ml-5 mr-10 rounded-2xl border-2 border-black border-solid bg-blue-600 text-white" type="submit">Save Changes</button>
+                <button id="edit_profile_cancel" class="w-16 h-8 rounded-2xl border-2 border-black border-solid bg-white text-black" type="button">Cancel</button>
+                <button id="edit_profile_confirm" class="w-28 h-8 ml-5 mr-10 rounded-2xl border-2 border-black border-solid bg-blue-600 text-white" type="submit">Save Changes</button>
             </div>
          </form>
     </div>

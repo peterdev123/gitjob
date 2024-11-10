@@ -12,6 +12,7 @@ class GitJobUser(AbstractUser):
     job = models.CharField(max_length=100, blank=True, null=True)
     job_company = models.CharField(max_length=100, blank=True, null=True)
     home_address = models.CharField(max_length=100, blank=True, null=True)
+    country = models.CharField(max_length=100, blank=True, null=True)
     phone_number = models.IntegerField(blank=True, null=True)
     birthdate = models.DateField(blank=True, null=True)
     gender = models.CharField(max_length=20, blank=True, null=True)

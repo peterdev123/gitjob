@@ -1,12 +1,18 @@
  .login_input, .register_input {
     display: block;
-    width: 75%;
+    width: 95%;
+    margin-top: 10px;
     color: black;
     border-radius: 10px;
     line-height: 1.5rem;
   }
   .register_input {
     line-height: 1rem;
+  }
+  .name_input{
+    width: 45%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
   }
   
 
@@ -31,9 +37,10 @@
     display: block;
     width: 90%;
     color: black;
-    line-height: 1.75rem;
+    line-height: 1.5rem;
     font: 1rem medium;
-    border-radius: 0.25rem;
+    font-family: Arial, sans-serif;
+    border-radius: 10px;
   }
 
   /* form div label {

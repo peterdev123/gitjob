@@ -32,12 +32,18 @@ class RegisterForm(forms.Form):
     fname = forms.CharField(
         label='', 
         max_length=50,
-        widget=forms.TextInput(attrs=input_attrs("First Name..."))
+        widget=forms.TextInput({
+            'class': 'register_input name_input',
+            'placeholder': 'First Name...'
+        })
     )
     lname = forms.CharField(
         label="", 
         max_length=50,
-        widget=forms.TextInput(attrs=input_attrs("Last Name..."))
+        widget=forms.TextInput({
+            'class': 'register_input name_input',
+            'placeholder': 'Last Name...'
+        })
     )
     email = forms.EmailField(
         label="Email Address", 
@@ -69,7 +75,7 @@ class RegisterForm(forms.Form):
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = GitJobUser
-        fields = ['username', 'job', 'job_company', 'home_address', 'phone_number', 'birthdate', 'gender', 'description']
+        fields = ['username', 'job', 'job_company', 'home_address', 'country' , 'phone_number', 'birthdate', 'gender', 'description']
     
     birthdate = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), required=False)
     gender = forms.ChoiceField(choices=[('Male', 'Male'), ('Female', 'Female'), ('Others', 'Others')], required=False)

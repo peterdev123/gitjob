@@ -65,33 +65,35 @@
           </div>
       </div>
 
-      <!-- Other Jobs Scrollable? -->
+      <!-- Other Jobs Scrollable -->
       <div class="flex max-w-[970px] w-[80%] mx-auto mt-6 overflow-x-auto flex-nowrap">
-          {% for job_posting in other_job_postings %}
-            <!-- Job-Posting Div -->
-            <div class="p-2 pb-5 m-1 min-w-80 rounded-xl bg-white shadow-xl box-border">
-              <!-- Colored Section -->
-              <div class="relative p-5 pb-2 h-60 mb-5 bg-orange-300 rounded-xl">
-                <h1 class="text-xl font-bold">{{ job_posting.job_title }}</h1>
-                <img src="{{ job_posting.company_logo.url }}" class="w-10 h-10 my-2">
-                <!-- Tags Section -->
-                <div class="flex flex-wrap">
-                  {% for tag in job_posting.tags %}
-                  <div class="min-w-10 h-6 m-2 mb-1 px-3 flex justify-center items-center text-xs bg-orange-300 box-border rounded-2xl border-2 border-solid border-black">
-                    <p>{{ tag }}</p>
-                  </div>
-                  {% endfor %}
+        {% for job_posting in other_job_postings %}
+          <!-- Job-Posting Div -->
+          <div class="p-2 pb-5 m-1 min-w-80 rounded-xl bg-white shadow-xl box-border">
+            <!-- Colored Section -->
+            <div class="relative p-5 pb-2 h-60 mb-5 bg-orange-300 rounded-xl">
+              <h1 class="text-xl font-bold">{{ job_posting.job_title }}</h1>
+              <img src="{{ job_posting.company_logo.url }}" class="w-10 h-10 my-2">
+              <!-- Tags Section -->
+              <div class="flex flex-wrap">
+                {% for tag in job_posting.tags %}
+                <div class="min-w-10 h-6 m-2 mb-1 px-3 flex justify-center items-center text-xs bg-orange-300 box-border rounded-2xl border-2 border-solid border-black">
+                  <p>{{ tag }}</p>
                 </div>
-                <p class="text-xs absolute bottom-2">Open until:</p>
-                <p class="text-xs absolute bottom-2 right-5">{{ job_posting.hiring_deadline }}</p>
+                {% endfor %}
               </div>
-              <div class="flex justify-between">
-                <p class="font-bold ml-3">₱{{ job_posting.min_salary }} - ₱{{ job_posting.max_salary }}</p>
-                <a href="{% url 'job_posting' id=job_posting.id %}"><button class="w-20 h-8 mr-3 bg-black text-white rounded-2xl">Details</button></a>
-              </div>
+              <p class="text-xs absolute bottom-2">Open until:</p>
+              <p class="text-xs absolute bottom-2 right-5">{{ job_posting.hiring_deadline }}</p>
             </div>
-          {% endfor %}
+            <div class="flex justify-between">
+              <p class="font-bold ml-3">₱{{ job_posting.min_salary }} - ₱{{ job_posting.max_salary }}</p>
+              <a href="{% url 'job_posting' id=job_posting.id %}"><button class="w-20 h-8 mr-3 bg-black text-white rounded-2xl">Details</button></a>
+            </div>
+          </div>
+        {% endfor %}
       </div>
     </div>
+
+    
 </body>
 </html>
