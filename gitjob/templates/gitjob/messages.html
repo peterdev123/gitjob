@@ -5,13 +5,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Messages</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
     <script src="https://unpkg.com/htmx.org/dist/htmx.js"></script>
-    <script src="https://unpkg.com/htmx.org@2.0.2"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
     <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   </head>
   <script>
     $(document).ready(function(){
@@ -66,11 +66,12 @@
       {% include 'includes/headings.html' %}
 
       <!--Current contents are placeholders for now-->
-      <!-- <div class="flex h-screen"> -->
-        <!-- <div class="w-1/4 bg-white shadow-lg border-r">
-          <div class="p-5 border-b bg-gray-200 border-r"> -->
+      <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-1/4 bg-white shadow-lg border-r">
+          <div class="p-5 border-b bg-gray-200 border-r">
             <!-- Search Bar -->
-            <!-- <div class="flex items-center bg-white rounded-full p-2">
+            <div class="flex items-center bg-white rounded-full p-2">
               <img
                 src="{% static 'images/search_icon.png' %}"
                 class="w-6 h-6"
@@ -87,155 +88,94 @@
                 </div>
               </form>
             </div>
-          </div> -->
+          </div>
 
           <!-- User List -->
-          <!-- <div class="mt-4">
-            <div class="flex items-center px-4 py-2 hover:bg-gray-100">
-              <img
-                src="{% static 'images/user_icon.png' %}"
-                class="w-12 h-12 rounded-full"
-              />
+          <div class="recent-chats">
+            {% for chat_group in chat_groups %}
+              {% if request.user in chat_group.members.all %}
+                {% for member in chat_group.members.all %}
+                  {% if member != request.user %}
+                    <div class="flex items-center px-4 py-2 hover:bg-gray-100">
+                      <a href="{% url 'start-chat' username=member.username %}" class="flex items-center">
+                        <img src="{{ member.profile_picture.url }}" class="w-10 h-10 rounded-full" />
+                        <div class="ml-4">
+                          <p class="font-bold">{{ member.username }}</p>
+                        </div>
+                      </a>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            {% empty %}
+              <p class="text-gray-600 px-4">No recent chats yet.</p>
+            {% endfor %}
+          </div>
+        </div>
+
+      <!-- Chat Section -->
+        <div class="flex flex-col w-3/4 h-full bg-white">
+          {% if other_user %}
+            <div class="flex items-center p-4 border-b bg-gray-200">
+                <img
+                  src="{{ other_user.profile_picture.url }}"
+                  alt="User Profile"
+                  class="w-12 h-12 rounded-full"
+                />
+                <div class="ml-4">
+                  <p class="font-bold text-lg">{{ other_user.username }}</p>
+                </div>
+            </div>
+          {% else %}
+            <div class="flex items-center p-6 border-b bg-gray-200">
               <div class="ml-4">
-                <p class="font-bold">Vivian Cross</p>
-                <p class="text-gray-600 text-sm">
-                  HyperX is excited to learn more...
-                </p>
+                <p class="font-bold text-lg">Public Chat</p>
               </div>
             </div>
-          </div>
-        </div> -->
+          {% endif %}
+          <!-- Online Status -->
+          <!-- <div class="flex justify-center text-emerald-400 bg-gray-800 p-2">
+            <span id="online-count" class="pr-1">3</span> online
+          </div> -->
 
-        <!-- Main Chat Window -->
-        <!-- <div class="w-3/4 flex flex-col bg-white">
-          Chat Header
-          <div class="flex items-center p-4 border-b bg-gray-200">
-            <img
-              src="{% static 'images/user_icon.png' %}"
-              alt="User Profile"
-              class="w-12 h-12 rounded-full"
-            />
-            <div class="ml-4">
-              <p class="font-bold text-lg">Vivian Cross</p>
-            </div>
-          </div>
-          Chat Messages
-          <div class="flex-1 p-4 overflow-y-auto">
-            <div class="flex flex-col space-y-2">
-              <p class="text-sm text-gray-500">5/9/2024 9:20PM</p>
-
-              <div class="bg-gray-200 rounded-lg p-4 max-w-md">
-                <p>
-                  Hello John Doe! I am Vivian Cross, the hiring manager of
-                  HyperX.
-                </p>
-              </div>
-
-              <div class="bg-gray-200 rounded-lg p-4 max-w-md">
-                <p>
-                  After reviewing your application, we were impressed with your
-                  qualifications and would like to invite you for an interview
-                  to further discuss the Junior Software Engineer role.
-                </p>
-              </div>
-
-              <div class="bg-gray-200 rounded-lg p-4 max-w-md">
-                <p>
-                  HyperX is excited to learn more about you. We look forward to
-                  meeting you.
-                </p>
-              </div>
-            </div>
+          <!-- Chat Messages Container -->
+          <div id="chat_container" class="flex-grow overflow-y-auto p-4">
+            <ul id="chat_messages" class="flex flex-col justify-end gap-2">
+              {% for message in chat_messages reversed %}
+              {% include 'gitjob/chat_message.html' %}
+              {% endfor %}
+            </ul>
           </div>
 
-          Message Input
-          <div class="p-4 border-t flex items-center">
-            <input
-              type="text"
-              placeholder="Write a message..."
-              class="flex-1 px-4 py-2 border rounded-full focus:outline-none"
-            />
-            <button class="ml-2 p-2 bg-gray-300 rounded-full">
-              <img src="{% static 'images/enter_icon.png' %}" class="w-6 h-6" />
-            </button>
-          </div>
-        </div> -->
+          <!-- Message Input Form -->
+          <div class="bg-white p-4 sticky bottom-0">
+            <form
+              id="chat_message_form"
+              class="w-full flex items-center"
+              hx-ext="ws"
+              ws-connect="/ws/chatroom/{{ chatroom_name }}"
+              ws-send
+              _="on htmx:wsAfterSend reset() me"
+            >
+              {% csrf_token %}
+              {{ form.body }}
 
-        <!-- <div class="w-3/4 flex-col">
-          Chat Messages Display
-          <div id="messages" class="flex-1 p-4 overflow-y-auto border border-gray-300 rounded-lg bg-gray-50"></div>
-
-          Message Input Form
-          <form id="form" class="flex items-center p-4 border-t border-gray-300">
-              <input type="text" name="message" placeholder="Write a message..." class="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring focus:ring-blue-500" />
-              <button type="submit" class="ml-2 p-2 bg-blue-500 text-white rounded-full">
-                  <img src="{% static 'images/enter_icon.png' %}" class="w-6 h-6" />
+              <button type="submit" class="ml-2 p-3 text-cyan-500 hover:text-cyan-600">
+                <i class="fas fa-paper-plane"></i>
               </button>
-          </form>
-
-          <script type="text/javascript">
-              let url = `ws://${window.location.host}/ws/socket-server/`;
-              const chatSocket = new WebSocket(url);
-
-              chatSocket.onmessage = function(e) {
-                  let data = JSON.parse(e.data);
-                  console.log('Data:', data);
-
-                  if(data.type === 'chat') {
-                      let messages = document.getElementById('messages');
-
-                      // Insert the new message into the messages div
-                      messages.insertAdjacentHTML('beforeend', `<div class="mb-2"><p>${data.message}</p></div>`);
-                  }
-              }
-
-              let form = document.getElementById('form');
-              form.addEventListener('submit', (e) => {
-                  e.preventDefault();
-                  let message = e.target.message.value;
-                  chatSocket.send(JSON.stringify({
-                      'message': message
-                  }));
-                  form.reset(); // Clear the input field
-              });
-          </script>
-          </div>        
-        </div> -->
-      <!-- </div> -->
-    <!-- </div> -->
-      {% block content %} 
-      <wrapper class="block max-w-2xl mx-auto my-10 px-6">
-          <div id="chat_window" class="h-[45rem] flex flex-col bg-gray-800 rounded-2xl shadow-2xl relative p-1">
-              <div class="flex justify-center text-emerald-400 bg-gray-800 p-2 sticky top-0 z-10">
-                  <span id="online-count" class="pr-1">3</span> online
-              </div>
-              
-              <!-- Chat Messages Container -->
-              <div id="chat_container" class="overflow-y-auto grow">
-                  <ul id='chat_messages' class="flex flex-col justify-end gap-2 p-4">
-                      {% for message in chat_messages reversed %}
-                          {% include 'gitjob/partials/chat_message_p.html' %}
-                      {% endfor %}
-                  </ul>
-              </div>
-
-              <!-- Message Input Form with HTMX and WebSocket Integration -->
-              <div class="sticky bottom-0 z-10 p-2 bg-gray-800">
-                  <div class="flex flex-col gap-4 items-center rounded-xl px-2 py-2">
-                      <form id="chat_message_form" class="w-full" 
-                            hx-ext="ws"
-                            ws-connect="/ws/chatroom/public-chat" 
-                            ws-send
-                            _="on htmx:afterOnLoad reset() me">
-                          {% csrf_token %}
-                          {{ form.body }}
-                          <input type="submit" class="hidden">
-                      </form>
-                  </div>
-              </div>
+            </form>
           </div>
-      </wrapper>
-      {% endblock %}
+          {% block javascript %}
+          <script>
+            function scrollToBottom() {
+              const container = document.getElementById('chat_container');
+              container.scrollTop = container.scrollHeight;
+            }
+            scrollToBottom()
+          </script>
+          {% endblock %}
+        </div>
+      </div>
     </div>
   </body>
   <script src="{% static 'js/sidebar.js' %}"></script>
