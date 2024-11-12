@@ -6,7 +6,7 @@ from users.models import GitJobUser
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.http import Http404
-from .models import ChatGroup, SearchedUsers
+from .models import ChatGroup
 from .forms import ChatmessageCreateForm
 
 
@@ -37,16 +37,22 @@ def messages(request, chatroom_name='public-chat'):
                           "last_name": user.last_name} 
                         for user in users]
             return JsonResponse({'users': user_list})
-    # Retrieve recent searched users for the current user
-    try:
-        searched_users = SearchedUsers.objects.get(current_user=request.user).recent_searched_users
-    except SearchedUsers.DoesNotExist:
-        searched_users = []
-
     # For private chat groups
-    all_chat_group = ChatGroup.objects.all()
     chat_group = get_object_or_404(ChatGroup, group_name=chatroom_name)
     chat_messages = chat_group.chat_messages.all()[:30]
+
+    chat_groups = ChatGroup.objects.filter(members=request.user)
+    filtered_chat_groups = []
+
+    for group in chat_groups:
+        # Check if there are messages in the group where the user has participated
+        if group.chat_messages.filter(author=request.user).exists():
+            filtered_chat_groups.append(group)
+            # Get the latest message for preview
+            latest_message = group.chat_messages.order_by('-created').first()
+            group.latest_message_body = latest_message.body if latest_message else "No messages yet"
+        else:
+            group.latest_message_body = "No messages yet"
 
     # For chats
     form = ChatmessageCreateForm()
@@ -76,8 +82,7 @@ def messages(request, chatroom_name='public-chat'):
         'form' : form,
         'other_user' : other_user,
         'chatroom_name' : chatroom_name,
-        'recent_chatted_users': searched_users,
-        'chat_groups' : all_chat_group,
+        'chat_groups' : filtered_chat_groups,
     }
 
     # Normal GET request (initial page load)
@@ -89,10 +94,6 @@ def get_or_create_chatroom(request, username):
     
     User = get_user_model()
     other_user = User.objects.get(username=username)
-    
-    # Update recent searched users list for the current user
-    searched_users, created = SearchedUsers.objects.get_or_create(current_user=request.user)
-    searched_users.add_recent_user(other_user.username)
     
     # Check if there is an existing private chat room with this user
     my_private_chatrooms = request.user.chat_groups.filter(is_private=True)

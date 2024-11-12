@@ -93,20 +93,21 @@
           <!-- User List -->
           <div class="recent-chats">
             {% for chat_group in chat_groups %}
-              {% if request.user in chat_group.members.all %}
-                {% for member in chat_group.members.all %}
-                  {% if member != request.user %}
-                    <div class="flex items-center px-4 py-2 hover:bg-gray-100">
-                      <a href="{% url 'start-chat' username=member.username %}" class="flex items-center">
-                        <img src="{{ member.profile_picture.url }}" class="w-10 h-10 rounded-full" />
-                        <div class="ml-4">
-                          <p class="font-bold">{{ member.username }}</p>
-                        </div>
-                      </a>
-                    </div>
-                  {% endif %}
-                {% endfor %}
-              {% endif %}
+              {% for member in chat_group.members.all %}
+                {% if member != request.user %}
+                  <div class="flex-between items-center px-4 py-2 hover:bg-gray-100">
+                    <a href="{% url 'start-chat' username=member.username %}" class="flex items-center">
+                      <img src="{{ member.profile_picture.url }}" class="w-12 h-12 rounded-full" />
+                      <div class="ml-4">
+                        <p class="font-bold">{{ member.first_name }} {{ member.last_name }}</p>
+                        <p class="text-sm text-gray-500">
+                          {{ chat_group.latest_message_body|slice:":50" }}{% if chat_group.latest_message_body|length > 50 %}...{% endif %}
+                        </p>
+                      </div>
+                    </a>
+                  </div>
+                {% endif %}
+              {% endfor %}
             {% empty %}
               <p class="text-gray-600 px-4">No recent chats yet.</p>
             {% endfor %}
@@ -117,11 +118,13 @@
         <div class="flex flex-col w-3/4 h-full bg-white">
           {% if other_user %}
             <div class="flex items-center p-4 border-b bg-gray-200">
-                <img
-                  src="{{ other_user.profile_picture.url }}"
-                  alt="User Profile"
-                  class="w-12 h-12 rounded-full"
-                />
+                <a href="{% url 'profile' username=other_user.username %}">
+                  <img
+                    src="{{ other_user.profile_picture.url }}"
+                    alt="User Profile"
+                    class="w-12 h-12 rounded-full"
+                  />
+                </a>
                 <div class="ml-4">
                   <p class="font-bold text-lg">{{ other_user.username }}</p>
                 </div>

@@ -10,22 +10,6 @@ class ChatGroup(models.Model):
 
     def __str__(self):
         return self.group_name
-class SearchedUsers(models.Model):
-    current_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    recent_searched_users = models.JSONField(default=list, blank=True)
-
-    def add_recent_user(self, username):
-        if username in self.recent_searched_users:
-            self.recent_searched_users.remove(username)
-
-        self.recent_searched_users.insert(0, username)
-
-        self.recent_searched_users = self.recent_searched_users[:15]
-
-        self.save()
-
-    def __str__(self):
-        return self.username
     
 class GroupMessage(models.Model):
     group = models.ForeignKey(ChatGroup, related_name='chat_messages', on_delete=models.CASCADE)

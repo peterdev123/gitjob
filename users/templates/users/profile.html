@@ -101,7 +101,9 @@
                     {% endif %}
                 </div>
             </div>
-            <a class="button" href="{% url 'start-chat' user.username %}">Chat with me</a>
+            <a href="{% url 'start-chat' username=user.username %}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md">
+                Chat with me
+            </a>
         </div>
     </div>
 </body>
