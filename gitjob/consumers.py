@@ -15,14 +15,8 @@ class ChatroomConsumer(WebsocketConsumer):
             self.chatroom_name, self.channel_name
         )
 
-        self.send(text_data=json.dumps({
-            'type': 'connection_established',
-            'message': 'You are now connected'
-        }))
-        
         self.accept()
-
-        print("connected")
+        
         
         
     def disconnect(self, close_code):

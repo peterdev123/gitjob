@@ -55,12 +55,6 @@ INSTALLED_APPS = [
     'django_browser_reload' # For reload
 ]
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND':'channels.layers.InMemoryChannelLayer'
-    }
-}
-
 TAILWIND_APP_NAME = 'theme'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -106,6 +100,12 @@ TEMPLATES = [
 
 # WSGI_APPLICATION = 'gitjobproject.wsgi.application'
 ASGI_APPLICATION = 'gitjobproject.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND':'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 
 # Database
