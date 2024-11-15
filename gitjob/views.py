@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
-from django.db.models import Q
+from django.db.models import Q, Max
 from manager.models import JobPost
 from users.models import GitJobUser
 from django.contrib.auth.decorators import login_required
@@ -41,9 +41,11 @@ def messages(request, chatroom_name='public-chat'):
     chat_group = get_object_or_404(ChatGroup, group_name=chatroom_name)
     chat_messages = chat_group.chat_messages.all()[:30]
 
-    chat_groups = ChatGroup.objects.filter(members=request.user)
+    chat_groups = ChatGroup.objects.filter(members=request.user).annotate(
+        latest_message_date=Max('chat_messages__created')
+    ).order_by('-latest_message_date')
+    
     filtered_chat_groups = []
-
     for group in chat_groups:
         # Check if there are messages in the group where the user has participated
         if group.chat_messages.filter(author=request.user).exists():
