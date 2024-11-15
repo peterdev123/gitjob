@@ -9,6 +9,7 @@ urlpatterns = [
     path('chat/room/<chatroom_name>', views.messages, name='chatroom'),
     path('contactus/', views.contactus, name='contactus'),
     path('aboutus/', views.aboutus, name='aboutus'),
+    path('jobs/', include('jobs.urls')),
     path('users/', include('users.urls')),
     path('manager/', include('manager.urls')),
     # path('user_messages/', include('user_messages.urls')),
