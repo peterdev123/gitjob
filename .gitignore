@@ -9,8 +9,11 @@ __pycache__/
 *.jpeg
 *.gif
 *.bmp
+*.webp
+*.avif
 *.tiff
  
+*alter_chatgroup_group_name.py
 *.log
 db.sqlite3
 /pip-log.txt
