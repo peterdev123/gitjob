@@ -5,6 +5,8 @@ def post_jobs(request):
     if request.method == 'POST':
         form = JobPostForm(request.POST, request.FILES)
         if form.is_valid():
+            form = form.save(commit=False)
+            form.author = request.user
             form.save()
             return redirect('/home/')  # Redirect to a success page after submission
     else:

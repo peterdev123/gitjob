@@ -13,7 +13,7 @@ __pycache__/
 *.avif
 *.tiff
  
-*alter_chatgroup_group_name.py
+00*
 *.log
 db.sqlite3
 /pip-log.txt
