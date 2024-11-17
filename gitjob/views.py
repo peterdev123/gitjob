@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.db.models import Q, Max
 from manager.models import JobPost
 from users.models import GitJobUser
+from django.conf import settings 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.http import Http404
@@ -37,6 +38,17 @@ def messages(request, chatroom_name='public-chat'):
                           "last_name": user.last_name} 
                         for user in users]
             return JsonResponse({'users': user_list})
+        
+    # For default chat groups if empty
+    if not ChatGroup.objects.filter(group_name="public-chat").exists():
+        public_group = ChatGroup.objects.create(
+            group_name = "public-chat",
+            is_private = False
+        )
+
+        user = get_user_model().objects.get(id=1)
+        public_group.members.add(user)
+
     # For private chat groups
     chat_group = get_object_or_404(ChatGroup, group_name=chatroom_name)
     chat_messages = chat_group.chat_messages.all()[:30]
@@ -47,14 +59,22 @@ def messages(request, chatroom_name='public-chat'):
     
     filtered_chat_groups = []
     for group in chat_groups:
-        # Check if there are messages in the group where the user has participated
-        if group.chat_messages.filter(author=request.user).exists():
+        messages_between_users = group.chat_messages.filter(
+            author=request.user
+        ) | group.chat_messages.filter(
+            author__in=group.members.exclude(id=request.user.id)
+        )
+
+        if messages_between_users.exists():
             filtered_chat_groups.append(group)
-            # Get the latest message for preview
-            latest_message = group.chat_messages.order_by('-created').first()
+
+            latest_message = messages_between_users.order_by('-created').first()
             group.latest_message_body = latest_message.body if latest_message else "No messages yet"
         else:
             group.latest_message_body = "No messages yet"
+
+
+    print(filtered_chat_groups)
 
     # For chats
     form = ChatmessageCreateForm()

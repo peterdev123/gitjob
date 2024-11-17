@@ -1,6 +1,7 @@
 from django.db import models
-
+from django.conf import settings
 class JobPost(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     job_title = models.CharField(max_length=255)
     job_field = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
