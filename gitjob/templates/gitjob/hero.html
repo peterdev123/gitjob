@@ -9,107 +9,125 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
+    <!-- Header Section -->
     <header class="bg-white p-4">
       <div class="container mx-auto flex justify-between items-center">
-        <!-- Title -->
         <div class="text-black text-2xl font-bold">GitJob</div>
-        <!-- Navigation Links -->
         <nav>
           <ul class="flex space-x-6">
-            <li>
-              <a href="{% url 'home' %}" class="text-black text-lg hover:underline">Home</a>
-            </li>
-            <li>
-              <a href="#" class="text-black text-lg hover:underline"
-                >Contact Us</a
-              >
-            </li>
-            <li>
-              <a href="#" class="text-black text-lg hover:underline">About</a>
-            </li>
-            <li>
-              <a
-                href="{% url 'login' %}"
-                class="text-black text-lg hover:underline"
-                >Login</a
-              >
-            </li>
+            <li><a href="{% url 'home' %}" class="text-black text-lg hover:underline">Home</a></li>
+            <li><a href="#" class="text-black text-lg hover:underline">Contact Us</a></li>
+            <li><a href="#" class="text-black text-lg hover:underline">About</a></li>
+            <li><a href="{% url 'login' %}" class="text-black text-lg hover:underline">Login</a></li>
           </ul>
         </nav>
       </div>
     </header>
 
-    <!-- Full Width Image Section with Text and Button Overlay -->
+    <!-- Hero Section -->
     <div class="relative w-screen h-[90vh]">
-      <!-- Image -->
       <img
         src="{% static 'images/hero.png' %}"
         alt="Sample Image"
         class="w-full h-full object-cover"
       />
-
-      <!-- Overlay Text and Button -->
-      <div
-        class="absolute inset-0 flex flex-col justify-center items-start text-left px-52"
-      >
-        <!-- Text -->
+      <div class="absolute inset-0 flex flex-col justify-center items-start text-left px-52">
         <h1 class="text-black text-5xl font-bold mb-4">
-          Your Next Career <br />
-          Move Starts <br />
-          Here
+          Your Next Career <br />Move Starts <br />Here
         </h1>
-
-        <!-- List with Icons -->
         <ul class="mb-6 space-y-2">
           <li class="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6 text-black mr-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M5 13l4 4L19 7"
-              />
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-black mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
             </svg>
             <span class="text-2xl">5,000+ jobs available now</span>
           </li>
           <li class="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6 text-black mr-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M5 13l4 4L19 7"
-              />
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-black mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
             </svg>
             <span class="text-2xl">Trusted by industry leaders</span>
           </li>
         </ul>
-
-        <!-- Description -->
         <p class="text-gray-600 mb-6 text-2xl">
           Discover opportunities that align with your skills and ambitions.
         </p>
-
-        <!-- Button -->
-        <a
-          href="{% url 'register' %}"
-          class="bg-white hover:shadow-lg text-black font-bold py-2 px-4 rounded"
-        >
+        <a href="{% url 'register' %}" class="bg-white hover:shadow-lg text-black font-bold py-2 px-4 rounded">
           Register Now
         </a>
       </div>
     </div>
-  </body>
+
+    <!-- Features Section -->
+    <section class="bg-gray-100 py-20">
+      <div class="container mx-auto text-center">
+        <h2 class="text-4xl font-bold mb-6">Why Choose GitJob?</h2>
+        <p class="text-gray-600 text-lg mb-12">
+          Explore our unique features and benefits designed to help you achieve your career goals.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 px-6">
+          <!-- Feature 1 -->
+          <div class="bg-white shadow-md rounded-lg p-8">
+            <img src="{% static 'images/job.png' %}" alt="Real-Time Updates" class="mx-auto mb-4 h-16 w-16">
+            <h3 class="text-xl font-semibold mb-4">Real-Time Job Updates</h3>
+            <p class="text-gray-600">
+              Stay informed with live updates on job openings tailored to your preferences.
+            </p>
+          </div>
+          <!-- Feature 2 -->
+          <div class="bg-white shadow-md rounded-lg p-8">
+            <img src="{% static 'images/promotion.png' %}" alt="Career Insights" class="mx-auto mb-4 h-16 w-16">
+            <h3 class="text-xl font-semibold mb-4">Career Insights</h3>
+            <p class="text-gray-600">
+              Access industry trends and guidance to plan your career with confidence.
+            </p>
+          </div>
+          <!-- Feature 3 -->
+          <div class="bg-white shadow-md rounded-lg p-8">
+            <img src="{% static 'images/application.png' %}" alt="Seamless Application" class="mx-auto mb-4 h-16 w-16">
+            <h3 class="text-xl font-semibold mb-4">Seamless Application Process</h3>
+            <p class="text-gray-600">
+              Apply to jobs effortlessly with our user-friendly platform.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="bg-gray-100 py-20">
+      <div class="container mx-auto text-center">
+        <h2 class="text-4xl font-bold mb-6">How It Works</h2>
+        <p class="text-gray-600 text-lg mb-12">
+          Finding your next career opportunity is just three steps away.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-10 px-6">
+          <!-- Step 1 -->
+          <div class="flex flex-col items-center">
+            <div class="bg-blue-500 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4 text-xl font-bold">1</div>
+            <h3 class="text-xl font-semibold mb-2">Create Your Profile</h3>
+            <p class="text-gray-600 text-center">
+              Sign up and complete your profile to showcase your skills and experience.
+            </p>
+          </div>
+          <!-- Step 2 -->
+          <div class="flex flex-col items-center">
+            <div class="bg-blue-500 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4 text-xl font-bold">2</div>
+            <h3 class="text-xl font-semibold mb-2">Search for Jobs</h3>
+            <p class="text-gray-600 text-center">
+              Browse through thousands of job listings tailored to your interests.
+            </p>
+          </div>
+          <!-- Step 3 -->
+          <div class="flex flex-col items-center">
+            <div class="bg-blue-500 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4 text-xl font-bold">3</div>
+            <h3 class="text-xl font-semibold mb-2">Apply and Connect</h3>
+            <p class="text-gray-600 text-center">
+              Apply directly or connect with hiring managers for your next role.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Footer -->
+    {% include 'includes/footer.html' %}
+</body>
 </html>
