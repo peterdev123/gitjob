@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib import messages
 from django.contrib.auth import authenticate ,login, logout
 from django.http import HttpResponse
-from django.contrib.auth import get_user_model
 from .forms import LoginForm, RegisterForm, EditProfileForm, ResumeUploadForm, ProfilePicUploadForm
 from .models import GitJobUser, Resume
-from .functions import remove_previous_profile_pic
+from .functions import remove_previous_profile_pic, handleResumeUploadForm
 import json
-from datetime import datetime
 
 # Create your views here.
 def login_view(request):
@@ -72,7 +71,7 @@ def register_view(request):
 
 def profile_view(request, username):
     #helper method
-    def parse_context(user, edit_profile_form, resume_upload_form, skills_json, experiences_json):
+    def parse_context(user, edit_profile_form, resume_upload_form):
         resumes = Resume.objects.filter(owner=user) or []
         if user.birthdate is not None:
             formatted_birthdate = user.birthdate.strftime("%Y-%m-%d")
@@ -83,8 +82,6 @@ def profile_view(request, username):
             "birthdate": formatted_birthdate,
             "edit_profile_form": edit_profile_form,
             "resume_upload_form": resume_upload_form,
-            "skills_json": skills_json, 
-            "experiences_json": experiences_json,
             "resumes": resumes
         }
 
@@ -106,10 +103,8 @@ def profile_view(request, username):
     profile_pic_upload_form = ProfilePicUploadForm()
     user = request.user
 
-    skills_json = json.dumps(user.skills) if user.skills else json.dumps([])
-    experiences_json = json.dumps(user.experiences) if user.experiences else json.dumps([])
-
     if request.method == "POST":
+        handleResumeUploadForm(request)
         if request.POST.get('form_type') == 'edit_profile_form':
             edit_profile_form = EditProfileForm(request.POST, instance=user)
             if edit_profile_form.is_valid():
@@ -126,17 +121,6 @@ def profile_view(request, username):
                 messages.info(request, "Profile picture successfully updated")
             else:
                 print(profile_pic_upload_form.errors)
-        elif request.POST.get('form_type') == 'resume_upload_form':
-            resume_upload_form = ResumeUploadForm(request.POST, request.FILES)
-            if resume_upload_form.is_valid():
-                resume_file = request.FILES['resume_file']
-                resume = Resume.objects.create(
-                    filename=str(resume_file),
-                    file=resume_file,
-                    owner=request.user
-                )
-                resume.save()
-                messages.info(request, f"Resume {str(resume_file)} uploaded successfully")
         elif request.POST.get('form_type') == 'edit_skills_form':
             skills_json_input = request.POST.get('skills_json')
             try:
@@ -145,7 +129,6 @@ def profile_view(request, username):
                 skills_list = []
             user.skills = skills_list
             user.save()
-            skills_json = json.dumps(user.skills)
         elif request.POST.get('form_type') == 'edit_experiences_form':
             experiences_json_input = request.POST.get('experiences_json')
             try:
@@ -154,7 +137,6 @@ def profile_view(request, username):
                 experiences_list = []
             user.experiences = experiences_list
             user.save()
-            experiences_json = json.dumps(user.experiences)
         elif request.POST.get('form_type') == 'resume_delete_form':
             id_to_delete = request.POST.get('id')
             resume = Resume.objects.filter(id=id_to_delete)
@@ -164,4 +146,4 @@ def profile_view(request, username):
             return redirect('login')
         return redirect('profile', username=user.username)
     
-    return render(request, "users/own_profile.html", parse_context(request.user, edit_profile_form, resume_upload_form, skills_json, experiences_json))
+    return render(request, "users/own_profile.html", parse_context(request.user, edit_profile_form, resume_upload_form))

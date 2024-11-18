@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="{% static 'css/dist/custom.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="{% static 'js/message_box.js' %}"></script>
-    {{ skills_json|json_script:"skills" }}
-    {{ experiences_json|json_script:"experiences" }}
+    {{ request.user.skills | json_script:"skills" }}
+    {{ request.user.experiences | json_script:"experiences" }}
     <script src="{% static 'js/edit_profile.js' %}" defer></script>
     {% if messages %}
         {% include 'includes/message_box.html' %}
