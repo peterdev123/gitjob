@@ -74,8 +74,7 @@ function addInWrapper(input_val, wrapper, div_name){
 }
 
 function initEditSkills(){
-    //idk but this needs double parsing
-    const skills = JSON.parse(JSON.parse(document.getElementById("skills").textContent));
+    const skills = JSON.parse(document.getElementById("skills").textContent);
     const skill_wrapper = $("#skill_wrapper")
     skill_wrapper.html("")
     distributeInWrapper(skills, skill_wrapper, "skill")
@@ -103,7 +102,7 @@ function updateSkills(){
 }
 
 function initEditExperiences(){
-    const experiences = JSON.parse(JSON.parse(document.getElementById("experiences").textContent));
+    const experiences = JSON.parse(document.getElementById("experiences").textContent);
     const exp_wrapper = $("#experience_wrapper")
     exp_wrapper.html("")
     distributeInWrapper(experiences, exp_wrapper, "experience")

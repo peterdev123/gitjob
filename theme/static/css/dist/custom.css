@@ -4,10 +4,12 @@
     margin-top: 10px;
     color: black;
     border-radius: 10px;
-    line-height: 1.5rem;
-  }
-  .register_input {
     line-height: 1rem;
+  }
+  .login_input {
+    margin-top: 0;
+    width: 80%;
+    line-height: 1.5rem;
   }
   .name_input{
     width: 45%;
@@ -20,7 +22,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    margin: 1rem;
+    margin-top: 1rem;
     margin-bottom: 0;
   }
 
@@ -42,12 +44,6 @@
     font-family: Arial, sans-serif;
     border-radius: 10px;
   }
-
-  /* form div label {
-    color: black;
-    font-size: 1.1rem;
-    justify-self: flex-start;
-  } */
 
   input[type="checkbox"] {
     margin: 5px;
