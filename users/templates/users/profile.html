@@ -30,81 +30,116 @@
     <!-- Navbar -->
     {% include 'includes/headings.html' %}
 
-    <div class="w-full h-[calc(100%-100px)] px-15 flex justify-center">
-        <!-- Left Div -->
-        <div class="relative w-1/5 h-5/6 m-10 mx-[0.75rem] bg-cyan-200 rounded-xl border-2 border-solid border-black flex flex-col items-center">
+    <div class="main_page w-full bg-gray-200">
+        <div class="max-w-[1000px] w-[90%] mx-auto px-15 py-5 flex flex-col justify-center">
 
-                <img src="{{ user.profile_picture.url }}" 
+            <div class="relative flex mb-5 p-10 rounded-xl bg-white  shadow-lg">
+                <div class="w-32">
+                    <img src="{{ user.profile_picture.url }}" 
                         alt="Profile Picture" 
-                        id="profile-pic"
-                        class="w-24 h-24 mt-[2.5rem] object-cover rounded-full border-2 border-black border-solid hover:cursor-pointer">
-                <h1 id="username" class="mt-2 text-xl font-bold">{{ user.username }}</h1>
-                <h1 id="name" class="mt-2 text-lg font-medium">{{ user.first_name }} {{ user.last_name }}</h1>
-
-                 {% if user.job %}
-                 <div class="flex justify-between">
-                    <h1 id="job" class="mt-2 text-l font-medium">{{ user.job }}</h1>
-                    <h1 class="mt-2 mx-1 text-l font-medium"> at </h1>
-                    <h1 id="job_company" class="mt-2 text-l font-medium">{{ user.job_company }}</h1>
-                 </div>
-                 {% endif %}
-
-                 {% if user.home_address %}
-                 <h1 id="home_address" class="mt-2 text-l font-medium">{{ user.home_address }}</h1>
-                 {% endif %}
-
-                 {% if user.phone_number %}
-                 <h1 id="phone_number" class="mt-2 text-l font-medium">{{ user.phone_number }}</h1>
-                 {% endif %}
-
-                 <h1 id="email" class="mt-2 text-l font-medium">{{ user.email }}</h1>
-
-                 <hr>
-
-                 {% if user.birthdate %}
-                 <h1 id="birthdate" class="mt-2 text-l font-medium">{{ user.birthdate }}</h1>
-                 {% endif %}
-
-                 {% if user.gender %}
-                 <h1 id="gender" class="mt-2 text-l font-medium">{{ user.gender }}</h1>
-                 {% endif %}
-
-                 {% if user.description %}
-                 <h1 id="description" class="mt-2 text-l font-medium">{{ user.description }}</h1>
-                 {% endif %}
-        </div>
-        <!-- Right Div -->
-        <div class="w-2/5 h-5/6 m-10 mx-[0.75rem] flex flex-col justify-center">
-            <div class="w-full h-3/5 mb-6 bg-gray-200 rounded-2xl border-2 border-solid border-black flex justify-between">
-                <div class="relative w-[45%] p-4 h-5/6 m-6 mr-4 bg-green-200 rounded-2xl border-2 border-solid border-black flex flex-col items-center">
-                    <h1 class="mt-2 text-xl font-bold">Skills</h1>
-                    {% if user.skills %}
-                        <ul class="list-disc">
-                            {% for skill in user.skills %}
-                            <li>{{skill}}</li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                    <p class="mt-4">Not written any yet</p>
-                    {% endif %}
+                        class="w-24 h-24 object-cover rounded-full">
                 </div>
-                <div class="relative w-[45%] p-4 h-5/6 m-6 ml-4 bg-green-200 rounded-2xl border-2 border-solid border-black flex flex-col items-center">
-                    <h1 class="mt-2 text-xl font-bold">Experiences</h1>
-                    {% if user.experiences %}
-                    <ul class="list-disc">
-                        {% for experience in user.experiences %}
-                        <li>{{experience}}</li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <p class="mt-4">Not written any yet</p>
-                    {% endif %}
+    
+                <div class="flex-1 flex flex-col">
+                    <h1 id="name" class="mt-2 text-3xl font-bold">{{ user.first_name }} {{ user.last_name }}</h1>
+                    <h1 id="username" class="text-sm text-gray-800">@{{ user.username }}</h1>
+                    {% if user.job %}
+                     <div class="mt-1 flex">
+                        <h1 id="job" class="text-xl font-medium">{{ user.job }}</h1>
+                        <h1 class="mx-1 text-xl"> at </h1>
+                        <h1 id="job_company" class="text-xl font-medium">{{ user.job_company }}</h1>
+                     </div>
+                     {% endif %}
+    
+                     <div class="flex">
+                        <div class="flex flex-col mt-4 gap-4 mr-10">
+                            {% if user.country %}
+                            <div class="flex items-center">
+                                <img src="{% static 'images/location.png' %}" class="profile_detail_icon">
+                                <h1 id="job" class="text-sm font-medium text-gray-600">{{ user.country }}</h1>
+                            </div>
+                            {% endif %}
+    
+                            {% if user.home_address %}
+                            <div class="flex items-center">
+                                <img src="{% static 'images/home.png' %}" class="profile_detail_icon">
+                                <h1 id="job" class="text-sm font-medium text-gray-600">{{ user.home_address }}</h1>
+                            </div>
+                            {% endif %}
+    
+                            {% if user.phone_number %}
+                            <div class="flex items-center">
+                                <img src="{% static 'images/phone.png' %}" class="profile_detail_icon">
+                                <p id="job" class="text-sm font-medium text-gray-600">{{ user.phone_number }}</p>
+                            </div>
+                            {% endif %}
+    
+                            {% if user.birthdate %}
+                            <div class="flex items-center">
+                                <img src="{% static 'images/calendar.png' %}" class="profile_detail_icon">
+                                <p id="job" class="text-sm font-medium text-gray-600">{{ user.birthdate }}</p>
+                            </div>
+                            {% endif %}
+                            
+                            {% if user.gender %}
+                            <div class="flex items-center">
+                                <img src="{% static 'images/gender.png' %}" class="profile_detail_icon">
+                                <p id="job" class="text-sm font-medium text-gray-600">{{ user.gender }}</p>
+                            </div>
+                            {% endif %}
+
+                            <a href="{% url 'start-chat' username=user.username %}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md">
+                                Chat with me
+                            </a>
+
+                        </div>
+    
+                        <div>
+                            {% if user.description %}
+                            <div class="mt-2 flex items-center">
+                                <img src="{% static 'images/info.png' %}" class="profile_detail_icon">
+                                <p id="job" class="text-sm font-medium text-gray-600">{{ user.description }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                     </div>
                 </div>
             </div>
-            <a href="{% url 'start-chat' username=user.username %}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md">
-                Chat with me
-            </a>
+    
+            <div class="relative flex flex-col mb-5 p-10 rounded-xl bg-white shadow-lg">
+                <h1 class="text-3xl font-bold">Skills</h1>
+    
+                {% if user.skills %}
+                    <div class="px-10 pt-5">
+                        <ul class="list-disc">
+                            {% for skill in user.skills %}
+                            <li class="text-lg">{{skill}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% else %}
+                    <p class="mt-4">Not written any yet</p>
+                {% endif %}
+            </div>
+    
+            <div class="relative flex flex-col mb-5 p-10 rounded-xl bg-white shadow-lg">
+                <h1 class="text-3xl font-bold">Experiences</h1>
+    
+                {% if user.experiences %}
+                    <div class="px-10 pt-5">
+                        <ul class="list-disc">
+                            {% for experience in user.experiences %}
+                            <li class="text-lg">{{experience}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% else %}
+                    <p class="mt-4">Not written any yet</p>
+                {% endif %}
+            </div>
         </div>
     </div>
+
 </body>
 </html>
