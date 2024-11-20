@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render 
 from manager.models import JobPost
 from users.models import Resume
 from users.forms import ResumeUploadForm
@@ -21,3 +21,8 @@ def job_posting_view(request, id):
         'resumes': resumes,
         'resume_upload_form': ResumeUploadForm()
         })
+
+def job_post(request):
+    job_post = JobPost.objects.filter(author=request.user)
+    print(job_post)
+    return render(request, 'jobs/job_post.html', {'job_post' : job_post})
