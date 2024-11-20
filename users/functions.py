@@ -1,4 +1,5 @@
 import os
+from datetime import date
 from django.contrib import messages
 from users.forms import ResumeUploadForm
 from users.models import Resume
@@ -14,8 +15,17 @@ def handleResumeUploadForm(request):
                 resume = Resume.objects.create(
                     filename=str(resume_file),
                     file=resume_file,
-                    owner=request.user
+                    owner=request.user,
+                    date_uploaded=date.today()
                 )
                 resume.save()
                 messages.info(request, f"Resume {str(resume_file)} uploaded successfully")
 
+
+def handleResumeDeleteForm(request):
+    if request.method == 'POST' and request.POST.get('form_type') == 'resume_delete_form':
+            id_to_delete = request.POST.get('id')
+            resume = Resume.objects.filter(id=id_to_delete)
+            resume_name = resume[0].filename
+            resume.delete()
+            messages.info(request, f"Resume {str(resume_name)} deleted successfully")

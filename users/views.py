@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate ,login, logout
 from django.http import HttpResponse
 from .forms import LoginForm, RegisterForm, EditProfileForm, ResumeUploadForm, ProfilePicUploadForm
 from .models import GitJobUser, Resume
-from .functions import remove_previous_profile_pic, handleResumeUploadForm
+from .functions import remove_previous_profile_pic, handleResumeUploadForm, handleResumeDeleteForm
 import json
 
 # Create your views here.
@@ -105,6 +105,7 @@ def profile_view(request, username):
 
     if request.method == "POST":
         handleResumeUploadForm(request)
+        handleResumeDeleteForm(request)
         if request.POST.get('form_type') == 'edit_profile_form':
             edit_profile_form = EditProfileForm(request.POST, instance=user)
             if edit_profile_form.is_valid():
@@ -137,10 +138,6 @@ def profile_view(request, username):
                 experiences_list = []
             user.experiences = experiences_list
             user.save()
-        elif request.POST.get('form_type') == 'resume_delete_form':
-            id_to_delete = request.POST.get('id')
-            resume = Resume.objects.filter(id=id_to_delete)
-            resume.delete()
         elif request.POST.get('form_type') == 'logout':
             logout(request)
             return redirect('login')
