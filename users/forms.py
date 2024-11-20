@@ -85,7 +85,10 @@ class EditProfileForm(forms.ModelForm):
         self.fields['username'].help_text = None
 
 class ResumeUploadForm(forms.Form):
-    resume_file = forms.FileField(widget=forms.FileInput(attrs={'accept': 'application/pdf'}))
+    resume_file = forms.FileField(widget=forms.FileInput(attrs={
+        'accept': 'application/pdf',
+        'class': 'resume_input'
+        }))
 
 class ProfilePicUploadForm(forms.Form):
     profile_pic = forms.ImageField(required=False)

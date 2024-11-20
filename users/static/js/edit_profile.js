@@ -1,8 +1,26 @@
 $(document).ready(function(){
-    function showEditProfileModal() {
+
+    const blurPage = ()=>{
+        // Disable scroll
+        $('body').addClass("overflow-hidden");
+        // Blur
+        $("nav").addClass("opacity-50 pointer-events-none");
+        // Make semi transparent for black background to be semi visible
+        $(".main_page").addClass("opacity-50 pointer-events-none");
+    }
+    const unblurPage = ()=>{
+        $('body').removeClass("overflow-hidden");
+
+        $("nav").removeClass("opacity-50 pointer-events-none");    
+        $(".main_page").removeClass("opacity-50 pointer-events-none");
+
+    }
+    const showEditProfileModal = ()=>{
+        blurPage()
         $("#edit_profile_modal").show()
     }
     function hideEditProfileModal() {
+        unblurPage()
         $("#edit_profile_modal").hide()
     }
     $("#edit_profile_btn").click(()=>{showEditProfileModal()})
@@ -10,35 +28,52 @@ $(document).ready(function(){
     $("#edit_profile_exit").click(()=>{hideEditProfileModal()})
 
     function showAddSkillModal(){
+        blurPage()
         initEditSkills()
         updateSkills()
         $("#edit_skills_modal").show()
     }
     function hideAddSkillModal(){
+        unblurPage()
         $("#edit_skills_modal").hide()
     }
 
     $("#edit_skills_btn").click(()=>{showAddSkillModal()})
     $("#edit_skills_cancel").click(()=>{hideAddSkillModal()})
     $("#edit_skills_exit").click(()=>{hideAddSkillModal()})
+    $("#add_skill").on("keydown", (event)=>{
+        if (event.key === "Enter"){
+            event.preventDefault(); //prevents submitting the form when pressing enter
+            addSkill();
+        }
+    })
 
     function showAddExperienceModal(){
+        blurPage()
         initEditExperiences()
         updateExperiences()
         $("#edit_experiences_modal").show()
     }
     function hideAddExperienceModal(){
+        unblurPage()
         $("#edit_experiences_modal").hide()
     }
     $("#edit_experiences_btn").click(()=>{showAddExperienceModal()})
     $("#edit_experiences_cancel").click(()=>{hideAddExperienceModal()})
     $("#edit_experiences_exit").click(()=>{hideAddExperienceModal()})
+    $("#add_experience").on("keydown", (event)=>{
+        if (event.key === "Enter"){
+            event.preventDefault(); //prevents submitting the form when pressing enter
+            addExperience();
+        }
+    })
 
     $("#profile-pic").click(()=>{ $("#profile-pic-input").click() })
     $("#profile-pic-input").change(function() { this.form.submit() })
     $("input[type='file']").change(function() { this.form.submit() })
     $("#delete_resume_btn").click((event)=>{
         $(event.currentTarget).parent().submit();
+        console.log("Submitted");
     })
 })
 
@@ -53,10 +88,11 @@ function deleteItem(element){
 function distributeInWrapper(array, wrapper, div_name){
     if(Array.isArray(array)){
         array.forEach(function(item){
-            const item_div = "<div class='"+div_name+"-div w-full m-0 mt-2 p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
-                + "<span class='align-middle'>" + item +"</span>"
-                + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
-                + "</div>"
+            const imageSrc = $('#close_btn_url').data('static-url');
+            const item_div = `<div class='${div_name}-div w-full m-0 mt-4 px-4 py-2 rounded-xl flex items-center justify-between bg-violet-300 border-2 box-border shadow-sm'>`
+                + `<span class='align-middle'>• ${item}</span>`
+                + `<img src=${imageSrc} onclick='deleteItem(this)' class='w-5 h-5 hover:cursor-pointer'>`
+                + `</div>`
             wrapper.append(item_div)
         })
     }else{
@@ -65,11 +101,12 @@ function distributeInWrapper(array, wrapper, div_name){
 }
 function addInWrapper(input_val, wrapper, div_name){
     if(input_val){
-        const item = "<div class='"+div_name+"-div w-full m-0 mt-2 p-2 rounded-2xl flex items-center justify-between bg-green-200 border-2 border-black border-solid box-border'>"
-            + "<span class='align-middle'>" + input_val +"</span>"
-            + "<button onclick='deleteItem(this)' class='w-12 h-8 ml-4 rounded-2xl border-2 border-black border-solid bg-white text-red-600 text-sm'>Delete</button>"
-            + "</div>"
-        wrapper.append(item)
+        const imageSrc = $('#close_btn_url').data('static-url');
+        const item_div = `<div class='${div_name}-div w-full m-0 mt-4 px-4 py-2 rounded-xl flex items-center justify-between bg-violet-300 border-2 box-border shadow-sm'>`
+            + `<span class='align-middle'>• ${input_val}</span>`
+            + `<img src=${imageSrc} onclick='deleteItem(this)' class='w-5 h-5 hover:cursor-pointer'>`
+            + `</div>`
+        wrapper.append(item_div)
     }
 }
 
@@ -83,7 +120,7 @@ function initEditSkills(){
 function addSkill(){
     const input = $("#add_skill")
     const input_val = input.val()
-    input.html("")
+    input.val("")
     addInWrapper(input_val, $("#skill_wrapper"), "skill")
     updateSkills()
 }
@@ -92,7 +129,7 @@ function updateSkills(){
     const skills = []
 
     $("#skill_wrapper .skill-div").each(function() {
-        const skillText = $(this).find("span").text();
+        const skillText = $(this).find("span").text().slice(2);
         skills.push(skillText);
     });
 
@@ -113,7 +150,7 @@ function addExperience(){
     const input_val = input.val()
 
     addInWrapper(input_val, $("#experience_wrapper"), "experience")
-    input.html("")
+    input.val("")
 
     updateExperiences()
 }
@@ -122,7 +159,7 @@ function updateExperiences(){
     const experiences = []
 
     $("#experience_wrapper .experience-div").each(function() {
-        const experienceText = $(this).find("span").text();
+        const experienceText = $(this).find("span").text().slice(2);
         experiences.push(experienceText);
     });
 
