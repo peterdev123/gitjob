@@ -7,13 +7,13 @@
     <title>Job Posting Form</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white">
+<body class="bg-gray-100">
     <!-- Headings -->
     {% include 'includes/headings.html' %}
 
     <div class="max-w-4xl mx-auto p-10 border border-grey-300 bg-white shadow-lg my-8 rounded-lg">
-        <div class="bg-cyan-400 text-black text-center py-4">
-            <h1 class="text-2xl font-bold">JOB POSTING</h1>
+        <div class="bg-cyan-400 text-white text-center py-4 rounded-t-lg">
+            <h1 class="text-2xl font-bold">Job Posting</h1>
         </div>
 
         <form method="POST" enctype="multipart/form-data" class="space-y-4 mt-6">
@@ -78,11 +78,11 @@
             </div>
 
             <!-- Submit Button -->
-            <div class="text-center">
-                <button type="submit" class="border border-black bg-cyan-400 hover:bg-cyan-600 text-black font-bold py-2 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-300">
+           <div class="text-center">
+                <button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-6 rounded-lg shadow-md focus:outline-none">
                     Submit
                 </button>
-            </div>
+           </div> 
         </form>
     </div>
 </body>
