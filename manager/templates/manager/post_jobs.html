@@ -20,7 +20,7 @@
             {% csrf_token %}
             
             <!-- Job Title and Job Field -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-gray-700 font-bold">Job Title</label>
                     {{ form.job_title }}
@@ -28,6 +28,10 @@
                 <div>
                     <label class="block text-gray-700 font-bold">Job Field</label>
                     {{ form.job_field }}
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-bold">Employment Status</label>
+                    {{ form.job_schedule }}
                 </div>
             </div>
 
