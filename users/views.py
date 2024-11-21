@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib import messages
 from django.contrib.auth import authenticate ,login, logout
 from django.http import HttpResponse
 from .forms import LoginForm, RegisterForm, EditProfileForm, ResumeUploadForm, ProfilePicUploadForm
@@ -103,9 +102,9 @@ def profile_view(request, username):
     profile_pic_upload_form = ProfilePicUploadForm()
     user = request.user
 
+    handleResumeUploadForm(request)
+    handleResumeDeleteForm(request)
     if request.method == "POST":
-        handleResumeUploadForm(request)
-        handleResumeDeleteForm(request)
         if request.POST.get('form_type') == 'edit_profile_form':
             edit_profile_form = EditProfileForm(request.POST, instance=user)
             if edit_profile_form.is_valid():
