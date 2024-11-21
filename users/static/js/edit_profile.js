@@ -4,8 +4,8 @@ $(document).ready(function(){
         // Disable scroll
         $('body').addClass("overflow-hidden");
         // Blur
-        $("nav").addClass("opacity-50 pointer-events-none");
         // Make semi transparent for black background to be semi visible
+        $("nav").addClass("opacity-50 pointer-events-none");
         $(".main_page").addClass("opacity-50 pointer-events-none");
     }
     const unblurPage = ()=>{
