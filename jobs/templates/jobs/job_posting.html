@@ -37,7 +37,7 @@
           blurPage();
           $("#job_application_modal").show();
         });
-        $("#job_application_exit").click(()=>{
+        $("#job_application_exit, #job_application_cancel").click(()=>{
           unblurPage();
           $("#job_application_modal").hide();
         })
@@ -228,8 +228,8 @@
           
           <!-- Buttons -->
           <div class="w-full flex justify-end">
-              <button id="edit_profile_cancel" class="px-3 py-2 rounded-xl bg-gray-200 text-black font-semibold" type="button">Cancel</button>
-              <button id="edit_profile_confirm" class="px-3 py-2 ml-5 rounded-xl bg-blue-600 text-white font-semibold" type="submit">Submit</button>
+              <button id="job_application_cancel" class="px-3 py-2 rounded-xl bg-gray-200 text-black font-semibold" type="button">Cancel</button>
+              <button id="job_application_submit" class="px-3 py-2 ml-5 rounded-xl bg-blue-600 text-white font-semibold" type="submit">Submit</button>
           </div>
        </form>
   </div>
