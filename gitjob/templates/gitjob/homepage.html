@@ -25,20 +25,20 @@
           <ul class="mt-4">
             <li class="text-s font-bold text-slate-500">Schedule</li>
             <li class="text-s">
-              <input type="radio" id="full-time" name="full-time" />
-              <label for="full-time" class="text-s">Full Time</label>
+              <input type="radio" id="full_time" name="full_time" />
+              <label for="full_time" class="text-s">Full Time</label>
             </li>
             <li class="text-s">
-              <input type="radio" id="part-time" name="part-time" />
-              <label for="part-time" class="text-s">Part Time</label>
+              <input type="radio" id="part_time" name="part_time" />
+              <label for="part_time" class="text-s">Part Time</label>
             </li>
             <li class="text-s">
               <input type="radio" id="internship" name="internship" />
               <label for="internship" class="text-s">Internship</label>
             </li>
             <li class="text-s">
-              <input type="radio" id="project-work" name="project-work" />
-              <label for="project-work" class="text-s">Project Work</label>
+              <input type="radio" id="project_work" name="project_work" />
+              <label for="project_work" class="text-s">Project Work</label>
             </li>
           </ul>
 
@@ -105,11 +105,17 @@
                   class="appearance-none w-[100px] bg-gray-200 border border-black rounded-[25px] h-[25px] pl-4 pr-10"
                 >
                   <option value="" class="text-center">Any</option>
-                  <option value="IT">Information Technology</option>
-                  <option value="Finance">Finance</option>
-                  <option value="Marketing">Marketing</option>
-                  <option value="Engineering">Engineering</option>
-                  <option value="Health">Health Care</option>
+                  <option value="architecture_engineering">Architecture and Engineering</option>
+                  <option value="arts_entertainment">Arts and Entertainment</option>
+                  <option value="business_management">Business Management and Administration</option>
+                  <option value="communications">Communications</option>
+                  <option value="education">Education</option>
+                  <option value="it">IT</option>
+                  <option value="repair_maintenance">Repair and Maintenance</option>
+                  <option value="agriculture">Agriculture</option>
+                  <option value="health_medicine">Health and Medicine</option>
+                  <option value="law_public_policy">Law and Public policy</option>
+                  <option value="sales">Sales</option>
                 </select>
                 <!-- Arrow Icon -->
                 <div
@@ -139,10 +145,14 @@
               <!-- Job-Posting Div -->
               <div class="job-posting p-2 pb-5 m-1 w-80 rounded-xl bg-white shadow-xl"
               data-min-salary="{{ job_posting.min_salary }}"
-              data-max-salary="{{ job_posting.max_salary }}">
+              data-max-salary="{{ job_posting.max_salary }}"
+              data-job-field="{{ job_posting.job_field }}"
+              data-job-sched="{{ job_posting.job_schedule }}"
+              >
                 <!-- Colored Section -->
                 <div class="relative p-5 pb-2 h-60 mb-5 bg-orange-300 rounded-xl">
                   <h1 class="text-xl font-bold">{{ job_posting.job_title }}</h1>
+                  <h6 class="font-bold">{{ job_posting.get_job_field_display }}</h6>
                   {% if job_posting.company_logo %}
                   <img src="{{ job_posting.company_logo.url }}" class="w-10 h-10 my-2">
                   {% else %}
@@ -157,6 +167,9 @@
                       <p>{{ tag }}</p>
                     </div>
                     {% endfor %}
+                    <div class="min-w-10 h-6 mx-2 mt-1 px-3 flex justify-center items-center text-xs bg-orange-300 box-border rounded-2xl border-2 border-solid border-black">
+                      <p>{{ job_posting.get_job_schedule_display }}</p>
+                    </div>
                   </div>
                   <p class="text-xs absolute bottom-2">Open until:</p>
                   <p class="text-xs absolute bottom-2 right-5">{{ job_posting.hiring_deadline }}</p>
@@ -175,99 +188,147 @@
     <!-- <script src="{% static 'js/salary_slider.js' %}"></script> -->
     <script>
       console.log("JavaScript file loaded");
+    
+      const rangeInputs = document.querySelectorAll(".range-input input"),
+        priceInputs = document.querySelectorAll(".price-input input"),
+        range = document.querySelector(".slider .progress"),
+        jobPostings = document.querySelectorAll(".job-posting"),
+        jobFieldDropdown = document.getElementById("job-field");
+        const scheduleInputs = document.querySelectorAll("input[name='full_time'], input[name='part_time'], input[name='internship'], input[name='project_work']");
 
-const rangeInputs = document.querySelectorAll(".range-input input"),
-  priceInputs = document.querySelectorAll(".price-input input"),
-  range = document.querySelector(".slider .progress"),
-  jobPostings = document.querySelectorAll(".job-posting");
+// Add a click event listener to each schedule radio button
+let lastCheckedRadio = null; // Keep track of the last checked radio button
 
-const priceGap = 1000; // Minimum gap between min and max values
+scheduleInputs.forEach((input) => {
+  input.addEventListener("click", function () {
+    // If the same radio button is clicked again, uncheck it
+    if (lastCheckedRadio === this) {
+      this.checked = false;
+      lastCheckedRadio = null; // Reset the last checked radio button
+    } else {
+      lastCheckedRadio = this; // Update the last checked radio button
+    }
+    // Trigger filtering after toggle
+    filterJobPostings();
+  });
+});
 
-// Helper function to update the range slider's progress bar
-const updateSlider = (minVal, maxVal) => {
-  range.style.left = ((minVal / rangeInputs[0].max) * 100).toFixed(2) + "%";
-  range.style.right = (100 - (maxVal / rangeInputs[1].max) * 100).toFixed(2) + "%";
+
+// Function to get the selected schedule
+const getSelectedSchedule = () => {
+  const selected = [...scheduleInputs].find(input => input.checked);
+  return selected ? selected.id : null; // Return the selected schedule ID or null if none is selected
 };
-
-// Function to filter job postings based on the selected salary range
-const filterJobPostings = () => {
+    
+      const priceGap = 1000; // Minimum gap between min and max values
+    
+      // Helper function to update the range slider's progress bar
+      const updateSlider = (minVal, maxVal) => {
+        range.style.left = ((minVal / rangeInputs[0].max) * 100).toFixed(2) + "%";
+        range.style.right = (100 - (maxVal / rangeInputs[1].max) * 100).toFixed(2) + "%";
+      };
+    
+      // Function to filter job postings based on the selected salary range and job field
+      const filterJobPostings = () => {
     console.log("filterJobPostings called");
-    const minSalary = parseInt(priceInputs[0].value, 10) || 0; // Fallback to 0
-    const maxSalary = parseInt(priceInputs[1].value, 10) || 100000; // Fallback to 100000
-    console.log(`Filtering with minSalary: ${minSalary}, maxSalary: ${maxSalary}`); // Debugging line
-  
+    const minSalary = parseInt(priceInputs[0].value, 10) || 0;
+    const maxSalary = parseInt(priceInputs[1].value, 10) || 100000;
+    const selectedJobField = jobFieldDropdown.value;
+    const selectedSchedule = getSelectedSchedule(); // Get selected schedule
+
+    console.log(`Filtering with minSalary: ${minSalary}, maxSalary: ${maxSalary}, jobField: ${selectedJobField}, schedule: ${selectedSchedule}`); // Debugging line
+
     jobPostings.forEach((job) => {
       const jobMinSalary = parseInt(job.getAttribute("data-min-salary"), 10);
       const jobMaxSalary = parseInt(job.getAttribute("data-max-salary"), 10);
-  
-      if (isNaN(jobMinSalary) || isNaN(jobMaxSalary)) {
-        console.warn("Skipping job with invalid salary range:", job); // Debugging line
-        job.style.display = "none"; 
-      } else if (jobMaxSalary >= minSalary && jobMinSalary <= maxSalary) {
-        job.style.display = "block"; 
+      const jobField = job.getAttribute("data-job-field");
+      const jobSchedule = job.getAttribute("data-job-sched"); // Assume a data attribute for job schedule
+
+      // Check salary, job field, and schedule conditions
+      const isSalaryMatch =
+        !isNaN(jobMinSalary) &&
+        !isNaN(jobMaxSalary) &&
+        jobMaxSalary >= minSalary &&
+        jobMinSalary <= maxSalary;
+
+      const isJobFieldMatch =
+        !selectedJobField || selectedJobField === jobField || selectedJobField === "any";
+
+      const isScheduleMatch =
+        !selectedSchedule || selectedSchedule === jobSchedule;
+
+      if (isSalaryMatch && isJobFieldMatch && isScheduleMatch) {
+        job.style.display = "block";
       } else {
         job.style.display = "none";
       }
     });
   };
-  
-
-// Initialize the slider positions on page load
-window.addEventListener("load", () => {
-  const minPrice = 0; // Initial min price
-  const maxPrice = 100000; // Initial max price
-
-  // Set initial values for both price and range inputs
-  priceInputs[0].value = minPrice;
-  priceInputs[1].value = maxPrice;
-  rangeInputs[0].value = minPrice;
-  rangeInputs[1].value = maxPrice;
-
-  updateSlider(minPrice, maxPrice);
-  filterJobPostings(); // Initial filter on page load
-});
-
-// Update slider and price inputs when price input fields are changed
-priceInputs.forEach((input) => {
-    input.addEventListener("input", (e) => {
-      console.log("Price input changed:", e.target.value); // Debugging line
-      const minPrice = parseInt(priceInputs[0].value, 10);
-      const maxPrice = parseInt(priceInputs[1].value, 10);
-  
-      if (maxPrice - minPrice >= priceGap) {
-        if (e.target.classList.contains("input-min")) {
-          rangeInputs[0].value = minPrice;
-        } else {
-          rangeInputs[1].value = maxPrice;
-        }
+    
+      // Initialize the slider positions on page load
+      window.addEventListener("load", () => {
+        const minPrice = 0; // Initial min price
+        const maxPrice = 100000; // Initial max price
+    
+        // Set initial values for both price and range inputs
+        priceInputs[0].value = minPrice;
+        priceInputs[1].value = maxPrice;
+        rangeInputs[0].value = minPrice;
+        rangeInputs[1].value = maxPrice;
+    
         updateSlider(minPrice, maxPrice);
-        filterJobPostings(); // Ensure this line is here
-      }
-    });
+        filterJobPostings(); // Initial filter on page load
+      });
+    
+      // Update slider and price inputs when price input fields are changed
+      priceInputs.forEach((input) => {
+        input.addEventListener("input", (e) => {
+          console.log("Price input changed:", e.target.value); // Debugging line
+          const minPrice = parseInt(priceInputs[0].value, 10);
+          const maxPrice = parseInt(priceInputs[1].value, 10);
+    
+          if (maxPrice - minPrice >= priceGap) {
+            if (e.target.classList.contains("input-min")) {
+              rangeInputs[0].value = minPrice;
+            } else {
+              rangeInputs[1].value = maxPrice;
+            }
+            updateSlider(minPrice, maxPrice);
+            filterJobPostings(); // Ensure this line is here
+          }
+        });
+      });
+    
+      // Handle range sliders when moved
+      rangeInputs.forEach((input) => {
+        input.addEventListener("input", (e) => {
+          console.log("Range input changed:", e.target.value); // Debugging line
+          const minVal = parseInt(rangeInputs[0].value, 10);
+          const maxVal = parseInt(rangeInputs[1].value, 10);
+    
+          if (maxVal - minVal < priceGap) {
+            if (e.target.classList.contains("range-min")) {
+              rangeInputs[0].value = maxVal - priceGap;
+            } else {
+              rangeInputs[1].value = minVal + priceGap;
+            }
+          } else {
+            priceInputs[0].value = minVal;
+            priceInputs[1].value = maxVal;
+            updateSlider(minVal, maxVal);
+            filterJobPostings(); // Ensure this line is here
+          }
+        });
+      });
+    
+      // Add event listener to the Job Field dropdown
+      jobFieldDropdown.addEventListener("change", () => {
+        console.log("Job Field dropdown changed:", jobFieldDropdown.value); // Debugging line
+        filterJobPostings();
+      });
+      window.addEventListener("load", () => {
+    filterJobPostings();
   });
-
-// Handle range sliders when moved
-rangeInputs.forEach((input) => {
-    input.addEventListener("input", (e) => {
-      console.log("Range input changed:", e.target.value); // Debugging line
-      const minVal = parseInt(rangeInputs[0].value, 10);
-      const maxVal = parseInt(rangeInputs[1].value, 10);
-  
-      if (maxVal - minVal < priceGap) {
-        if (e.target.classList.contains("range-min")) {
-          rangeInputs[0].value = maxVal - priceGap;
-        } else {
-          rangeInputs[1].value = minVal + priceGap;
-        }
-      } else {
-        priceInputs[0].value = minVal;
-        priceInputs[1].value = maxVal;
-        updateSlider(minVal, maxVal);
-        filterJobPostings(); // Ensure this line is here
-      }
-    });
-  });
-
     </script>
   </body>
 </html>

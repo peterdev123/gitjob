@@ -4,7 +4,7 @@ from .models import JobPost
 class JobPostForm(forms.ModelForm):
     class Meta:
         model = JobPost
-        fields = ['job_title', 'job_field', 'address', 'hiring_deadline', 
+        fields = ['job_title', 'job_field', 'job_schedule', 'address', 'hiring_deadline', 
                   'min_salary', 'max_salary', 'job_description', 
                   'core_competencies', 'tags', 'company_logo']
         
@@ -14,9 +14,14 @@ class JobPostForm(forms.ModelForm):
                 'placeholder': 'Enter Job Title', 
                 'required': True
             }),
-            'job_field': forms.TextInput(attrs={
+            'job_field': forms.Select(attrs={
                 'class': 'w-full border border-gray-300 rounded-lg p-3 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none', 
                 'placeholder': 'Enter Job Field', 
+                'required': True
+            }),
+            'job_schedule': forms.Select(attrs={
+                'class': 'w-full border border-gray-300 rounded-lg p-3 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none', 
+                'placeholder': 'Select Job Schedule', 
                 'required': True
             }),
             'address': forms.TextInput(attrs={
