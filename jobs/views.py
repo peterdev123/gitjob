@@ -20,7 +20,7 @@ def job_posting_view(request, id):
     handleResumeUploadForm(request)
     handleResumeDeleteForm(request)
     try:
-        existing_application = JobApplication.objects.get(applicant=request.user)
+        existing_application = JobApplication.objects.get(id=id, applicant=request.user)
     except JobApplication.DoesNotExist:
         existing_application = None
 
