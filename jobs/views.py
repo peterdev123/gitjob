@@ -19,25 +19,29 @@ def job_posting_view(request, id):
         other_job_posting.tags = other_job_posting.tags.split(',')
     handleResumeUploadForm(request)
     handleResumeDeleteForm(request)
-    try:
-        existing_application = JobApplication.objects.get(id=id, applicant=request.user)
-    except JobApplication.DoesNotExist:
-        existing_application = None
 
+    # dictionary to check if user already applied, and if true, add the form submitted
     edit_application_fields = {
         'already_applied': False,
-        'last_updated': None
     }
-    edit_application_fields['already_applied'] = False
-    if existing_application:
-        edit_application_fields['already_applied'] = True
-        edit_application_fields['form'] = existing_application
+
+    existing_application = None
+    if request.user.is_authenticated:
+        try:
+            existing_application = JobApplication.objects.get(id=id, applicant=request.user)
+        except JobApplication.DoesNotExist:
+            pass
+
+        edit_application_fields['already_applied'] = False
+        if existing_application:
+            edit_application_fields['already_applied'] = True
+            edit_application_fields['form'] = existing_application
         
     if request.method == 'POST' and request.POST.get('form_type') == 'job_application_form':
         job_application_form = JobApplicationForm(request.POST)
         if job_application_form.is_valid():
-            resume = get_object_or_404(Resume, id=request.POST.get('resume_id'))
-            if request.POST.get('already_applied') == 'True':
+            if  request.POST.get('already_applied') == 'True':
+                resume = get_object_or_404(Resume, id=request.POST.get('resume_id'))
                 existing_application.email = request.POST.get('email')
                 existing_application.phone_number = request.POST.get('phone_number')
                 existing_application.cover_letter = request.POST.get('cover_letter')
@@ -56,8 +60,12 @@ def job_posting_view(request, id):
             messages.error(request, "Error: Form submitted is not valid!")
 
 
-                 
-    resumes = Resume.objects.filter(owner=request.user) or []
+
+    resumes = []
+    if request.user.is_authenticated:
+        resumes = Resume.objects.filter(owner=request.user)
+
+
     return render(request, 'jobs/job_posting.html', {
         'job_posting': job_posting,
         'other_job_postings': other_job_postings,

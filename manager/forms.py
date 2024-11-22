@@ -101,15 +101,15 @@ class JobApplicationForm(forms.ModelForm):
     def __init__(self, *args, user=None, form=None, **kwargs):
         super().__init__(*args, **kwargs)
         if user:
-            # Set initial values and make the fields readonly
-            self.fields['first_name'].initial = user.first_name
+            # make the fields readonly
             self.fields['first_name'].widget.attrs['readonly'] = True
-
-            self.fields['last_name'].initial = user.last_name
             self.fields['last_name'].widget.attrs['readonly'] = True
 
-            self.fields['email'].initial = user.email
-            self.fields['phone_number'].initial = user.phone_number
+            if user.is_authenticated:
+                self.fields['first_name'].initial = user.first_name
+                self.fields['last_name'].initial = user.last_name
+                self.fields['email'].initial = user.email
+                self.fields['phone_number'].initial = user.phone_number
             
             if form:
                 self.fields['email'].initial = form.email
