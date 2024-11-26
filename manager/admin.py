@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import JobPost, JobApplication
+from .models import JobPost
 
 # Register your models here.
 admin.site.register(JobPost)
-admin.site.register(JobApplication)
