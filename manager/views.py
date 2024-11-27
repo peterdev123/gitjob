@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import JobPostForm
+from datetime import datetime
 
 def post_jobs(request):
     if request.method == 'POST':

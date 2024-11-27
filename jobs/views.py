@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.utils.timezone import now
 from datetime import date
 from manager.models import JobPost
 from .models import JobApplication
@@ -9,14 +10,15 @@ from manager.forms import JobApplicationForm
 from users.functions import handleResumeUploadForm, handleResumeDeleteForm
 from .functions import get_job_field_color
 
+
 # Create your views here.
 def job_posting_view(request, id):
     job_posting = JobPost.objects.get(id=id)
     # Need to change this on create
     job_posting.tags = job_posting.tags.split(',')
 
-
-    other_job_postings = JobPost.objects.all().exclude(id=id)
+    # Get all job_postings that are not yet done with hiring AND not the current one we are viewing AND ordered by latest datetime added
+    other_job_postings = JobPost.objects.filter(hiring_deadline__gte=now().date()).exclude(id=id).order_by('-date_time_added')
     for other_job_posting in other_job_postings:
         other_job_posting.tags = other_job_posting.tags.split(',')
         other_job_posting.color = get_job_field_color(other_job_posting.job_field)

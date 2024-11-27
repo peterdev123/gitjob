@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from datetime import datetime
 
 class JobPost(models.Model):
 
@@ -41,6 +42,7 @@ class JobPost(models.Model):
     tags = models.TextField(blank=True, help_text="Enter tags separated by commas.")
     
     company_logo = models.ImageField(upload_to='logos/', blank=True, null=True)
+    date_time_added = models.DateTimeField(default=datetime.now) # datetime callable now()
 
     def __str__(self):
         return self.job_title
