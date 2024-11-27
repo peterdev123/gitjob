@@ -86,4 +86,6 @@ def job_post(request):
 
 def job_application_history_view(request):
     job_applications = request.user.job_applications.all()
+    for application in job_applications:
+        application.job_post.tags = application.job_post.tags.split(',')
     return render(request, 'jobs/job_application_history.html', {'job_applications': job_applications})
