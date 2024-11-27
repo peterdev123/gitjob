@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 from django.http import Http404
 from .models import ChatGroup
 from .forms import ChatmessageCreateForm
-
+from jobs.functions import get_job_field_color
 
 
 def hero(request):
@@ -20,6 +20,7 @@ def homepage(request):
     job_postings = JobPost.objects.all()
     for job_posting in job_postings:
         job_posting.tags = job_posting.tags.split(',')
+        job_posting.color = get_job_field_color(job_posting.job_field)
     return render(request, 'gitjob/homepage.html', {'job_postings': job_postings})
 
 @login_required

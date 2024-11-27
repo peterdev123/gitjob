@@ -51,8 +51,9 @@
     <!-- Search Job Bar -->
     {% include 'includes/search_job_bar.html' %}
     <div class="main_page min-h-[calc(100vh-150px)] flex flex-col items-center bg-gray-200">
-      <div>
-        <div class="p-10 flex flex-col rounded-xl bg-white">
+      <div class="flex flex-col items-center">
+        <!-- Job Post Details -->
+        <div class="min-w-[800px] p-10 flex flex-col rounded-xl bg-white">
           
           <div class="flex gap-4">
             <img src="{{ job_posting.company_logo.url }}" class="w-20 h-20 rounded-lg">
@@ -60,12 +61,15 @@
             <div class="flex flex-col flex-1">
               <h1 class="text-xl font-bold ml-3">{{ job_posting.job_title }}</h1>
 
-              <div class="flex flex-wrap">
+              <div class="p-2 flex flex-wrap gap-x-2 gap-y-1">
                 {% for tag in job_posting.tags %}
-                <div class="min-w-10 h-6 mx-3 mt-2 px-3 flex justify-center items-center text-xs bg-cyan-200 box-border rounded-2xl border-2 border-solid border-black">
-                  <p>{{ tag }}</p>
+                <div class="min-w-10 h-6 mt-1 mb-1 px-3 flex justify-center items-center text-xs bg-cyan-200 box-border rounded-2xl border-[1px] border-solid border-black">
+                  <p class="font-semibold">{{ tag }}</p>
                 </div>
                 {% endfor %}
+                <div class="min-w-10 h-6 mt-1 mb-1 px-3 flex justify-center items-center text-xs bg-cyan-200 box-border rounded-2xl border-[1px] border-solid border-black">
+                  <p class="font-semibold">{{ job_posting.get_job_schedule_display }}</p>
+                </div>
               </div>
             </div>
 
@@ -102,7 +106,7 @@
 
           <hr class="border-top-2px my-6">
           
-          <div class="flex">
+          <div class="flex gap-6">
 
             <div class="w-1/2 flex flex-col gap-2">
 
@@ -113,7 +117,7 @@
 
               <div class="flex items-center">
                   <img src="{% static 'jobs/images/field.png' %}" class="profile_detail_icon">
-                  <p id="job" class="text-sm font-medium">{{ job_posting.job_field }}</p>
+                  <p id="job" class="text-sm font-medium">{{ job_posting.get_job_field_display }}</p>
               </div>
 
               <div class="flex items-center">
@@ -138,28 +142,32 @@
         </div>
 
         <!-- Other Jobs Scrollable -->
-        <div class="flex mt-6 gap-4 overflow-x-auto flex-nowrap">
-          {% for job_posting in other_job_postings %}
+        <div class="flex-1 flex mt-6 gap-4 max-w-[1000px] overflow-x-auto flex-nowrap">
+          {% for o_job_posting in other_job_postings %}
             <!-- Job-Posting Div -->
-            <div class="p-2 pb-5 my-1 w-80 rounded-xl bg-white shadow-xl box-border">
+            <div class="shrink-0 p-2 pb-5 my-1 w-80 rounded-xl bg-white shadow-xl box-border">
               <!-- Colored Section -->
-              <div class="relative p-5 pb-2 h-60 mb-5 bg-orange-300 rounded-xl">
-                <h1 class="text-xl font-bold">{{ job_posting.job_title }}</h1>
+              <div class="relative p-5 pb-2 h-60 mb-5 {{ o_job_posting.color }} rounded-xl">
+                <h1 class="text-xl font-bold">{{ o_job_posting.job_title }}</h1>
+                <h6 class="text-sm">{{ o_job_posting.get_job_field_display }}</h6>
                 <img src="{{ job_posting.company_logo.url }}" class="w-10 h-10 my-2">
                 <!-- Tags Section -->
-                <div class="flex flex-wrap gap-2">
-                  {% for tag in job_posting.tags %}
-                  <div class="min-w-10 h-6 mt-2 mb-1 px-3 flex justify-center items-center text-xs bg-orange-300 box-border rounded-2xl border-2 border-solid border-black">
-                    <p>{{ tag }}</p>
+                <div class="flex flex-wrap gap-x-2 gap-y-1">
+                  {% for tag in o_job_posting.tags %}
+                  <div class="min-w-10 h-6 mt-1 mb-1 px-3 flex justify-center items-center text-xs box-border rounded-2xl border-[1px] border-solid border-black">
+                    <p class="font-semibold">{{ tag }}</p>
                   </div>
                   {% endfor %}
+                  <div class="min-w-10 h-6 mt-1 mb-1 px-3 flex justify-center items-center text-xs box-border rounded-2xl border-[1px] border-solid border-black">
+                    <p class="font-semibold">{{ o_job_posting.get_job_schedule_display }}</p>
+                  </div>
                 </div>
                 <p class="text-xs absolute bottom-2">Open until:</p>
-                <p class="text-xs absolute bottom-2 right-5">{{ job_posting.hiring_deadline }}</p>
+                <p class="text-xs absolute bottom-2 right-5">{{ o_job_posting.hiring_deadline }}</p>
               </div>
               <div class="flex justify-between">
-                <p class="font-bold ml-3">₱{{ job_posting.min_salary }} - ₱{{ job_posting.max_salary }}</p>
-                <a href="{% url 'job_posting' id=job_posting.id %}"><button class="w-20 h-8 mr-3 bg-black text-white rounded-2xl">Details</button></a>
+                <p class="font-bold ml-3">₱{{ o_job_posting.min_salary }} - ₱{{ o_job_posting.max_salary }}</p>
+                <a href="{% url 'job_posting' id=o_job_posting.id %}"><button class="w-20 h-8 mr-3 bg-black text-white rounded-2xl">Details</button></a>
               </div>
             </div>
           {% endfor %}
@@ -170,5 +178,12 @@
     {% if request.user.is_authenticated %}
         {% include 'includes/job_application_form.html' %}
     {% endif %}
+
+    <!-- Hidden Dummy Div for Tailwind JIT -->
+    <div class="hidden" style="display: none;">
+      bg-blue-300 bg-pink-200 bg-orange-200 bg-sky-200 bg-yellow-200
+      bg-green-300 bg-red-200 bg-lime-200 bg-rose-200 bg-amber-200
+      bg-yellow-300 bg-gray-300
+    </div>
 </body>
 </html>

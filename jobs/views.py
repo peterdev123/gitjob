@@ -7,6 +7,7 @@ from users.models import Resume
 from users.forms import ResumeUploadForm
 from manager.forms import JobApplicationForm
 from users.functions import handleResumeUploadForm, handleResumeDeleteForm
+from .functions import get_job_field_color
 
 # Create your views here.
 def job_posting_view(request, id):
@@ -14,9 +15,12 @@ def job_posting_view(request, id):
     # Need to change this on create
     job_posting.tags = job_posting.tags.split(',')
 
+
     other_job_postings = JobPost.objects.all().exclude(id=id)
     for other_job_posting in other_job_postings:
         other_job_posting.tags = other_job_posting.tags.split(',')
+        other_job_posting.color = get_job_field_color(other_job_posting.job_field)
+        print(other_job_posting.job_field)
     handleResumeUploadForm(request)
     handleResumeDeleteForm(request)
 

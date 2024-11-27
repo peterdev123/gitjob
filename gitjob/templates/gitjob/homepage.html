@@ -150,9 +150,9 @@
               data-job-sched="{{ job_posting.job_schedule }}"
               >
                 <!-- Colored Section -->
-                <div class="relative p-5 pb-2 h-60 mb-5 bg-orange-300 rounded-xl">
+                <div class="relative p-5 pb-2 h-60 mb-5 {{ job_posting.color }} rounded-xl">
                   <h1 class="text-xl font-bold">{{ job_posting.job_title }}</h1>
-                  <h6 class="font-bold">{{ job_posting.get_job_field_display }}</h6>
+                  <h6 class="text-sm">{{ job_posting.get_job_field_display }}</h6>
                   {% if job_posting.company_logo %}
                   <img src="{{ job_posting.company_logo.url }}" class="w-10 h-10 my-2">
                   {% else %}
@@ -163,12 +163,12 @@
                   <!-- Tags Section -->
                   <div class="flex flex-wrap gap-2">
                     {% for tag in job_posting.tags %}
-                    <div class="min-w-10 h-6 mt-2 mt-1 px-3 flex justify-center items-center text-xs bg-orange-300 box-border rounded-2xl border-2 border-solid border-black">
-                      <p>{{ tag }}</p>
+                    <div class="min-w-10 h-6 mt-2 mt-1 px-3 flex justify-center items-center text-xs box-border rounded-2xl border-[1.5px] border-solid border-black">
+                      <p class="font-semibold">{{ tag }}</p>
                     </div>
                     {% endfor %}
-                    <div class="min-w-10 h-6 mx-2 mt-1 px-3 flex justify-center items-center text-xs bg-orange-300 box-border rounded-2xl border-2 border-solid border-black">
-                      <p>{{ job_posting.get_job_schedule_display }}</p>
+                    <div class="min-w-10 h-6 mt-1 px-3 flex justify-center items-center text-xs box-border rounded-2xl border-[1.5px] border-solid border-black">
+                      <p class="font-semibold">{{ job_posting.get_job_schedule_display }}</p>
                     </div>
                   </div>
                   <p class="text-xs absolute bottom-2">Open until:</p>
