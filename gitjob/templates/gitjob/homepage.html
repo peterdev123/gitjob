@@ -157,13 +157,13 @@
                   <img src="{{ job_posting.company_logo.url }}" class="w-10 h-10 my-2">
                   {% else %}
                   <div class="w-10 h-10 my-2 bg-gray-200 rounded-full flex items-center justify-center">
-                  <p class="text-xs font-bold text-gray-500">No Logo</p>
+                    <p class="text-xs font-bold text-gray-500">No Logo</p>
                   </div>
                   {% endif %}
                   <!-- Tags Section -->
-                  <div class="flex flex-wrap">
+                  <div class="flex flex-wrap gap-2">
                     {% for tag in job_posting.tags %}
-                    <div class="min-w-10 h-6 mx-2 mt-1 px-3 flex justify-center items-center text-xs bg-orange-300 box-border rounded-2xl border-2 border-solid border-black">
+                    <div class="min-w-10 h-6 mt-2 mt-1 px-3 flex justify-center items-center text-xs bg-orange-300 box-border rounded-2xl border-2 border-solid border-black">
                       <p>{{ tag }}</p>
                     </div>
                     {% endfor %}
