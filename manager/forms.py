@@ -1,5 +1,6 @@
 from django import forms
-from .models import JobPost, JobApplication
+from .models import JobPost
+from jobs.models import JobApplication
 
 class JobPostForm(forms.ModelForm):
     class Meta:
