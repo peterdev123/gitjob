@@ -73,9 +73,6 @@ def messages(request, chatroom_name='public-chat'):
         else:
             group.latest_message_body = "No messages yet"
 
-
-    print(filtered_chat_groups)
-
     # For chats
     form = ChatmessageCreateForm()
 

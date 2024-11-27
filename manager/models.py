@@ -41,7 +41,7 @@ class JobPost(models.Model):
     # Change tags to allow free-form input
     tags = models.TextField(blank=True, help_text="Enter tags separated by commas.")
     
-    company_logo = models.ImageField(upload_to='logos/', blank=True, null=True)
+    company_logo = models.ImageField(upload_to='logos/') 
 
     def __str__(self):
         return self.job_title
