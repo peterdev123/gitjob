@@ -1,12 +1,10 @@
 env/
 myenv/
+media/
  
 *.py[cod]
 __pycache__/
 *.so
-*.png
-*.jpg
-*.jpeg
 *.gif
 *.bmp
 *.webp
