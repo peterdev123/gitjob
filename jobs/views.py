@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.utils.timezone import now
 from datetime import date
@@ -87,8 +87,13 @@ def job_posting_view(request, id):
 
 def job_post(request):
     job_post = JobPost.objects.filter(author=request.user)
-    print(job_post)
     return render(request, 'jobs/job_post.html', {'job_post' : job_post})
+
+def delete_job_post(request, post_id):
+    post = get_object_or_404(JobPost, id=post_id)
+    if request.method == "POST":
+        post.delete()
+        return redirect('job_post') 
 
 def job_application_history_view(request):
     job_applications = request.user.job_applications.all()
