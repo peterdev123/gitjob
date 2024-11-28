@@ -42,11 +42,11 @@
               const profileURLBase = "{% url 'profile' username='placeholder' %}";
                 s_users.forEach(function(s_user){
                   const profileURL = profileURLBase.replace('placeholder', s_user.username);
-                  const user_div = "<a href="+profileURL+"><div class='searched_user_div flex items-center'>"
-                    +                 "<img src='"+s_user.profile_pic_url+"' alt='Profile_Picture'"
-                    +                     "class='w-8 h-8 m-2 rounded-full'>"
-                    +                 "<p>" + s_user.first_name + " " + s_user.last_name + " (" + s_user.username + ")</p>"
-                    +               "</div></a>"
+                  const user_div = `<a href=${profileURL}><div class='searched_user_div p-2 flex items-center hover:bg-gray-200 '>`
+                    +                 `<img src='${s_user.profile_pic_url}' alt='Profile_Picture'`
+                    +                     `class='w-8 h-8 m-2 mr-4 rounded-full'>`
+                    +                 `<p>${s_user.first_name} ${s_user.last_name} (${s_user.username})</p>`
+                    +               `</div></a>`
 
                     search_user_wrapper.append(user_div)
                 })

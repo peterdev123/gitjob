@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from users.models import Resume
+from datetime import datetime
 
 class JobPost(models.Model):
 
@@ -41,17 +41,8 @@ class JobPost(models.Model):
     # Change tags to allow free-form input
     tags = models.TextField(blank=True, help_text="Enter tags separated by commas.")
     
-    company_logo = models.ImageField(upload_to='logos/') 
+    company_logo = models.ImageField(upload_to='logos/')
+    date_time_added = models.DateTimeField(default=datetime.now) # datetime callable now()
 
     def __str__(self):
         return self.job_title
-
-class JobApplication(models.Model):
-    applicant = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    email = models.EmailField()
-    phone_number = models.IntegerField(blank=True, null=True)
-    cover_letter = models.TextField(max_length=1000)
-    resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
-    date_updated = models.DateField()

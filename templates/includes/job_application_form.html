@@ -1,0 +1,77 @@
+{% load static %}
+{% load static tailwind_tags %}
+
+<!-- Apply Job -->
+<div id="job_application_modal" class="fixed w-3/5 max-h-[90vh] p-16 py-7 top-[2rem] left-1/2 translate-x-[-50%] rounded-2xl bg-white z-10 overflow-y-auto" style="display: none;">
+    <form method="POST" class="flex flex-col items-center">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="job_application_form">
+        <input type="hidden" name="already_applied" value="{{ edit_application_fields.already_applied }}">
+
+        <h1 class="text-2xl text-black text-center">Job Application Form</h1>
+        <img id="job_application_exit" src="{% static 'jobs/images/cross_mark_icon.png' %}" class="w-8 h-8 hover:cursor-pointer absolute top-6 right-6" alt="Exit Button">
+ 
+        <hr class="w-[96%] mt-2 border-1 border-solid border-black">
+        
+        <!-- Short inputs container -->
+        <div class="flex flex-col m-0 justify-center">
+            <!-- row of inputs, two per row if space is available -->
+            <div class="mb-0 flex flex-wrap gap-6">
+                <!-- input and their label containers -->
+                <div class="m-0 flex flex-col flex-1 min-w-[250px]">
+                    <label for="first_name">First Name</label>
+                    {{ job_application_form.first_name }}
+                </div>
+                <div class="m-0 flex flex-col flex-1 min-w-[250px]">
+                    <label for="last_name">Last Name</label>
+                    {{ job_application_form.last_name }}
+                </div>
+            </div>
+            <div class="my-0 flex flex-wrap gap-6">
+              <div class="m-0 flex flex-col flex-1 min-w-[250px]">
+                <label for="email">Email address</label>
+                {{ job_application_form.email }}
+              </div>  
+              <div class="m-0 flex flex-col flex-1 min-w-[250px]">
+                  <label for="phone_number">Phone Number</label>
+                  {{ job_application_form.phone_number }}
+              </div>
+            </div>
+            <div class="my-0 flex flex-col items-center">
+              <p class="mt-2 text-2xl font-semibold">Cover Letter</p>
+              {{ job_application_form.cover_letter }}
+            </div>
+
+            <div class="flex flex-col items-center mb-5">
+              <h1 class="text-2xl font-semibold">Resumes</h1>
+              {% if resumes %}
+              <div class="resume_wrapper flex flex-col mt-0">
+                  {% for resume in resumes %}
+                  <div class="relative flex w-full mb-5 px-4 py-2 border-[2px] border-solid border-black rounded-xl bg-cyan-200 items-center">
+                      <a href="{{ resume.file.url }}" target="_blank" class="flex-1">
+                          <div class="flex items-center m-0">
+                              <img src="{% static 'images/document.png' %}" class="w-8 h-8 mr-4">
+                              <div class="flex flex-col m-0">
+                                  <p class="overflow-hidden">{{ resume.filename }}</p>
+                                  <p class="text-sm text-gray-600">Date Uploaded: {{ resume.date_uploaded }}</p>
+                                </div>
+                          </div>
+                      </a>
+                      <input type="radio" name="resume_id" value="{{ resume.id }}"
+                        {% if edit_application_fields.form.resume.id == resume.id %}
+                        checked
+                        {% endif %}>
+                  </div>
+                  {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+        </div>
+        
+        <!-- Buttons -->
+        <div class="w-full flex justify-end">
+            <button id="job_application_cancel" class="px-3 py-2 rounded-xl bg-gray-200 text-black font-semibold" type="button">Cancel</button>
+            <button id="job_application_submit" class="px-3 py-2 ml-5 rounded-xl bg-blue-600 text-white font-semibold" type="submit">Submit</button>
+        </div>
+     </form>
+</div>

@@ -1,0 +1,115 @@
+{% load static %}
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Job Posting Details</title>
+    {% tailwind_css %}
+    {% if messages %}
+        {% include 'includes/message_box.html' %}
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'css/dist/custom.css' %}">
+
+    <script>
+      const blurPage = ()=>{
+          // Disable scroll
+          $('body').addClass("overflow-hidden");
+          // Blur
+          // Make semi transparent for black background to be semi visible           
+          $("nav").addClass("opacity-50 pointer-events-none");
+          $(".search_job_bar").addClass("opacity-50 pointer-events-none");
+          $(".main_page").addClass("opacity-50 pointer-events-none");
+      }
+      const unblurPage = ()=>{
+          $('body').removeClass("overflow-hidden");
+
+          $("nav").removeClass("opacity-50 pointer-events-none");
+          $(".search_job_bar").removeClass("opacity-50 pointer-events-none");
+          $(".main_page").removeClass("opacity-50 pointer-events-none");
+
+      }
+
+      $(document).ready(function(){
+        $("#job_application_btn").click(()=>{
+          blurPage();
+          $("#job_application_modal").show();
+        });
+        $("#job_application_exit, #job_application_cancel").click(()=>{
+          unblurPage();
+          $("#job_application_modal").hide();
+        })
+        $("input[type='file']").change(function() { this.form.submit() })
+      });
+    </script>
+</head>
+<body class="w-screen h-screen bg-black">
+    <!-- Navbar -->
+    {% include 'includes/headings.html' %}
+    <div class="main_page min-h-[calc(100vh-80px)] flex flex-col items-center bg-gray-200">
+      <div class="w-[90%] max-w-[800px] mt-10 p-8 flex flex-col bg-white border-gray-500 border-2 border-solid rounded-xl">
+        
+        <div class="flex h-12 pl-9">
+          <h1 class="text-2xl font-bold">My Job Applications</h1>
+        </div>
+        
+        <div class="flex px-5 h-12 gap-8">
+          <div class="1/8">
+            <h4 class="text-center text-lg mx-4">Company</h4>
+          </div>
+          <div class="flex-grow">  
+            <h4 class="text-lg">Position</h4>
+          </div>
+          <div class="flex-grow">
+            <h4 class="text-lg">Details</h4>
+          </div>
+          <div class="w-1/8">
+            <h4 class="text-lg mr-6">Status</h4>
+          </div>
+        </div>
+
+        <hr class="border-top-2px w-[93%] border-gray-400 mb-3 self-center">
+
+        {% for application in job_applications %}
+          <a class="mb-5 p-5 flex justify-between hover:bg-gray-200 hover:text-black" href="/jobs/job_posting/{{ application.job_post.id }}">
+              <!-- Company -->
+              <div class="w-1/8 mx-4">
+                <img src="{{ application.job_post.company_logo.url }}" class="w-20 h-20 m-auto">
+              </div>
+              <!-- Position -->
+              <div class="flex-1 mx-4 flex flex-col justify-center">
+                <h1 class="text-lg font-bold">{{ application.job_post.job_title }}</h1>
+                <h1 class="">{{ application.job_post.get_job_field_display }}</h1>
+              </div>
+              <!-- Details -->
+              <div class="flex-1 mx-4 flex flex-col justify-center gap-2">
+                <div class="flex items-center">
+                  <img src="{% static 'jobs/images/salary.png' %}" class="profile_detail_icon">
+                  <p class="text-md">₱{{ application.job_post.min_salary }} - ₱{{ application.job_post.max_salary }}</p>
+                </div>
+                <div class="flex items-center">
+                  <img src="{% static 'jobs/images/calendar.png' %}" class="profile_detail_icon">
+                  <p class="text-md">Deadline: {{ application.job_post.hiring_deadline }}</p>
+                </div>
+              </div>
+              <!-- Status -->
+              <div class="flex justify-center items-center">
+                {% if application.status == 0 %}
+                <div class="w-[100px] h-10 rounded-2xl bg-orange-300 font-semibold flex items-center justify-center">Pending</div>
+                {% elif application.status == 1 %}
+                <div class="w-[100px] h-10 rounded-2xl bg-green-300 font-semibold flex items-center justify-center">Accepted</div>
+                {% elif application.status == 2 %}                  
+                <div class="w-[100px] h-10 rounded-2xl bg-red-300 font-semibold flex items-center justify-center">Rejected</div>
+                {% else %}
+                <div class="w-[100px] h-10 rounded-2xl bg-red-300 font-semibold flex items-center justify-center">Error</div>
+                {% endif %}
+              </div>
+            </a>
+        {% endfor %}
+      </div>
+    </div>
+    
+</body>
+</html>
