@@ -43,31 +43,37 @@ def job_posting_view(request, id):
             edit_application_fields['already_applied'] = True
             edit_application_fields['form'] = existing_application
         
-    if request.method == 'POST' and request.POST.get('form_type') == 'job_application_form':
-        job_application_form = JobApplicationForm(request.POST)
-        if job_application_form.is_valid():
-            resume = get_object_or_404(Resume, id=request.POST.get('resume_id'))
-            if request.POST.get('already_applied') == 'True':
-                existing_application.email = request.POST.get('email')
-                existing_application.phone_number = request.POST.get('phone_number')
-                existing_application.cover_letter = request.POST.get('cover_letter')
-                existing_application.resume = resume
-                existing_application.date_updated = date.today()
-                existing_application.save()
-                messages.info(request, "Successfully edited your application entry!")
+    if request.method == 'POST': 
+        if request.POST.get('form_type') == 'job_application_form':
+            job_application_form = JobApplicationForm(request.POST)
+            if job_application_form.is_valid():
+                resume = get_object_or_404(Resume, id=request.POST.get('resume_id'))
+                if request.POST.get('already_applied') == 'True':
+                    existing_application.email = request.POST.get('email')
+                    existing_application.phone_number = request.POST.get('phone_number')
+                    existing_application.cover_letter = request.POST.get('cover_letter')
+                    existing_application.resume = resume
+                    existing_application.date_updated = date.today()
+                    existing_application.save()
+                    messages.info(request, "Successfully edited your application entry!")
+                else:
+                    job_application = job_application_form.save(commit=False)  # Create the instance but don't save yet
+                    job_application.job_post = JobPost.objects.get(id=id)
+                    job_application.applicant = request.user  # Set the current user as the applicant
+                    job_application.resume = resume  # Set the resume
+                    job_application.date_updated = date.today()
+                    job_application.save()
+                    messages.info(request, "Successfully filed a job application form!")
+                
             else:
-                job_application = job_application_form.save(commit=False)  # Create the instance but don't save yet
-                job_application.job_post = JobPost.objects.get(id=id)
-                job_application.applicant = request.user  # Set the current user as the applicant
-                job_application.resume = resume  # Set the resume
-                job_application.date_updated = date.today()
-                job_application.save()
-                messages.info(request, "Successfully filed a job application form!")
-            
-            # redirect the page to reset all input after submitting a form
-            return redirect('job_posting', id=id)
-        else:
-            messages.error(request, "Error: Form submitted is not valid!")
+                messages.error(request, "Error: Form submitted is not valid!")
+
+        elif request.POST.get('form_type') == 'cancel_application':
+            existing_application.delete()
+            messages.info(request, "Successfully cancelled your application to this job posting!")
+        
+        # redirect the page to reset all input after submitting a form
+        return redirect('job_posting', id=id)
 
 
 

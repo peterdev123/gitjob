@@ -31,6 +31,15 @@
           $(".main_page").removeClass("opacity-50 pointer-events-none");
 
       }
+      const showCancelApplicationModal = (postId)=>{
+          const modal = $("#cancel_application_modal");
+          modal.removeClass('hidden');
+      }
+
+      const hideCancelApplicationModal = ()=>{
+          const modal = $("#cancel_application_modal");
+          modal.addClass('hidden');
+      }
 
       $(document).ready(function(){
         $("#job_application_btn").click(()=>{
@@ -43,6 +52,9 @@
         })
         $("input[type='file']").change(function() { this.form.submit() })
       });
+    </script>
+    <script>
+      
     </script>
 </head>
 <body class="w-full h-screen bg-black">
@@ -74,25 +86,31 @@
             </div>
 
             <div class="ml-auto mr-5 my-auto flex flex-col items-center">
-              <button id="job_application_btn" class="px-4 py-2 text-sm font-bold rounded-lg hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm
-                {% if request.user.is_authenticated %}
-                  text-white
-                  bg-purple-700
-                {% else %}
-                  text-black
-                  bg-gray-300
-                {% endif %}"
-                
-                {% if not request.user.is_authenticated %} disabled {% endif %} >
-                {% if edit_application_fields.already_applied %}
-                Edit Entry
-                {% else %}
-                Apply Now
-                {% endif %}
-              </button>
-              {% if edit_application_fields.already_applied %}
+              {% if not edit_application_fields.already_applied %}
+                <button id="job_application_btn" class="px-4 py-2 text-sm font-bold rounded-lg
+                  {% if request.user.is_authenticated %}
+                    text-white bg-purple-700 hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm  
+                  {% else %}
+                    text-black bg-gray-300
+                  {% endif %}"
+                  {% if not request.user.is_authenticated %} disabled {% endif %}>
+                    Apply Now
+                </button>
+
+              {% else %}
+                <!-- Buttons put in a flex div so that they will have the same width -->
+                <div class="flex flex-col">
+                  <!-- Assumes that the user is authenticated if they already had an application entry to this job post -->
+                  <button id="job_application_btn" class="mb-2 px-4 py-2 text-sm font-bold rounded-lg hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm text-white bg-purple-700">
+                    Edit Entry
+                  </button>
+                  <button id="cancel_application_btn" onclick="showCancelApplicationModal()"
+                    class="px-4 py-2 text-sm font-bold rounded-lg hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm text-white bg-red-500">
+                    Cancel
+                  </button>
+                </div>
                 <p class="text-xs mt-2">Last Updated: {{ edit_application_fields.form.date_updated }}</p>
-              {% endif %}
+                {% endif %}
             </div>
 
           </div>
@@ -176,6 +194,22 @@
     {% if request.user.is_authenticated %}
         {% include 'includes/job_application_form.html' %}
     {% endif %}
+
+    
+
+    <div id="cancel_application_modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
+      <div class="bg-white rounded-lg shadow-lg p-6 max-w-sm">
+          <h2 class="text-lg font-bold mb-4">Are you sure you want to cancel your application?</h2>
+          <div class="flex justify-end space-x-4">
+              <button onclick="hideCancelApplicationModal()" class="bg-gray-200 px-4 py-2 rounded-lg text-gray-800 hover:bg-gray-300 hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm">No</button>
+              <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="cancel_application">
+                <button type="submit" class="bg-red-600 px-4 py-2 rounded-lg text-white hover:bg-red-700 hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm">Yes</button>
+              </form>
+          </div>
+      </div>
+    </div>
 
     <!-- Hidden Dummy Div for Tailwind JIT -->
     <div class="hidden" style="display: none;">
