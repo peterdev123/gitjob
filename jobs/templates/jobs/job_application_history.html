@@ -45,7 +45,7 @@
       });
     </script>
 </head>
-<body class="w-screen h-screen bg-black">
+<body class="w-full h-screen bg-black">
     <!-- Navbar -->
     {% include 'includes/headings.html' %}
     <div class="main_page min-h-[calc(100vh-80px)] flex flex-col items-center bg-gray-200">
@@ -73,7 +73,7 @@
         <hr class="border-top-2px w-[93%] border-gray-400 mb-3 self-center">
 
         {% for application in job_applications %}
-          <a class="mb-5 p-5 flex justify-between hover:bg-gray-200 hover:text-black" href="/jobs/job_posting/{{ application.job_post.id }}">
+          <a class="mb-5 p-5 flex justify-between rounded-2xl hover:bg-gray-200 hover:text-black" href="/jobs/job_posting/{{ application.job_post.id }}">
               <!-- Company -->
               <div class="w-1/8 mx-4">
                 <img src="{{ application.job_post.company_logo.url }}" class="w-20 h-20 m-auto">

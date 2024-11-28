@@ -176,8 +176,8 @@
                 </div>
                 <div class="flex justify-between">
                   <p class="font-bold ml-3">₱{{ job_posting.min_salary }} - ₱{{ job_posting.max_salary }}</p>
-                  <a href="{% url 'job_posting' id=job_posting.id %}">
-                    <button class="w-20 h-8 mr-3 bg-black text-white rounded-2xl hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm">Details</button>
+                  <a href="{% url 'job_posting' id=job_posting.id %}" class="mr-3">
+                    <button class="w-20 h-8 bg-black text-white rounded-2xl hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm">Details</button>
                   </a>
                 </div>
               </div>
