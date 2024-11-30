@@ -42,68 +42,69 @@
     
                 <div class="flex-1 flex flex-col">
                     <h1 id="name" class="mt-2 text-3xl font-bold">{{ user.first_name }} {{ user.last_name }}</h1>
-                    <h1 id="username" class="text-sm text-gray-800">@{{ user.username }}</h1>
+                    <h1 id="username" class="mb-2 text-sm text-gray-800">@{{ user.username }}</h1>
                     {% if user.job %}
-                     <div class="mt-1 flex">
-                        <h1 id="job" class="text-xl font-medium">{{ user.job }}</h1>
-                        <h1 class="mx-1 text-xl"> at </h1>
-                        <h1 id="job_company" class="text-xl font-medium">{{ user.job_company }}</h1>
-                     </div>
-                     {% endif %}
+                        <h1 class="text-xl font-semibold">{{ user.job }} at {{ user.job_company }}</h1>
+                    {% endif %}
     
-                     <div class="flex">
-                        <div class="flex flex-col mt-4 gap-4 mr-10">
+                    <hr class="my-6 border-[1.5px] border-gray-300 border-solid">
+
+                    <div class="flex gap-10">
+                        <div class="w-[40%] flex flex-col gap-3">
+                            <div class="flex items-center">
+                                <img src="{% static 'images/email.png' %}" class="profile_detail_icon">
+                                <h1 class="text-sm font-medium">{{ user.email }}</h1>
+                            </div>
                             {% if user.country %}
                             <div class="flex items-center">
                                 <img src="{% static 'images/location.png' %}" class="profile_detail_icon">
-                                <h1 id="job" class="text-sm font-medium text-gray-600">{{ user.country }}</h1>
+                                <h1 class="text-sm font-medium">{{ user.country }}</h1>
                             </div>
                             {% endif %}
     
                             {% if user.home_address %}
                             <div class="flex items-center">
                                 <img src="{% static 'images/home.png' %}" class="profile_detail_icon">
-                                <h1 id="job" class="text-sm font-medium text-gray-600">{{ user.home_address }}</h1>
+                                <h1 class="text-sm font-medium">{{ user.home_address }}</h1>
                             </div>
                             {% endif %}
     
                             {% if user.phone_number %}
                             <div class="flex items-center">
                                 <img src="{% static 'images/phone.png' %}" class="profile_detail_icon">
-                                <p id="job" class="text-sm font-medium text-gray-600">{{ user.phone_number }}</p>
+                                <p class="text-sm font-medium">{{ user.phone_number }}</p>
                             </div>
                             {% endif %}
     
                             {% if user.birthdate %}
                             <div class="flex items-center">
                                 <img src="{% static 'images/calendar.png' %}" class="profile_detail_icon">
-                                <p id="job" class="text-sm font-medium text-gray-600">{{ user.birthdate }}</p>
+                                <p class="text-sm font-medium">{{ user.birthdate }}</p>
                             </div>
                             {% endif %}
                             
                             {% if user.gender %}
                             <div class="flex items-center">
                                 <img src="{% static 'images/gender.png' %}" class="profile_detail_icon">
-                                <p id="job" class="text-sm font-medium text-gray-600">{{ user.gender }}</p>
+                                <p class="text-sm font-medium">{{ user.gender }}</p>
                             </div>
                             {% endif %}
-
-                            <a href="{% url 'start-chat' username=user.username %}" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:text-white hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm">
-                                Chat with me
-                            </a>
-
                         </div>
     
                         <div>
                             {% if user.description %}
-                            <div class="mt-2 flex items-center">
+                            <div class="flex items-center">
                                 <img src="{% static 'images/info.png' %}" class="profile_detail_icon">
-                                <p id="job" class="text-sm font-medium text-gray-600">{{ user.description }}</p>
+                                <p class="text-sm font-medium">{{ user.description }}</p>
                             </div>
                             {% endif %}
                         </div>
 
-                     </div>
+                    </div>
+                    <hr class="my-6 border-[1.5px] border-gray-300 border-solid">
+                    <a href="{% url 'start-chat' username=user.username %}" class="w-[130px] bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:text-white hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm">
+                        Chat with me
+                    </a>
                 </div>
             </div>
     

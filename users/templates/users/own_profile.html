@@ -46,69 +46,71 @@
     
                 <div class="flex-1 flex flex-col">
                     <h1 id="name" class="mt-2 text-3xl font-bold">{{ user.first_name }} {{ user.last_name }}</h1>
-                    <h1 id="username" class="text-sm text-gray-800">@{{ user.username }}</h1>
+                    <h1 id="username" class="mb-2 text-sm text-gray-800">@{{ user.username }}</h1>
                     {% if user.job %}
-                     <div class="mt-1 flex">
-                        <h1 id="job" class="text-xl font-medium">{{ user.job }}</h1>
-                        <h1 class="mx-1 text-xl"> at </h1>
-                        <h1 id="job_company" class="text-xl font-medium">{{ user.job_company }}</h1>
-                     </div>
-                     {% endif %}
+                        <h1 class="text-xl font-semibold">{{ user.job }} at {{ user.job_company }}</h1>
+                    {% endif %}
     
-                     <div class="flex">
-                        <div class="flex flex-col mt-4 gap-4 mr-10">
+                    <hr class="my-6 border-[1.5px] border-gray-300 border-solid">
+
+                    <div class="flex gap-10">
+                        <div class="w-[40%] flex flex-col gap-3">
+                            <div class="flex items-center">
+                                <img src="{% static 'images/email.png' %}" class="profile_detail_icon">
+                                <h1 class="text-sm font-medium">{{ user.email }}</h1>
+                            </div>
                             {% if user.country %}
                             <div class="flex items-center">
                                 <img src="{% static 'images/location.png' %}" class="profile_detail_icon">
-                                <h1 id="job" class="text-sm font-medium text-gray-600">{{ user.country }}</h1>
+                                <h1 class="text-sm font-medium">{{ user.country }}</h1>
                             </div>
                             {% endif %}
     
                             {% if user.home_address %}
                             <div class="flex items-center">
                                 <img src="{% static 'images/home.png' %}" class="profile_detail_icon">
-                                <h1 id="job" class="text-sm font-medium text-gray-600">{{ user.home_address }}</h1>
+                                <h1 class="text-sm font-medium">{{ user.home_address }}</h1>
                             </div>
                             {% endif %}
     
                             {% if user.phone_number %}
                             <div class="flex items-center">
                                 <img src="{% static 'images/phone.png' %}" class="profile_detail_icon">
-                                <p id="job" class="text-sm font-medium text-gray-600">{{ user.phone_number }}</p>
+                                <p class="text-sm font-medium">{{ user.phone_number }}</p>
                             </div>
                             {% endif %}
     
                             {% if user.birthdate %}
                             <div class="flex items-center">
                                 <img src="{% static 'images/calendar.png' %}" class="profile_detail_icon">
-                                <p id="job" class="text-sm font-medium text-gray-600">{{ user.birthdate }}</p>
+                                <p class="text-sm font-medium">{{ user.birthdate }}</p>
                             </div>
                             {% endif %}
                             
                             {% if user.gender %}
                             <div class="flex items-center">
                                 <img src="{% static 'images/gender.png' %}" class="profile_detail_icon">
-                                <p id="job" class="text-sm font-medium text-gray-600">{{ user.gender }}</p>
+                                <p class="text-sm font-medium">{{ user.gender }}</p>
                             </div>
                             {% endif %}
-
-                            <form method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="form_type" value="logout">
-                                <button type="submit" class="w-24 py-1 mt-4 rounded-xl bg-red-500 text-white font-bold hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm">Sign out</button>
-                            </form>
                         </div>
     
                         <div>
                             {% if user.description %}
-                            <div class="mt-2 flex items-center">
+                            <div class="flex items-center">
                                 <img src="{% static 'images/info.png' %}" class="profile_detail_icon">
-                                <p id="job" class="text-sm font-medium text-gray-600">{{ user.description }}</p>
+                                <p class="text-sm font-medium">{{ user.description }}</p>
                             </div>
                             {% endif %}
                         </div>
 
-                     </div>
+                    </div>
+                    <hr class="my-6 border-[1.5px] border-gray-300 border-solid">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="logout">
+                        <button type="submit" class="w-24 py-1 rounded-xl bg-red-500 text-white font-bold hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm">Sign out</button>
+                    </form>
                 </div>
             </div>
     
@@ -183,7 +185,7 @@
                             <input type="hidden" name="form_type" value="resume_delete_form">
                             <input type="hidden" name="id" value="{{ resume.id }}">
                             <img id="delete_resume_btn" src="{% static 'images/delete-icon.png' %}"
-                            class="hover:cursor-pointer z-10">
+                            class="hover:cursor-pointer z-10 hover:scale-105 active:scale-95">
                         </form>
                     </div>
                     {% endfor %}
@@ -195,11 +197,11 @@
 
     <!-- Edit Profile Details -->
     <div id="edit_profile_modal" class="fixed w-3/5 max-h-[90vh] p-16 py-7 top-[2rem] left-1/2 translate-x-[-50%] rounded-2xl bg-white z-10 overflow-y-auto" style="display: none;">
-        <form method="POST" class="flex flex-col overflow-y-auto">
+        <form method="POST" class="flex flex-col">
             {% csrf_token %}
             <input type="hidden" name="form_type" value="edit_profile_form">
             
-            <img id="edit_profile_exit" src="{% static 'images/cross_mark_icon.png' %}" class="w-8 h-8 hover:cursor-pointer absolute top-6 right-6" alt="Exit Button">
+            <img id="edit_profile_exit" src="{% static 'images/cross_mark_icon.png' %}" class="w-8 h-8 hover:cursor-pointer absolute top-6 right-6 hover:scale-105 active:scale-95" alt="Exit Button">
             <h1 class="text-2xl font-bold">Edit Profile Details</h1>
      
             <!-- <hr class="w-[96%] mt-2 border-1 border-solid border-black"> -->
@@ -207,7 +209,7 @@
             <!-- Short inputs container -->
             <div class="flex flex-col m-0 justify-center">
                 <!-- row of inputs, two per row if space is available -->
-                <div class="mb-0 flex flex-wrap gap-10">
+                <div class="mb-0 flex flex-wrap gap-x-10">
                     <!-- input and their label containers -->
                     <div class="m-0 flex flex-col flex-1 min-w-[250px]">
                         <label for="id_username" class="font-semibold">Username</label>
@@ -220,7 +222,7 @@
                             {% if user.phone_number %} value="{{ user.phone_number }}"{% endif %}>
                     </div>
                 </div>
-                <div class="my-0 flex flex-wrap gap-10">
+                <div class="my-0 flex flex-wrap gap-x-10">
                     <div class="m-0 flex flex-col flex-1 min-w-[250px]">
                         <label for="id_home_address" class="font-semibold">Home Address</label>
                         <input type="text" name="home_address" id="id_home_address" class="profile_edit_input" 
@@ -232,7 +234,7 @@
                             {% if user.country %} value="{{ user.country }}"{% endif %}>
                     </div>
                 </div>
-                <div class="my-0 flex flex-wrap gap-10">
+                <div class="my-0 flex flex-wrap gap-x-10">
                     <div class="m-0 flex flex-col flex-1 min-w-[250px]">
                         <label for="id_job" class="font-semibold">Job</label>
                         <input type="text" name="job" id="id_job" class="profile_edit_input" 
@@ -244,7 +246,7 @@
                             {% if user.job_company %} value="{{ user.job_company }}"{% endif %}>
                     </div>
                 </div>
-                <div class="my-0 flex flex-wrap gap-10">
+                <div class="my-0 flex flex-wrap gap-x-10">
                     <div class="m-0 flex flex-col flex-1 min-w-[250px]">
                         <label for="id_gender" class="font-semibold">Gender</label>
                         <select name="gender" id="id_gender" class="profile_edit_input">
@@ -268,8 +270,8 @@
             
             <!-- Buttons -->
             <div class="flex justify-end">
-                <button id="edit_profile_cancel" class="px-3 py-2 rounded-xl bg-gray-200 text-black font-semibold" type="button">Cancel</button>
-                <button id="edit_profile_confirm" class="px-3 py-2 ml-5 rounded-xl bg-blue-600 text-white font-semibold" type="submit">Save Changes</button>
+                <button id="edit_profile_cancel" class="px-3 py-2 rounded-xl bg-gray-200 text-black font-semibold hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm" type="button">Cancel</button>
+                <button id="edit_profile_confirm" class="px-3 py-2 ml-5 rounded-xl bg-blue-600 text-white font-semibold hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm" type="submit">Save Changes</button>
             </div>
          </form>
     </div>
@@ -283,18 +285,18 @@
             <input type="hidden" name="form_type" value="edit_skills_form">
 
             <h1 class="text-2xl text-black text-center">Edit Skills</h1>
-            <img id="edit_skills_exit" src="{% static 'images/cross_mark_icon.png' %}" class="w-8 h-8 hover:cursor-pointer absolute top-6 right-6" alt="Exit Button">
+            <img id="edit_skills_exit" src="{% static 'images/cross_mark_icon.png' %}" class="w-8 h-8 hover:cursor-pointer absolute top-6 right-6 hover:scale-105 active:scale-95" alt="Exit Button">
 
             <div class="w-full flex items-center gap-4 p-0">
                 <input type="text" name="add_skill" id="add_skill" class="flex-1 border-2 border-gray-300 rounded-md p-2 h-10">
-                <button name="add_skill_btn" id="add_skill_btn" class="px-5 py-2 rounded-xl bg-gray-200 font-semibold" onclick="addSkill()" type="button">Add</button>
+                <button name="add_skill_btn" id="add_skill_btn" class="px-5 py-2 rounded-xl bg-gray-200 font-semibold hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm" onclick="addSkill()" type="button">Add</button>
             </div>
             <input type="hidden" name="skills_json" id="skills_json">
             <div id="skill_wrapper" class="m-0 mt-6 max-h-[60vh] flex flex-col box-border"></div>
 
             <div class="flex justify-end mt-auto">
-                <button id="edit_skills_cancel" class="px-3 py-2 rounded-xl bg-gray-200 text-black font-semibold" type="button">Cancel</button>
-                <button id="edit_skills_confirm" class="px-3 py-2 ml-5 rounded-xl bg-blue-600 text-white font-semibold" type="submit">Save Changes</button>
+                <button id="edit_skills_cancel" class="px-3 py-2 rounded-xl bg-gray-200 text-black font-semibold hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm" type="button">Cancel</button>
+                <button id="edit_skills_confirm" class="px-3 py-2 ml-5 rounded-xl bg-blue-600 text-white font-semibold hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm" type="submit">Save Changes</button>
             </div>
         </form>
     </div>
@@ -306,19 +308,19 @@
             <input type="hidden" name="form_type" value="edit_experiences_form">
 
             <h1 class="text-2xl text-black text-center">Edit Experiences</h1>
-            <img id="edit_experiences_exit" src="{% static 'images/cross_mark_icon.png' %}" class="w-8 h-8 hover:cursor-pointer absolute top-6 right-6" alt="Exit Button">
+            <img id="edit_experiences_exit" src="{% static 'images/cross_mark_icon.png' %}" class="w-8 h-8 hover:cursor-pointer absolute top-6 right-6 hover:scale-105 active:scale-95" alt="Exit Button">
 
             <div class="w-full flex items-center gap-4 p-0">
                 <input type="text" name="add_experience" id="add_experience" class="flex-1 border border-gray-300 rounded-md p-2 h-10">
-                <button name="add_experience_btn" id="add_experience_btn" class="px-5 py-2 rounded-xl bg-gray-200 font-semibold" onclick="addExperience()" type="button">Add</button>
+                <button name="add_experience_btn" id="add_experience_btn" class="px-5 py-2 rounded-xl bg-gray-200 font-semibold hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm" onclick="addExperience()" type="button">Add</button>
             </div>
 
             <input type="hidden" name="experiences_json" id="experiences_json">
             <div id="experience_wrapper" class="m-0 mt-6 max-h-[60vh] flex flex-col box-border"></div>
 
             <div class="flex justify-end mt-auto">
-                <button id="edit_experiences_cancel" class="px-3 py-2 rounded-xl bg-gray-200 text-black font-semibold" type="button">Cancel</button>
-                <button id="edit_experiences_confirm" class="px-3 py-2 ml-5 rounded-xl bg-blue-600 text-white font-semibold" type="submit">Save Changes</button>
+                <button id="edit_experiences_cancel" class="px-3 py-2 rounded-xl bg-gray-200 text-black font-semibold hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm" type="button">Cancel</button>
+                <button id="edit_experiences_confirm" class="px-3 py-2 ml-5 rounded-xl bg-blue-600 text-white font-semibold hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm" type="submit">Save Changes</button>
             </div>
          </form>
     </div>

@@ -14,6 +14,18 @@
     <link rel="stylesheet" href="{% static 'css/dist/custom.css' %}">
 
     <script>
+      // refresh the page when the user navigated this page back from other page(s)
+      // use case: when user has not uploaded resume yet. After uploading one, they navigate back and the resume will now show instead of the cached html
+      // source: https://stackoverflow.com/questions/43043113/how-to-force-reloading-a-page-when-using-browser-back-button
+      window.addEventListener('pageshow', function(event) {
+          var historyTraversal = event.persisted || 
+                        ( typeof window.performance != "undefined" && 
+                            window.performance.navigation.type === 2 );
+          if ( historyTraversal ) {
+              window.location.reload();
+          }
+      });
+      
       const blurPage = ()=>{
           // Disable scroll
           $('body').addClass("overflow-hidden");
@@ -133,17 +145,17 @@
 
               <div class="flex items-center">
                   <img src="{% static 'jobs/images/field.png' %}" class="profile_detail_icon">
-                  <p id="job" class="text-sm font-medium">{{ job_posting.get_job_field_display }}</p>
+                  <p id="job" class="text-sm">{{ job_posting.get_job_field_display }}</p>
               </div>
 
               <div class="flex items-center">
                   <img src="{% static 'jobs/images/calendar.png' %}" class="profile_detail_icon">
-                  <p id="job" class="text-sm font-medium">Deadline: {{ job_posting.hiring_deadline }}</p>
+                  <p id="job" class="text-sm">Deadline: {{ job_posting.hiring_deadline }}</p>
               </div>
 
               <div class="flex items-center">
                 <img src="{% static 'jobs/images/salary.png' %}" class="profile_detail_icon">
-                <p id="job" class="text-sm font-medium">{{ job_posting.min_salary }} - {{ job_posting.max_salary }} Pesos/year</p>
+                <p id="job" class="text-sm">{{ job_posting.min_salary }} - {{ job_posting.max_salary }} Pesos/year</p>
               </div>
             </div>
 
@@ -215,7 +227,6 @@
     <div class="hidden" style="display: none;">
       bg-blue-300 bg-pink-200 bg-orange-200 bg-sky-200 bg-yellow-200
       bg-green-300 bg-red-200 bg-lime-200 bg-rose-200 bg-amber-200
-      bg-yellow-300 bg-gray-300
-    </div>
+      bg-yellow-300 bg-gray-300 h-48</div>
 </body>
 </html>
