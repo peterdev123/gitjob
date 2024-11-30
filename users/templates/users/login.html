@@ -17,7 +17,6 @@
     {% endif %}
   
 <body class="bg-white"> 
-    <a href="{% url 'home' %}" class="absolute top-4 left-4 text-black text-4xl font-bold"> GitJob </a>
     <!-- Center Div -->
     <section class="min-h-screen flex box-border justify-center items-center"
             style="background-image: url('{% static "images/bg_image.jpg" %}');">
@@ -30,7 +29,7 @@
                     {% csrf_token %}
                     {{ form.username }}
                     {{ form.password }}
-                    <button class="bg-white border-2 text-black py-2 rounded-xl hover:scale-105 duration-300 hover:bg-[#206ab1] font-medium" type="submit">Login</button>
+                    <button class="bg-blue-500 text-white py-2 rounded-xl hover:scale-105 duration-300 hover:bg-[#206ab1] font-medium" type="submit">Login</button>
                 </form>
                 <div class="mt-6  items-center text-gray-100">
                     <hr class="border-black">
@@ -47,7 +46,7 @@
 
                         Login with Google
                     </button>
-                <div class="mt-10 text-sm border-b border-gray-500 py-5 playfair tooltip">Forget password?</div>
+                <div class="mt-8 text-sm border-b border-gray-500 py-5 playfair tooltip">Forget password?</div>
 
                 <div class="mt-4 text-sm flex justify-between items-center container-mr">
                     <p class="mr-3 md:mr-0 ">If you don't have an account..</p>

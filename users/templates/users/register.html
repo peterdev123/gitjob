@@ -12,46 +12,66 @@
     <script src="{% static 'js/message_box.js' %}"></script>
   </head>
 
+  <body class="h-screen flex items-center justify-center bg-gray-100">
     {% if messages %}
-        {% include 'includes/message_box.html' %}
+      {% include 'includes/message_box.html' %}
     {% endif %}
 
-  <body class="relative w-screen h-screen flex flex-col items-center justify-center bg-gray-700">
-    <a href="{% url 'home' %}" class="absolute top-4 left-4 text-white text-4xl font-bold"> GitJob </a>
-    <!-- Center Div -->
-    <div class="top-1/2 left-1/2 w-3/4 h-3/4 flex">
-      <!-- Left Side -->
-      <div class="relative w-1/2 h-full">
-          <img src="{% static 'images/register_page_bg.png' %}" alt="GitJob" class="w-full h-full">
-      </div>
-
-      <!-- Right Side -->
-    <div class="w-1/2 h-full flex flex-col bg-gradient-to-b from-gray-200 to-cyan-500">
-        <p class="mt-3 ml-3">Already have an account? <a class="blue_link" href="{% url 'login' %}">Log in</a></p>
-        <form class="w-full h-full p-6 pt-2" method="post">
-          {% csrf_token %}
-          <h1 class="text-4xl mt-2 mb-4 font-bold text-center">Register</h1>
-          <div class="m-0 flex justify-center">
-            {{ form.fname }}
-            {{ form.lname }}
-          </div>
-          <div class="m-0 my-1 flex flex-col items-center">
-            {{ form.email }}
-            {{ form.username }}
-            {{ form.password }}
-            {{ form.retypepassword }}
-            <div>
-            {{ form.is_business_manager.label }}
-            {{ form.is_business_manager }}
-
+    <div class="w-full h-full flex">
+      <!-- Left Section -->
+      <div class="w-1/2 left_section bg-cover bg-center" style="background-image: url('{% static 'images/right_reg_img.jpg' %}');"></div>
+      
+      <!-- Right Section -->
+      <div class="w-1/2 bg-white flex flex-col justify-center p-16">
+        <div class="mx-auto">
+          <h2 class="text-4xl font-bold mb-6 text-black">Register</h2>
+          <form class="space-y-6" method="post">
+            {% csrf_token %}
+            <div class="flex space-x-4">
+              <div class="flex-col">
+                <label for="fname" class="block font-bold text-gray-700 mb-1">First Name</label>
+                {{ form.fname }}
+              </div>
+              <div class="flex-col">
+                <label for="lname" class="block font-bold text-gray-700 mb-1">Last Name</label>
+                {{ form.lname }}
+              </div>
             </div>
-          </div>
-
-          <div class="flex flex-col items-center my-0">
-              <button type="submit" class="w-3/4 py-2 my-2 border-solid border-2 border-black text-black font-bold bg-white hover:bg-sky-500 rounded-2xl">Submit</button>
-          </div>
-      </form>
-  </div>
+            <div class="flex-col">
+              <label for="email" class="block font-bold text-gray-700 mb-1">Email Address</label>
+              {{ form.email }}
+            </div>
+            <div class="flex-col">
+              <label for="username" class="block font-bold text-gray-700 mb-1">Username</label>
+              {{ form.username }}
+            </div>
+            <div class="flex-col">
+              <label for="password" class="block font-bold text-gray-700 mb-1">Password</label>
+              {{ form.password }}
+            </div>
+            <div class="flex-col">
+              <label for="retypepassword" class="block font-bold text-gray-700 mb-1">Retype Password</label>
+              {{ form.retypepassword }}
+            </div>
+            <div class="flex-col">
+              <label for="is_business_manager" class="block font-bold text-gray-700 mb-1">Account Type</label>
+              {{ form.is_business_manager }}
+            </div>
+            <div class="flex items-center space-x-2">
+              <input type="checkbox" class="h-5 w-5">
+              <label class="text-gray-600">
+                I accept the <a href="#" class="text-blue-600 underline">Terms of Use</a> & <a href="#" class="text-blue-600 underline">Privacy Policy</a>
+              </label>
+            </div>
+            <button type="submit" class="w-full p-4 button_design text-white font-bold rounded-lg hover:scale-105 duration-300">
+              Register Now
+            </button>
+          </form>
+          <p class="mt-6 text-center text-gray-600">
+            Already have an account? <a href="{% url 'login' %}" class="text-blue-600 underline">Login</a>
+          </p>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>

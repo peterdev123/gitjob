@@ -33,7 +33,7 @@ class RegisterForm(forms.Form):
         label='', 
         max_length=50,
         widget=forms.TextInput({
-            'class': 'register_input name_input',
+            'class': 'register_input name_input1',
             'placeholder': 'First Name...'
         })
     )
@@ -41,7 +41,7 @@ class RegisterForm(forms.Form):
         label="", 
         max_length=50,
         widget=forms.TextInput({
-            'class': 'register_input name_input',
+            'class': 'register_input name_input2',
             'placeholder': 'Last Name...'
         })
     )
@@ -62,8 +62,10 @@ class RegisterForm(forms.Form):
         label="Retype Password", 
         widget=forms.PasswordInput(attrs=input_attrs("Retype Password..."))
     )
-    is_business_manager = forms.BooleanField(
-        label="Register as Business Manager", required=False
+    is_business_manager = forms.ChoiceField(
+        label="Register as Business Manager",
+        choices=[(False, "Job Seeker"), (True, "Business Manager")],
+        widget=forms.Select(attrs={"class": "form-select register_input"})
     )
 
     def __init__(self, *args, **kwargs):
