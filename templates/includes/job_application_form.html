@@ -9,7 +9,7 @@
         <input type="hidden" name="already_applied" value="{{ edit_application_fields.already_applied }}">
 
         <h1 class="text-2xl text-black text-center">Job Application Form</h1>
-        <img id="job_application_exit" src="{% static 'jobs/images/cross_mark_icon.png' %}" class="w-8 h-8 hover:cursor-pointer absolute top-6 right-6" alt="Exit Button">
+        <img id="job_application_exit" src="{% static 'jobs/images/cross_mark_icon.png' %}" class="w-8 h-8 hover:cursor-pointer absolute top-6 right-6 hover:scale-105 active:scale-95" alt="Exit Button">
  
         <hr class="w-[96%] mt-2 border-1 border-solid border-black">
         
@@ -47,7 +47,7 @@
               {% if resumes %}
               <div class="resume_wrapper flex flex-col mt-0">
                   {% for resume in resumes %}
-                  <div class="relative flex w-full mb-5 px-4 py-2 border-[2px] border-solid border-black rounded-xl bg-cyan-200 items-center">
+                  <div class="relative flex w-full px-4 py-2 border-[2px] border-solid border-black rounded-xl bg-cyan-200 items-center">
                       <a href="{{ resume.file.url }}" target="_blank" class="flex-1">
                           <div class="flex items-center m-0">
                               <img src="{% static 'images/document.png' %}" class="w-8 h-8 mr-4">
@@ -58,20 +58,29 @@
                           </div>
                       </a>
                       <input type="radio" name="resume_id" value="{{ resume.id }}"
-                        {% if edit_application_fields.form.resume.id == resume.id %}
+                        class="hover:scale-110 hover:shadow-md active:scale-90 active:shadow-sm"
+                        {% if edit_application_fields.form.resume.id == resume.id or forloop.first %}
                         checked
                         {% endif %}>
                   </div>
                   {% endfor %}
               </div>
-              {% endif %}
+
+              <!-- Buttons -->
+                <div class="mt-5 w-full flex justify-end">
+                    <button id="job_application_cancel" class="px-3 py-2 rounded-xl bg-gray-200 text-black font-semibold hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm" type="button">Cancel</button>
+                    <button id="job_application_submit" class="px-3 py-2 ml-5 rounded-xl bg-blue-600 text-white font-semibold hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm" type="submit">Submit</button>
+                </div>
+            {% else %}
+
+                <p class="mt-2">You have not uploaded a single resume yet. Please go to your 
+                    <a href="{% url 'profile' username=request.user.username %}" class="font-bold text-cyan-600 hover:text-cyan-700">PROFILE</a> 
+                    and upload one
+                </p>
+
+            {% endif %}
             </div>
         </div>
-        
-        <!-- Buttons -->
-        <div class="w-full flex justify-end">
-            <button id="job_application_cancel" class="px-3 py-2 rounded-xl bg-gray-200 text-black font-semibold" type="button">Cancel</button>
-            <button id="job_application_submit" class="px-3 py-2 ml-5 rounded-xl bg-blue-600 text-white font-semibold" type="submit">Submit</button>
-        </div>
+
      </form>
 </div>

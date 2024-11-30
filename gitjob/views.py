@@ -4,6 +4,7 @@ from django.db.models import Q, Max
 from django.utils.timezone import now
 from manager.models import JobPost
 from users.models import GitJobUser
+from jobs.models import JobApplication
 from django.conf import settings 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
@@ -11,6 +12,7 @@ from django.http import Http404
 from .models import ChatGroup
 from .forms import ChatmessageCreateForm
 from jobs.functions import get_job_field_color
+from django.db.models import Subquery
 
 
 def hero(request):
@@ -18,8 +20,15 @@ def hero(request):
     return render(request, 'gitjob/hero.html')
 
 def homepage(request):
-    # get all JobPosts that still hiring AND sorted by latest datetime added
-    job_postings = JobPost.objects.filter(hiring_deadline__gte=now().date()).order_by('-date_time_added')
+    applied_job_ids = JobApplication.objects.filter(applicant=request.user).values('job_post')
+
+    # get all JobPosts that still hiring
+    # AND exclude job_posts that are added by the current user (they will not see their own post)
+    # sorted by latest datetime added
+    job_postings = JobPost.objects.filter(hiring_deadline__gte=now().date())\
+        .exclude(author=request.user)\
+        .exclude(id__in=Subquery(applied_job_ids))\
+        .order_by('-date_time_added')
     for job_posting in job_postings:
         job_posting.tags = job_posting.tags.split(',')
         job_posting.color = get_job_field_color(job_posting.job_field)

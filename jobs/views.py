@@ -1,14 +1,37 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.utils.timezone import now
-from datetime import date
-from manager.models import JobPost
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import get_object_or_404
+from django.db import transaction
+from django.db.models import Subquery
 from .models import JobApplication
+from .forms import JobApplicationForm
+from .functions import get_job_field_color
+from manager.models import JobPost
 from users.models import Resume
 from users.forms import ResumeUploadForm
-from manager.forms import JobApplicationForm
 from users.functions import handleResumeUploadForm, handleResumeDeleteForm
-from .functions import get_job_field_color
+from datetime import date
+
+@csrf_exempt
+def update_application_status(request):
+    if request.method == 'POST':
+        app_id = request.POST.get('app_id')
+        new_status = request.POST.get('status')
+        try:
+            with transaction.atomic():
+                # Fetch the JobApplication object
+                application = get_object_or_404(JobApplication, id=app_id)
+                # Update the status
+                application.status = int(new_status)  # Assuming 1 = Accepted, 2 = Declined
+                application.save()
+            return JsonResponse({'success': True, 'status': application.status})
+        except JobApplication.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Application not found'})
+    
+    return JsonResponse({'success': False, 'error': 'Invalid request'}, status=400)
 
 
 # Create your views here.
@@ -17,8 +40,19 @@ def job_posting_view(request, id):
     # Need to change this on create
     job_posting.tags = job_posting.tags.split(',')
 
-    # Get all job_postings that are not yet done with hiring AND not the current one we are viewing AND ordered by latest datetime added
-    other_job_postings = JobPost.objects.filter(hiring_deadline__gte=now().date()).exclude(id=id).order_by('-date_time_added')
+    applied_job_ids = JobApplication.objects.filter(applicant=request.user).values('job_post')
+
+    # Get all job_postings that are not yet done with hiring 
+    # AND not the current one we are viewing 
+    # AND not authored but the current user
+    # AND not yet applied jobs
+    # AND ordered by latest datetime added
+    other_job_postings = JobPost.objects.filter(hiring_deadline__gte=now().date())\
+        .exclude(id=id)\
+        .exclude(author=request.user)\
+        .exclude(id__in=Subquery(applied_job_ids))\
+        .order_by('-date_time_added')
+    
     for other_job_posting in other_job_postings:
         other_job_posting.tags = other_job_posting.tags.split(',')
         other_job_posting.color = get_job_field_color(other_job_posting.job_field)

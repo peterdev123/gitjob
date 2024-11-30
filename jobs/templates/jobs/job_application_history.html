@@ -96,15 +96,15 @@
               </div>
               <!-- Status -->
               <div class="flex justify-center items-center">
+                <div class="w-[100px] h-10 rounded-2xl
                 {% if application.status == 0 %}
-                <div class="w-[100px] h-10 rounded-2xl bg-orange-300 font-semibold flex items-center justify-center">Pending</div>
+                  bg-orange-300 
                 {% elif application.status == 1 %}
-                <div class="w-[100px] h-10 rounded-2xl bg-green-300 font-semibold flex items-center justify-center">Accepted</div>
-                {% elif application.status == 2 %}                  
-                <div class="w-[100px] h-10 rounded-2xl bg-red-300 font-semibold flex items-center justify-center">Rejected</div>
+                  bg-green-300
                 {% else %}
-                <div class="w-[100px] h-10 rounded-2xl bg-red-300 font-semibold flex items-center justify-center">Error</div>
+                  bg-red-300
                 {% endif %}
+                  font-semibold flex items-center justify-center">{{ application.get_status_display }}</div>
               </div>
             </a>
         {% endfor %}
