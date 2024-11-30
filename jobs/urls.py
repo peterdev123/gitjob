@@ -7,5 +7,6 @@ urlpatterns = [
     path('job_post/', views.job_post, name='job_post'),
     path('edit/<int:post_id>/', manager.views.edit_job_post, name='edit_job_post'),
     path('delete/<int:post_id>/', views.delete_job_post, name='delete_job_post'),
-    path('application_history', views.job_application_history_view, name='job_application_history')
+    path('application_history', views.job_application_history_view, name='job_application_history'),
+    path('update-status/', views.update_application_status, name='update_application_status'),
 ]
