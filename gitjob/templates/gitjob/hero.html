@@ -90,10 +90,11 @@
         </div>
       </div>
     </section>
+    
     <!-- Mission -->
     <section class="relative bg-gray-100 py-16">
       <div class="relative container mx-auto flex items-center px-6 lg:px-20">
-        <div class="bg-white p-8 shadow-lg rounded-lg w-full lg:w-1/2">
+        <div class="bg-white p-8 shadow-lg rounded-lg w-full lg:w-1/2 hover:scale-105 duration-300">
           <h2 class="text-3xl font-bold mb-4">Our Mission</h2>
           <p class="text-gray-700 mb-4">
             We aim to connect talented individuals with opportunities that help
@@ -106,9 +107,7 @@
             development.
           </p>
         </div>
-        <div
-          class="absolute inset-0 lg:relative lg:w-1/2 lg:ml-6 lg:block hidden"
-        >
+        <div class="absolute inset-0 lg:relative lg:w-1/2 lg:ml-6 lg:block hidden">
           <img
             src="{% static 'images/mission-background.jpg' %}"
             alt="Community Work"
@@ -117,6 +116,29 @@
         </div>
       </div>
     </section>
+
+    <!-- Vision -->
+    <section class="relative bg-gray-100 py-16">
+      <div class="relative container mx-auto flex items-center px-6 lg:px-20">
+        <div class="absolute inset-0 lg:relative lg:w-1/2 lg:mr-6 lg:block hidden">
+          <img
+            src="{% static 'images/vision.jpg' %}"
+            alt="Future Vision"
+            class="object-cover w-full h-full rounded-lg shadow-lg"
+          />
+        </div>
+        <div class="bg-white p-8 shadow-lg rounded-lg w-full lg:w-1/2 ml-auto hover:scale-105 duration-300">
+          <h2 class="text-3xl font-bold mb-4">Our Vision</h2>
+          <p class="text-gray-700 mb-4">
+            Our vision is to create a world where every individual can easily find and connect with the best job opportunities that match their skills and aspirations.
+          </p>
+          <p class="text-gray-700">
+            We strive to be the leading platform in career development, offering innovative solutions to job seekers and employers alike. By fostering a community of professionals, we aim to bridge the gap between talent and opportunity, ensuring a brighter future for all.
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!-- How it works -->
     <section class="bg-gray-100 py-20">
       <div class="container mx-auto text-center">
@@ -126,7 +148,8 @@
         </p>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-10 px-6">
           <!-- Step 1 -->
-          <div class="flex flex-col items-center">
+          <div class="flex flex-col items-center p-4 bg-white shadow-lg rounded-lg hover:scale-105 duration-300">
+            <img src="{% static 'images/step1.jpg' %}" alt="Create Profile" class="h-40 w-40 mb-4">
             <div class="bg-blue-500 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4 text-xl font-bold">1</div>
             <h3 class="text-xl font-semibold mb-2">Create Your Profile</h3>
             <p class="text-gray-600 text-center">
@@ -134,7 +157,8 @@
             </p>
           </div>
           <!-- Step 2 -->
-          <div class="flex flex-col items-center">
+          <div class="flex flex-col items-center p-4 bg-white shadow-lg rounded-lg hover:scale-105 duration-300">
+            <img src="{% static 'images/step2.jpg' %}" alt="Search for Jobs" class="h-40 w-40 mb-4">
             <div class="bg-blue-500 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4 text-xl font-bold">2</div>
             <h3 class="text-xl font-semibold mb-2">Search for Jobs</h3>
             <p class="text-gray-600 text-center">
@@ -142,7 +166,8 @@
             </p>
           </div>
           <!-- Step 3 -->
-          <div class="flex flex-col items-center">
+          <div class="flex flex-col items-center p-4 bg-white shadow-lg rounded-lg hover:scale-105 duration-300">
+            <img src="{% static 'images/step3.jpg' %}" alt="Apply and Connect" class="h-40 w-40 mb-4">
             <div class="bg-blue-500 text-white rounded-full w-16 h-16 flex items-center justify-center mb-4 text-xl font-bold">3</div>
             <h3 class="text-xl font-semibold mb-2">Apply and Connect</h3>
             <p class="text-gray-600 text-center">
@@ -152,6 +177,7 @@
         </div>
       </div>
     </section>
+
     <!-- Footer -->
     {% include 'includes/footer.html' %}
 </body>
