@@ -25,4 +25,4 @@ def edit_job_post(request, post_id):
             return redirect('/home/')
     else:
         form = JobPostForm(instance=post)
-    return render(request, 'manager/edit_post_jobs.html', {'form': form})
+    return render(request, 'manager/post_jobs.html', {'form': form})

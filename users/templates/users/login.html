@@ -16,36 +16,48 @@
         {% include 'includes/message_box.html' %}
     {% endif %}
   
-<body class="w-full h-screen flex flex-col items-center overflow-y-hidden justify-center">
+<body class="bg-white"> 
     <a href="{% url 'home' %}" class="absolute top-4 left-4 text-black text-4xl font-bold"> GitJob </a>
     <!-- Center Div -->
-    <div class="top-1/2 left-1/2 h-3/4 w-3/4 flex">
+    <section class="min-h-screen flex box-border justify-center items-center"
+            style="background-image: url('{% static "images/bg_image.jpg" %}');">
+        <div class="bg-cyan-300 rounded-3xl flex max-w-4xl p-8 items-center">
+            <div class="md:w-1/2 px-10 mr-10">
+                <h2 class="font-bold text-4xl text-[#002D74]">Login</h2>
+                <p class="text-sm mt-4 text-[#002D74]">If you already a member, easily log in now.</p>
+                <br>
+                <form method="post" class="flex flex-col gap-4">
+                    {% csrf_token %}
+                    {{ form.username }}
+                    {{ form.password }}
+                    <button class="bg-white border-2 text-black py-2 rounded-xl hover:scale-105 duration-300 hover:bg-[#206ab1] font-medium" type="submit">Login</button>
+                </form>
+                <div class="mt-6  items-center text-gray-100">
+                    <hr class="border-black">
+                    <p class="text-center text-sm">OR</p>
+                    <hr class="border-black">
+                </div>
+                <button class="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 hover:bg-[#60a8bc4f] font-medium">
+                        <svg class="mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="25px">
+                            <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path>
+                            <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path>
+                            <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path>
+                            <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
+                        </svg>
 
-        <!-- Left Form -->
-        <div class="w-1/2 h-full bg-gradient-to-b from-gray-200 to-sky-300">
-            <p class="m-4">Not a member? <a class="blue_link" href="{% url 'register' %}">Register now</a></p>
-            <div class="div flex flex-col text-center">
-                <h1 class="text-4xl m-3 font-bold">Login</h1>
-                <h3 class="text-xl m-3 font-bold">Sign in to your account</h3>
+                        Login with Google
+                    </button>
+                <div class="mt-10 text-sm border-b border-gray-500 py-5 playfair tooltip">Forget password?</div>
+
+                <div class="mt-4 text-sm flex justify-between items-center container-mr">
+                    <p class="mr-3 md:mr-0 ">If you don't have an account..</p>
+                    <a href="{% url 'register' %}" class="hover:border register text-blue-600 bg-[#002D74] hover:border-gray-400 rounded-xl py-2 px-5 hover:scale-110 hover:bg-[#002c7424] font-semibold duration-300">Register</a>
+                </div>
             </div>
-            <form class="w-full h-full p-3" method="post">
-                {% csrf_token %}
-                
-                {{ form.as_div }}
-    
-                <div class="relative w-full flex pr-6 left-1/4">
-                    <a class="text-black hover:text-sky-700">Forgot password?</a>
-                </div>
-                <div class="flex justify-center">
-                    <button type="submit" class="w-3/4 py-2 mt-4 border-solid border-2 border-black text-black font-bold bg-white hover:bg-sky-500 rounded-2xl">Sign in</button>
-                </div>
-            </form>
+            <div class="md:block w-1/2">
+                <img class="rounded-2xl max-h-[1600px]" src="{% static 'images/login_img.jpg' %}" alt="login form image">
+            </div>
         </div>
-
-        <!-- Right image -->
-        <div class="w-1/2 h-full">
-            <img src="{% static 'images/login_page_img.jpg' %}" alt="Abstract Painting" class="w-full h-full">
-        </div>
-    </div>
+    </section> 
 </body>
 </html>

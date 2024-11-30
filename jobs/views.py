@@ -130,10 +130,9 @@ def job_post(request):
     return render(request, 'jobs/job_post.html', {'job_post' : job_post})
 
 def delete_job_post(request, post_id):
-    post = get_object_or_404(JobPost, id=post_id)
-    if request.method == "POST":
-        post.delete()
-        return redirect('job_post') 
+    job_post = get_object_or_404(JobPost, id=post_id)
+    job_post.delete()
+    return redirect('job_post') 
 
 def job_application_history_view(request):
     job_applications = request.user.job_applications.all()
