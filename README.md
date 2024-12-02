@@ -7,7 +7,15 @@ GitJob is designed for:
 
 - Job Seekers: Helping individuals find their dream jobs by providing advanced search tools and profile-building options.
 - Employers: Simplifying talent acquisition through effective job postings and direct communication with candidates.
+  
+---
 
+## ⚒️ Contributors
+
+- [Ranz Matheu Lumayno](https://github.com/eggstink)
+- [Jorash Jonathan Robillos](https://github.com/Syjhert)
+- [Peter Sylvan Vecina](https://github.com/peterdev123)
+- 
 ---
 
 ## 🌟 **Features**
@@ -80,14 +88,6 @@ To install the required dependencies for this project, run the following command
 ```bash
 pip install -r requirements.txt
 ```
-
----
-
-## ⚒️ Contributors
-
-- [Ranz Matheu Lumayno](https://github.com/eggstink)
-- [Jorash Jonathan Robillos](https://github.com/Syjhert)
-- [Peter Sylvan Vecina](https://github.com/peterdev123)  
 
 ---
 
