@@ -95,4 +95,4 @@ pip install -r requirements.txt
 
 - [**Entity Relationship Diagram**](https://lucid.app/lucidchart/6c527eae-3cc6-407e-8ef6-0ecba46eb37c/edit?viewport_loc=-1882%2C-1298%2C3840%2C1671%2C0_0&invitationId=inv_894d479b-e733-49bf-8c37-298976aa3fb8)
 - [**Prototype Design (UI/UX)**](https://www.figma.com/design/zC0gbD7fisGipgOS7K6W2g/GitJob?node-id=0-1&node-type=canvas&t=40YWGSSwfbB7TT9I-0)
-- [**Gantt Chart**](https://docs.google.com/spreadsheets/d/1h0T3ZGuNDg2fa2_iTYAqQqOD4cmHKSXTfp13jLAKFg8/edit?gid=230388173#gid=230388173) 
+- [**Gantt Chart**](https://cebuinstituteoftechnology-my.sharepoint.com/:x:/g/personal/petersylvan_vecina_cit_edu/EcUw6xP8iK1Lvx9Bf4JHa9YBhHT8QiszbE-izXa9qI0MFQ?e=Ybr9rf)
