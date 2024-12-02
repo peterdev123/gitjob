@@ -15,7 +15,7 @@ GitJob is designed for:
 - [Ranz Matheu Lumayno](https://github.com/eggstink)
 - [Jorash Jonathan Robillos](https://github.com/Syjhert)
 - [Peter Sylvan Vecina](https://github.com/peterdev123)
-- 
+  
 ---
 
 ## 🌟 **Features**
