@@ -1,10 +1,9 @@
  .login_input, .register_input {
     display: block;
     width: 100%;
-    margin-top: 5 px;
     color: black;
     border-radius: 10px;
-    line-height: 2rem;
+    line-height: 1rem;
     border: 2px solid #e5e7eb;
   }
   .login_input {

@@ -12,7 +12,7 @@
     <script src="{% static 'js/message_box.js' %}"></script>
   </head>
 
-  <body class="h-screen flex items-center justify-center bg-gray-100">
+  <body class="h-full flex items-center justify-center bg-gray-100">
     {% if messages %}
       {% include 'includes/message_box.html' %}
     {% endif %}
@@ -22,10 +22,10 @@
       <div class="w-1/2 left_section bg-cover bg-center" style="background-image: url('{% static 'images/right_reg_img.jpg' %}');"></div>
       
       <!-- Right Section -->
-      <div class="w-1/2 bg-white flex flex-col justify-center p-16">
-        <div class="mx-auto">
+      <div class="w-1/2 h-full bg-white flex flex-col justify-center py-3 px-8">
+        <div class="mx-12">
           <h2 class="text-4xl font-bold mb-6 text-black">Register</h2>
-          <form class="space-y-6" method="post">
+          <form class="space-y-2" method="post">
             {% csrf_token %}
             <div class="flex space-x-4">
               <div class="flex-col">
@@ -58,7 +58,7 @@
               {{ form.is_business_manager }}
             </div>
             <div class="flex items-center space-x-2">
-              <input type="checkbox" class="h-5 w-5">
+              <input type="checkbox" class="h-5 w-5" required>
               <label class="text-gray-600">
                 I accept the <a href="#" class="text-blue-600 underline">Terms of Use</a> & <a href="#" class="text-blue-600 underline">Privacy Policy</a>
               </label>
