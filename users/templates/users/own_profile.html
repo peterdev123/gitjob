@@ -18,11 +18,12 @@
         {% include 'includes/message_box.html' %}
     {% endif %}
 </head>
-<body class="w-screen min-h-screen bg-black">
+<!-- black background so that when a modal is opened, we reduce all elements' opacity and it will look like it's darker -->
+<body class="w-full bg-black">
     <!-- Navbar -->
     {% include 'includes/headings.html' %}
     <!-- Main Page -->
-    <div class="main_page w-full bg-gray-200">
+    <div class="main_page bg-gray-200">
         <div class="max-w-[1000px] w-[90%] mx-auto px-15 py-5 flex flex-col justify-center">
 
             <div class="relative flex mb-5 p-10 rounded-xl bg-white  shadow-lg">
@@ -163,7 +164,7 @@
                     <input type="hidden" name="form_type" value="resume_upload_form">
                     <p class="w-full">
                         {{ resume_upload_form.resume_file }}
-                        <label for="id_resume_file" class="inline-block px-3 py-2 bg-violet-700 text-white font-bold rounded-xl hover:cursor-pointer hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm">Upload File</label>
+                        <label for="id_resume_file" class="inline-block px-3 py-2 bg-cyan-500 text-white font-bold rounded-xl hover:cursor-pointer hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm">Upload File</label>
                     </p>
                 </form>
     
@@ -196,7 +197,7 @@
     </div>
 
     <!-- Edit Profile Details -->
-    <div id="edit_profile_modal" class="fixed w-3/5 max-h-[90vh] p-16 py-7 top-[2rem] left-1/2 translate-x-[-50%] rounded-2xl bg-white z-10 overflow-y-auto" style="display: none;">
+    <div id="edit_profile_modal" class="fixed w-1/2 max-h-[90vh] p-16 py-7 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] rounded-2xl bg-white z-10 overflow-y-auto" style="display: none;">
         <form method="POST" class="flex flex-col">
             {% csrf_token %}
             <input type="hidden" name="form_type" value="edit_profile_form">
@@ -207,7 +208,7 @@
             <!-- <hr class="w-[96%] mt-2 border-1 border-solid border-black"> -->
             
             <!-- Short inputs container -->
-            <div class="flex flex-col m-0 justify-center">
+            <div class="flex flex-col justify-center gap-2">
                 <!-- row of inputs, two per row if space is available -->
                 <div class="mb-0 flex flex-wrap gap-x-10">
                     <!-- input and their label containers -->

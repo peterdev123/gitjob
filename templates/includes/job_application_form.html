@@ -2,7 +2,7 @@
 {% load static tailwind_tags %}
 
 <!-- Apply Job -->
-<div id="job_application_modal" class="fixed w-3/5 max-h-[90vh] p-16 py-7 top-[2rem] left-1/2 translate-x-[-50%] rounded-2xl bg-white z-10 overflow-y-auto" style="display: none;">
+<div id="job_application_modal" class="fixed w-3/5 max-h-[90vh] p-16 py-7 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] rounded-2xl bg-white z-10 overflow-y-auto" style="display: none;">
     <form method="POST" class="flex flex-col items-center">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="job_application_form">

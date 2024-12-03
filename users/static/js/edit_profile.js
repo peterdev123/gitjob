@@ -89,8 +89,8 @@ function distributeInWrapper(array, wrapper, div_name){
     if(Array.isArray(array)){
         array.forEach(function(item){
             const imageSrc = $('#close_btn_url').data('static-url');
-            const item_div = `<div class='${div_name}-div w-full m-0 mt-4 px-4 py-2 rounded-xl flex items-center justify-between bg-violet-300 border-2 box-border shadow-sm'>`
-                + `<span class='align-middle'>• ${item}</span>`
+            const item_div = `<div class='${div_name}-div w-full m-0 mt-4 px-4 py-2 rounded-xl flex items-center justify-between bg-cyan-300 border-2 box-border shadow-sm'>`
+                + `<span class='align-middle font-semibold'>• ${item}</span>`
                 + `<img src=${imageSrc} onclick='deleteItem(this)' class='w-5 h-5 hover:cursor-pointer'>`
                 + `</div>`
             wrapper.append(item_div)
@@ -102,8 +102,8 @@ function distributeInWrapper(array, wrapper, div_name){
 function addInWrapper(input_val, wrapper, div_name){
     if(input_val){
         const imageSrc = $('#close_btn_url').data('static-url');
-        const item_div = `<div class='${div_name}-div w-full m-0 mt-4 px-4 py-2 rounded-xl flex items-center justify-between bg-violet-300 border-2 box-border shadow-sm'>`
-            + `<span class='align-middle'>• ${input_val}</span>`
+        const item_div = `<div class='${div_name}-div w-full m-0 mt-4 px-4 py-2 rounded-xl flex items-center justify-between bg-cyan-300 border-2 box-border shadow-sm'>`
+            + `<span class='align-middle font-semibold'>• ${input_val}</span>`
             + `<img src=${imageSrc} onclick='deleteItem(this)' class='w-5 h-5 hover:cursor-pointer'>`
             + `</div>`
         wrapper.append(item_div)
