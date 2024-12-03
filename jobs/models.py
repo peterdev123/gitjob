@@ -18,8 +18,5 @@ class JobApplication(models.Model):
     phone_number = models.IntegerField(blank=True, null=True)
     cover_letter = models.TextField(max_length=1000)
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
-    date_updated = models.DateField()
+    datetime_updated = models.DateTimeField()
     status = models.IntegerField(choices=STATUS_CHOICES, default=0) # 0 - undecided, 1 - accepted, 2 - declined
-
-
-

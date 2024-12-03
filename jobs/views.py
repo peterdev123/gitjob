@@ -101,7 +101,7 @@ def job_posting_view(request, id):
                     existing_application.phone_number = request.POST.get('phone_number')
                     existing_application.cover_letter = request.POST.get('cover_letter')
                     existing_application.resume = resume
-                    existing_application.date_updated = date.today()
+                    existing_application.datetime_updated = now()
                     existing_application.save()
                     messages.info(request, "Successfully edited your application entry!")
                 else:
@@ -109,7 +109,7 @@ def job_posting_view(request, id):
                     job_application.job_post = JobPost.objects.get(id=id)
                     job_application.applicant = request.user  # Set the current user as the applicant
                     job_application.resume = resume  # Set the resume
-                    job_application.date_updated = date.today()
+                    job_application.datetime_updated = now()
                     job_application.save()
                     messages.info(request, "Successfully filed a job application form!")
                 
@@ -150,7 +150,7 @@ def delete_job_post(request, post_id):
  
 
 def job_application_history_view(request):
-    job_applications = request.user.job_applications.all().order_by('-date_updated')
+    job_applications = request.user.job_applications.all().order_by('-datetime_updated')
     for application in job_applications:
         application.job_post.tags = application.job_post.tags.split(',')
     return render(request, 'jobs/job_application_history.html', {'job_applications': job_applications})

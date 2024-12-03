@@ -1,5 +1,5 @@
 import os
-from datetime import date
+from django.utils.timezone import now
 from django.contrib import messages
 from users.forms import ResumeUploadForm
 from users.models import Resume
@@ -16,7 +16,7 @@ def handleResumeUploadForm(request):
                     filename=str(resume_file),
                     file=resume_file,
                     owner=request.user,
-                    date_uploaded=date.today()
+                    datetime_uploaded=now()
                 )
                 resume.save()
                 messages.info(request, f"Resume {str(resume_file)} uploaded successfully")

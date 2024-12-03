@@ -28,4 +28,4 @@ class Resume(models.Model):
     filename = models.CharField(max_length=100, default="Unnamed Resume.pdf")
     file = models.FileField(upload_to="users/resumes/")
     owner = models.ForeignKey(GitJobUser, on_delete=models.CASCADE)
-    date_uploaded = models.DateField(blank=True, null=True)
+    datetime_uploaded = models.DateTimeField(blank=True, null=True)
