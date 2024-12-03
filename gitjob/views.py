@@ -144,7 +144,6 @@ def get_or_create_chatroom(request, username):
     return redirect('chatroom', chatroom.group_name)
 
 @login_required
-@login_required
 def fetch_notifications(request):
     if request.method == "GET" and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         # Fetch chat-related notifications
