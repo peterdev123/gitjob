@@ -14,6 +14,7 @@ from users.models import Resume
 from users.forms import ResumeUploadForm
 from users.functions import handleResumeUploadForm, handleResumeDeleteForm
 from datetime import date
+from gitjob.models import Notification
 
 @csrf_exempt
 def update_application_status(request):
@@ -27,6 +28,19 @@ def update_application_status(request):
                 # Update the status
                 application.status = int(new_status)  # Assuming 1 = Accepted, 2 = Declined
                 application.save()
+                # Create a notification if the application is accepted
+                if int(new_status) == 1:  # Assuming 1 = Accepted
+                    Notification.objects.create(
+                        recipient=application.applicant,  
+                        message=f"Your application for <strong>{application.job_post.job_title}</strong> has been accepted!",
+                        image_url="/static/images/job-accepted.png"
+                    )
+                if int(new_status) == 2:
+                    Notification.objects.create(
+                        recipient=application.applicant,  
+                        message=f"Your application for <strong>{application.job_post.job_title}</strong> has been rejected.",
+                        image_url="/static/images/job-rejected.png"
+                    )
             return JsonResponse({'success': True, 'status': application.status})
         except JobApplication.DoesNotExist:
             return JsonResponse({'success': False, 'error': 'Application not found'})
@@ -132,7 +146,8 @@ def job_post(request):
 def delete_job_post(request, post_id):
     job_post = get_object_or_404(JobPost, id=post_id)
     job_post.delete()
-    return redirect('job_post') 
+    return redirect('job_post')
+ 
 
 def job_application_history_view(request):
     job_applications = request.user.job_applications.all()

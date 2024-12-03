@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from manager.models import JobPost
 from users.models import Resume
+from django.utils import timezone
 
 STATUS_CHOICES = [
     (0, 'Pending'),
@@ -21,3 +22,6 @@ class JobApplication(models.Model):
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
     date_updated = models.DateField()
     status = models.IntegerField(choices=STATUS_CHOICES, default=0) # 0 - undecided, 1 - accepted, 2 - declined
+
+
+

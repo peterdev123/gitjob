@@ -1,34 +1,28 @@
-console.log("JavaScript file loaded");
-    
-      const rangeInputs = document.querySelectorAll(".range-input input"),
-        priceInputs = document.querySelectorAll(".price-input input"),
-        range = document.querySelector(".slider .progress"),
-        jobPostings = document.querySelectorAll(".job-posting"),
-        jobFieldDropdown = document.getElementById("job-field");
-        const scheduleInputs = document.querySelectorAll("input[name='full_time'], input[name='part_time'], input[name='internship'], input[name='project_work']");
+const rangeInputs = document.querySelectorAll(".range-input input"),
+      priceInputs = document.querySelectorAll(".price-input input"),
+      range = document.querySelector(".slider .progress"),
+      jobPostings = document.querySelectorAll(".job-posting"),
+      jobFieldDropdown = document.getElementById("job-field");
+const scheduleInputs = document.querySelectorAll("input[name='full_time'], input[name='part_time'], input[name='internship'], input[name='project_work']");
 
-// Add a click event listener to each schedule radio button
-let lastCheckedRadio = null; // Keep track of the last checked radio button
+
+let lastCheckedRadio = null;
 
 scheduleInputs.forEach((input) => {
-  input.addEventListener("click", function () {
-    // If the same radio button is clicked again, uncheck it
-    if (lastCheckedRadio === this) {
-      this.checked = false;
-      lastCheckedRadio = null; // Reset the last checked radio button
-    } else {
-      lastCheckedRadio = this; // Update the last checked radio button
-    }
-    // Trigger filtering after toggle
+  input.addEventListener("change", function () {
     filterJobPostings();
   });
 });
 
 
+
+        
+
+
 // Function to get the selected schedule
 const getSelectedSchedule = () => {
   const selected = [...scheduleInputs].find(input => input.checked);
-  return selected ? selected.id : null; // Return the selected schedule ID or null if none is selected
+  return selected ? selected.id : null;
 };
     
       const priceGap = 1000; // Minimum gap between min and max values
@@ -45,15 +39,14 @@ const getSelectedSchedule = () => {
     const minSalary = parseInt(priceInputs[0].value, 10) || 0;
     const maxSalary = parseInt(priceInputs[1].value, 10) || 100000;
     const selectedJobField = jobFieldDropdown.value;
-    const selectedSchedule = getSelectedSchedule(); // Get selected schedule
+    const selectedSchedule = getSelectedSchedule(); 
 
-    console.log(`Filtering with minSalary: ${minSalary}, maxSalary: ${maxSalary}, jobField: ${selectedJobField}, schedule: ${selectedSchedule}`); // Debugging line
 
     jobPostings.forEach((job) => {
       const jobMinSalary = parseInt(job.getAttribute("data-min-salary"), 10);
       const jobMaxSalary = parseInt(job.getAttribute("data-max-salary"), 10);
       const jobField = job.getAttribute("data-job-field");
-      const jobSchedule = job.getAttribute("data-job-sched"); // Assume a data attribute for job schedule
+      const jobSchedule = job.getAttribute("data-job-sched"); 
 
       // Check salary, job field, and schedule conditions
       const isSalaryMatch =
@@ -78,8 +71,8 @@ const getSelectedSchedule = () => {
     
       // Initialize the slider positions on page load
       window.addEventListener("load", () => {
-        const minPrice = 0; // Initial min price
-        const maxPrice = 100000; // Initial max price
+        const minPrice = 0;
+        const maxPrice = 100000;
     
         // Set initial values for both price and range inputs
         priceInputs[0].value = minPrice;
@@ -88,13 +81,12 @@ const getSelectedSchedule = () => {
         rangeInputs[1].value = maxPrice;
     
         updateSlider(minPrice, maxPrice);
-        filterJobPostings(); // Initial filter on page load
+        filterJobPostings();
       });
     
       // Update slider and price inputs when price input fields are changed
       priceInputs.forEach((input) => {
         input.addEventListener("input", (e) => {
-          console.log("Price input changed:", e.target.value); // Debugging line
           const minPrice = parseInt(priceInputs[0].value, 10);
           const maxPrice = parseInt(priceInputs[1].value, 10);
     
@@ -105,7 +97,7 @@ const getSelectedSchedule = () => {
               rangeInputs[1].value = maxPrice;
             }
             updateSlider(minPrice, maxPrice);
-            filterJobPostings(); // Ensure this line is here
+            filterJobPostings(); 
           }
         });
       });
@@ -113,7 +105,6 @@ const getSelectedSchedule = () => {
       // Handle range sliders when moved
       rangeInputs.forEach((input) => {
         input.addEventListener("input", (e) => {
-          console.log("Range input changed:", e.target.value); // Debugging line
           const minVal = parseInt(rangeInputs[0].value, 10);
           const maxVal = parseInt(rangeInputs[1].value, 10);
     
@@ -134,7 +125,6 @@ const getSelectedSchedule = () => {
     
       // Add event listener to the Job Field dropdown
       jobFieldDropdown.addEventListener("change", () => {
-        console.log("Job Field dropdown changed:", jobFieldDropdown.value); // Debugging line
         filterJobPostings();
       });
       window.addEventListener("load", () => {

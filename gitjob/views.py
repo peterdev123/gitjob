@@ -13,6 +13,10 @@ from .models import ChatGroup
 from .forms import ChatmessageCreateForm
 from jobs.functions import get_job_field_color
 from django.db.models import Subquery
+from .models import GroupMessage
+from .models import Notification
+from django.urls import reverse
+
 
 
 def hero(request):
@@ -138,6 +142,60 @@ def get_or_create_chatroom(request, username):
     chatroom.members.add(other_user, request.user)
     
     return redirect('chatroom', chatroom.group_name)
+
+@login_required
+@login_required
+def fetch_notifications(request):
+    if request.method == "GET" and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        # Fetch chat-related notifications
+        latest_messages = (
+            GroupMessage.objects.filter(group__members=request.user)
+            .exclude(author=request.user)
+            .values('author')
+            .annotate(latest_message_id=Max('id'))
+        )
+        latest_message_ids = [entry['latest_message_id'] for entry in latest_messages]
+        chat_notifications = (
+            GroupMessage.objects.filter(id__in=latest_message_ids)
+            .select_related('author', 'group')
+            .order_by('-created')
+        )
+
+        # Fetch job application acceptance notifications
+        acceptance_notifications = Notification.objects.filter(
+            recipient=request.user,
+            is_read=False  
+        ).order_by('-created_at')
+
+        # Combine both types of notifications
+        notifications_data = []
+
+        # Add chat notifications
+        for message in chat_notifications:
+            notifications_data.append({
+                "imageUrl": message.author.profile_picture.url if message.author.profile_picture else "/static/default_profile_pic.jpg",
+                "author": message.author.username,
+                "message": f"<strong>{message.author.username}</strong> from <strong>{message.author.job_company}</strong> has sent you a message."
+                if message.author.job_company else f"<strong>{message.author.username}</strong> has sent you a message.",
+                "url": "/messages/",
+                "created": message.created.strftime("%Y-%m-%d %H:%M:%S"),
+            })
+
+        # Add job acceptance notifications
+        for notification in acceptance_notifications:
+            notifications_data.append({
+                "imageUrl": notification.image_url,
+                "author": "System",
+                "message": notification.message,
+                "url": reverse('job_application_history'),
+                "created": notification.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+            })
+
+        notifications_data.sort(key=lambda x: x["created"], reverse=True)
+        return JsonResponse({"notifications": notifications_data})
+
+    return JsonResponse({"notifications": []})
+
 
 def contactus(request):
 

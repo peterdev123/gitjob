@@ -12,7 +12,7 @@
     <!--Notifications-->
     <div
     id="notif-sidebar"
-    class="fixed right-0 top-0 h-full w-64 bg-white shadow-lg text-black z-50 transform translate-x-full transition-transform duration-300"
+    class="fixed right-0 top-0 h-full w-80 bg-gray-100 shadow-lg text-black z-50 transform translate-x-full transition-transform duration-300"
     >
         <div class="flex flex-col items-start p-6 space-y-6">
             <!-- Notifications Header -->
@@ -25,16 +25,17 @@
                 id="close-toggle-notif-sidebar"
             />
             </div>
+            </div>
             <hr class="border-t border-gray-600 w-full" />
             <!-- Example Notifications -->
-            <ul class="space-y-4">
-            <li class="text-lg font-bold">You have a new message!</li>
-            <li class="text-lg font-bold">Your job application was viewed.</li>
-            <li class="text-lg font-bold">Interview scheduled for Friday.</li>
+            <div class="flex justify-between justify-center items-center w-full">
+            <ul id="notification-list" class="space-y-4 py-5">
+                <!-- Notifications will be dynamically inserted here -->
             </ul>
-        </div>
+            </div>
+        
     </div>
-
+    
     <!-- Navbar -->
     {% include 'includes/nav_bar.html' %}
-    <script src="{% static 'js/notifications.js' %}"></script>
+<script src="{% static 'js/notifications.js' %}"></script>
