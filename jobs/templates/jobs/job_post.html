@@ -74,7 +74,11 @@
 
       function confirmDelete() {
         const postId = document.getElementById("confirmDelete").dataset.postId;
-        // window.location.href = `/delete_job_post/${postId}/`;
+        const deleteUrl = "{% url 'delete_job_post' 0 %}".replace(
+          "/0/",
+          `/${postId}/`
+        );
+        window.location.href = deleteUrl;
       }
 
       function showApplications(postId) {
@@ -163,7 +167,7 @@
             </a>
             <!-- Delete Button -->
             <button
-              onclick="window.location.href=`{% url 'delete_job_post' post.id %}`"
+              onclick="showDeleteModal('{{ post.id }}')"
               class="text-red-600 hover:text-red-800"
             >
               <svg
@@ -214,7 +218,8 @@
               <a
                 href="/users/{{ application.applicant.username }}"
                 class="text-2xl font-bold mr-auto"
-                >{{ application.applicant.first_name }} {{ application.applicant.last_name }}</a
+                >{{ application.applicant.first_name }} {{
+                application.applicant.last_name }}</a
               >
               <p class="mt-2">
                 <strong>Email:</strong> {{ application.email }}

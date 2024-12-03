@@ -1,5 +1,4 @@
-{% load static %}
-{% load static tailwind_tags %}
+{% load static %} {% load static tailwind_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,19 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register Page</title>
     {% tailwind_css %}
-    <link rel="stylesheet" href="{% static 'css/dist/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dist/custom.css' %}" />
     <script src="{% static 'js/message_box.js' %}"></script>
   </head>
 
   <body class="h-full flex items-center justify-center bg-gray-100">
-    {% if messages %}
-      {% include 'includes/message_box.html' %}
-    {% endif %}
+    {% if messages %} {% include 'includes/message_box.html' %} {% endif %}
 
     <div class="w-full h-full flex">
       <!-- Left Section -->
-      <div class="w-1/2 left_section bg-cover bg-center" style="background-image: url('{% static 'images/right_reg_img.jpg' %}');"></div>
-      
+      <div
+        class="w-1/2 left_section bg-cover bg-center"
+        style="background-image: url('{% static 'images/right_reg_img.jpg' %}')"
+      ></div>
+
       <!-- Right Section -->
       <div class="w-1/2 h-full bg-white flex flex-col justify-center py-3 px-8">
         <div class="mx-12">
@@ -29,46 +29,72 @@
             {% csrf_token %}
             <div class="flex space-x-4">
               <div class="flex-col">
-                <label for="fname" class="block font-bold text-gray-700 mb-1">First Name</label>
+                <label for="fname" class="block font-bold text-gray-700 mb-1"
+                  >First Name</label
+                >
                 {{ form.fname }}
               </div>
               <div class="flex-col">
-                <label for="lname" class="block font-bold text-gray-700 mb-1">Last Name</label>
+                <label for="lname" class="block font-bold text-gray-700 mb-1"
+                  >Last Name</label
+                >
                 {{ form.lname }}
               </div>
             </div>
             <div class="flex-col">
-              <label for="email" class="block font-bold text-gray-700 mb-1">Email Address</label>
+              <label for="email" class="block font-bold text-gray-700 mb-1"
+                >Email Address</label
+              >
               {{ form.email }}
             </div>
             <div class="flex-col">
-              <label for="username" class="block font-bold text-gray-700 mb-1">Username</label>
+              <label for="username" class="block font-bold text-gray-700 mb-1"
+                >Username</label
+              >
               {{ form.username }}
             </div>
             <div class="flex-col">
-              <label for="password" class="block font-bold text-gray-700 mb-1">Password</label>
+              <label for="password" class="block font-bold text-gray-700 mb-1"
+                >Password</label
+              >
               {{ form.password }}
             </div>
             <div class="flex-col">
-              <label for="retypepassword" class="block font-bold text-gray-700 mb-1">Retype Password</label>
+              <label
+                for="retypepassword"
+                class="block font-bold text-gray-700 mb-1"
+                >Retype Password</label
+              >
               {{ form.retypepassword }}
             </div>
             <div class="flex-col">
-              <label for="is_business_manager" class="block font-bold text-gray-700 mb-1">Account Type</label>
+              <label
+                for="is_business_manager"
+                class="block font-bold text-gray-700 mb-1"
+                >Account Type</label
+              >
               {{ form.is_business_manager }}
             </div>
             <div class="flex items-center space-x-2">
-              <input type="checkbox" class="h-5 w-5" required>
+              <input type="checkbox" class="h-5 w-5" required />
               <label class="text-gray-600">
-                I accept the <a href="#" class="text-blue-600 underline">Terms of Use</a> & <a href="#" class="text-blue-600 underline">Privacy Policy</a>
+                I accept the
+                <a href="#" class="text-blue-600 underline">Terms of Use</a> &
+                <a href="#" class="text-blue-600 underline">Privacy Policy</a>
               </label>
             </div>
-            <button type="submit" class="w-full p-4 button_design text-white font-bold rounded-lg hover:scale-105 duration-300">
+            <button
+              type="submit"
+              class="w-full p-4 button_design text-white font-bold rounded-lg hover:scale-105 duration-300"
+            >
               Register Now
             </button>
           </form>
           <p class="mt-6 text-center text-gray-600">
-            Already have an account? <a href="{% url 'login' %}" class="text-blue-600 underline">Login</a>
+            Already have an account?
+            <a href="{% url 'login' %}" class="text-blue-600 underline"
+              >Login</a
+            >
           </p>
         </div>
       </div>
