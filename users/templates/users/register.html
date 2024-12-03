@@ -17,13 +17,13 @@
       {% include 'includes/message_box.html' %}
     {% endif %}
 
-    <div class="w-full h-full flex">
+    <div class="w-full h-screen flex">
       <!-- Left Section -->
       <div class="w-1/2 left_section bg-cover bg-center" style="background-image: url('{% static 'images/right_reg_img.jpg' %}');"></div>
       
       <!-- Right Section -->
       <div class="w-1/2 h-full bg-white flex flex-col justify-center py-3 px-8">
-        <div class="mx-12">
+        <div class="mx-auto">
           <h2 class="text-4xl font-bold mb-6 text-black">Register</h2>
           <form class="space-y-2" method="post">
             {% csrf_token %}
