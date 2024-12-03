@@ -36,9 +36,15 @@
             </div>
 
             <!-- Address -->
-            <div>
-                <label class="block text-gray-700 font-bold">Address</label>
-                {{ form.address }}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-700 font-bold">Company Name</label>
+                    {{ form.company_name }}
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-bold">Address</label>
+                    {{ form.address }}
+                </div>
             </div>
 
             <!-- Hiring Deadline, Minimum Salary, Maximum Salary -->

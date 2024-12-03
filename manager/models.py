@@ -28,6 +28,7 @@ class JobPost(models.Model):
     ]
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    company_name = models.CharField(max_length=255)
     job_title = models.CharField(max_length=255)
     job_field = models.CharField(max_length=255,choices=JOB_FIELD_CHOICES,default='others')
     job_schedule = models.CharField(max_length=255,choices=JOB_SCHED_CHOICES,default='select')

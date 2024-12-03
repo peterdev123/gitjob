@@ -5,7 +5,7 @@ class JobPostForm(forms.ModelForm):
     class Meta:
         model = JobPost
         fields = ['job_title', 'job_field', 'job_schedule', 'address', 'hiring_deadline', 
-                  'min_salary', 'max_salary', 'job_description', 
+                  'min_salary', 'max_salary', 'job_description', 'company_name',
                   'core_competencies', 'tags', 'company_logo']
         
         widgets = {
@@ -13,6 +13,11 @@ class JobPostForm(forms.ModelForm):
                 'class': 'w-full border border-gray-300 rounded-lg p-3 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none', 
                 'placeholder': 'Enter Job Title', 
                 'required': True
+            }),
+            'company_name': forms.TextInput(attrs={
+                'class': 'w-full border border-gray-300 rounded-lg p-3 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none',
+                'placeholder': 'Enter Company Name',
+                'required': True 
             }),
             'job_field': forms.Select(attrs={
                 'class': 'w-full border border-gray-300 rounded-lg p-3 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none', 
