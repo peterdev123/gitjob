@@ -19,7 +19,13 @@
 <body class="bg-white"> 
     <!-- Center Div -->
     <section class="min-h-screen flex box-border justify-center items-center"
-            style="background-image: url('{% static "images/bg_image.jpg" %}');">
+            style="background-image: url('{% static "images/bg_image.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            height: 100vh;"
+            >
         <div class="bg-cyan-300 rounded-3xl flex max-w-4xl p-8 items-center">
             <div class="md:w-1/2 px-10 mr-10">
                 <h2 class="font-bold text-4xl text-[#002D74]">Login</h2>
