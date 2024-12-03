@@ -143,30 +143,34 @@
           <div class="flex flex-wrap justify-start gap-8 p-5">
             {% for job_posting in job_postings %}
               <!-- Job-Posting Div -->
-              <div class="job-posting p-2 pb-5 m-1 w-80 rounded-xl bg-white shadow-xl"
+              <div class="flex flex-col job-posting p-2 pb-4 m-1 w-80 rounded-xl bg-white shadow-xl"
               data-min-salary="{{ job_posting.min_salary }}"
               data-max-salary="{{ job_posting.max_salary }}"
               data-job-field="{{ job_posting.job_field }}"
-              data-job-sched="{{ job_posting.job_schedule }}"
-              >
+              data-job-sched="{{ job_posting.job_schedule }}">
                 <!-- Colored Section -->
-                <div class="relative p-5 pb-2 h-60 mb-5 {{ job_posting.color }} rounded-xl">
+                <div class="relative flex-1 flex flex-col gap-1 p-5 mb-5 {{ job_posting.color }} rounded-xl">
                   <h1 class="text-xl font-bold">{{ job_posting.job_title }}</h1>
-                  <h6 class="text-sm">{{ job_posting.get_job_field_display }}</h6>
+                  <h6 class="text-xs">{{ job_posting.company_name }}</h6>
                   {% if job_posting.company_logo %}
-                  <img src="{{ job_posting.company_logo.url }}" class="w-10 h-10 my-2">
+                    <img src="{{ job_posting.company_logo.url }}" class="w-10 h-10 my-2" title="{{ job_field.company_name }}">
                   {% else %}
                   <div class="w-10 h-10 my-2 bg-gray-200 rounded-full flex items-center justify-center">
                     <p class="text-xs font-bold text-gray-500">No Logo</p>
                   </div>
                   {% endif %}
                   <!-- Tags Section -->
-                  <div class="flex flex-wrap gap-2">
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    <div class="min-w-10 h-6 mt-1 px-3 flex justify-center items-center text-xs box-border rounded-2xl border-[1.5px] border-solid border-black">
+                      <p class="font-semibold">{{ job_posting.get_job_field_display }}</p>
+                    </div>
+
                     {% for tag in job_posting.tags %}
                     <div class="min-w-10 h-6 mt-2 mt-1 px-3 flex justify-center items-center text-xs box-border rounded-2xl border-[1.5px] border-solid border-black">
                       <p class="font-semibold">{{ tag }}</p>
                     </div>
                     {% endfor %}
+
                     <div class="min-w-10 h-6 mt-1 px-3 flex justify-center items-center text-xs box-border rounded-2xl border-[1.5px] border-solid border-black">
                       <p class="font-semibold">{{ job_posting.get_job_schedule_display }}</p>
                     </div>

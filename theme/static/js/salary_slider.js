@@ -62,7 +62,7 @@ const getSelectedSchedule = () => {
         !selectedSchedule || selectedSchedule === jobSchedule;
 
       if (isSalaryMatch && isJobFieldMatch && isScheduleMatch) {
-        job.style.display = "block";
+        job.style.display = "flex";
       } else {
         job.style.display = "none";
       }

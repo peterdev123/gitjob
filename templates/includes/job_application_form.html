@@ -20,11 +20,13 @@
                 <!-- input and their label containers -->
                 <div class="m-0 flex flex-col flex-1 min-w-[250px]">
                     <label for="first_name">First Name</label>
-                    {{ job_application_form.first_name }}
+                    <input value="{{ request.user.first_name }}"
+                        class="profile_edit_input" readonly>
                 </div>
                 <div class="m-0 flex flex-col flex-1 min-w-[250px]">
                     <label for="last_name">Last Name</label>
-                    {{ job_application_form.last_name }}
+                    <input value="{{ request.user.last_name }}"
+                        class="profile_edit_input" readonly>
                 </div>
             </div>
             <div class="my-0 flex flex-wrap gap-6">
