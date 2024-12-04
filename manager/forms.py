@@ -41,12 +41,12 @@ class JobPostForm(forms.ModelForm):
             }),
             'min_salary': forms.NumberInput(attrs={
                 'class': 'w-full border border-gray-300 rounded-lg p-3 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none', 
-                'placeholder': 'Enter Minimum Salary', 
+                'placeholder': 'Enter Maximum Salary', 
                 'required': True
             }),
             'max_salary': forms.NumberInput(attrs={
                 'class': 'w-full border border-gray-300 rounded-lg p-3 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:outline-none', 
-                'placeholder': 'Enter Maximum Salary', 
+                'placeholder': 'Enter Minimum Salary', 
                 'required': True
             }),
             'job_description': forms.Textarea(attrs={
