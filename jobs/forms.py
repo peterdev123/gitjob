@@ -4,14 +4,8 @@ from .models import JobApplication
 class JobApplicationForm(forms.ModelForm):
     class Meta:
         model = JobApplication
-        fields = ['email', 'phone_number', 'cover_letter']
+        fields = ['phone_number', 'cover_letter']
         widgets = {
-            'email': forms.EmailInput(attrs={
-                'class': 'profile_edit_input',
-                'name': 'email',
-                'placeholder': 'john@email.co...', 
-                'required': True
-            }),
             'phone_number': forms.TextInput(attrs={
                 'class': 'profile_edit_input',
                 'name': 'phone_number',
@@ -34,14 +28,10 @@ class JobApplicationForm(forms.ModelForm):
 
         if user:
             if user.is_authenticated:
-                self.fields['email'].initial = user.email
-                if user.email:
-                    self.fields['email'].widget.attrs['readonly'] = True
                 self.fields['phone_number'].initial = user.phone_number
                 if user.phone_number:
                     self.fields['phone_number'].widget.attrs['readonly'] = True
             
             if form:
-                self.fields['email'].initial = form.email
                 self.fields['phone_number'].initial = form.phone_number
                 self.fields['cover_letter'].initial = form.cover_letter

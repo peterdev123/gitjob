@@ -218,11 +218,11 @@
               <a
                 href="/users/{{ application.applicant.username }}"
                 class="text-2xl font-bold mr-auto"
-                >{{ application.applicant.first_name }} {{
-                application.applicant.last_name }}</a
+                >{{ application.applicant.first_name }} 
+                 {{ application.applicant.last_name }}</a
               >
               <p class="mt-2">
-                <strong>Email:</strong> {{ application.email }}
+                <strong>Email:</strong> {{ application.applicant.email }}
               </p>
               <p class="mt-2">
                 <strong>Phone:</strong> {{ application.phone_number }}

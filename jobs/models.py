@@ -14,7 +14,6 @@ STATUS_CHOICES = [
 class JobApplication(models.Model):
     job_post = models.ForeignKey(JobPost, on_delete=models.CASCADE, related_name='job_applications')
     applicant = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='job_applications')
-    email = models.EmailField()
     phone_number = models.IntegerField(blank=True, null=True)
     cover_letter = models.TextField(max_length=1000)
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE)

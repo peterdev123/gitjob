@@ -1458,6 +1458,10 @@ select {
   max-width: 24rem;
 }
 
+.max-w-\[33\%\] {
+  max-width: 33%;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -2132,6 +2136,10 @@ select {
   padding-bottom: 1.75rem;
 }
 
+.pb-20 {
+  padding-bottom: 5rem;
+}
+
 .pb-4 {
   padding-bottom: 1rem;
 }
@@ -2170,6 +2178,14 @@ select {
 
 .pt-5 {
   padding-top: 1.25rem;
+}
+
+.pb-10 {
+  padding-bottom: 2.5rem;
+}
+
+.pb-5 {
+  padding-bottom: 1.25rem;
 }
 
 .text-left {
