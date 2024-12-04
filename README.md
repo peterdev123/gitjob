@@ -22,32 +22,32 @@ GitJob is designed for:
 
 1. **User Registration**  
    - Create accounts as a Job Seeker or Employer.  
-   - Secure password management and account recovery.
+   - Access the rest of the platform's features with an account.
 
 2. **Job Search**  
    - Search for jobs using keywords, filters, and sorting options.  
    - Discover relevant positions based on location, industry, or employment type.
 
-3. **Profile Management**  
-   - Job Seekers: Build a profile, upload resumes, and track applications.  
-   - Employers: Create a company profile and showcase job openings.
+3. **Profile Management**
+   - Build a profile, change your profile picture, and showcase your skills and experiences.
+   - Job Seekers: Upload resumes and track applications.  
 
-4. **Job Posting**  
+5. **Job Posting**  
    - Employers can post, edit, and manage job listings.  
    - Include job descriptions, salary, qualifications, and more.
 
-5. **Communication**  
+6. **Communication**  
    - Built-in messaging system for seamless interaction between Job Seekers and Employers.  
    - Secure and efficient exchange of application details or interview schedules.
 
-6. **Notifications**  
+7. **Notifications**  
    - Stay informed with real-time updates on applications, messages, and job matches.  
 
-7. **Analytics & Insights**  
+8. **Analytics & Insights**  
    - Job Seekers: Track profile views and application performance.  
    - Employers: Monitor job post engagement and applicant trends.
 
-8. **Admin Management**  
+9. **Admin Management**  
    - Platform moderation, system reports, and user account management for smooth operations.
 
 ---
