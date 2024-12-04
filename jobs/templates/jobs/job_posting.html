@@ -112,6 +112,16 @@
                     Apply Now
                 </button>
 
+              {% elif edit_application_fields.form.status != 0 %}
+                <div class="flex flex-col items-center">
+                  <p class="font-semibold">Your application has been</p>
+                  {% if edit_application_fields.form.status == 1 %}
+                    <p class="font-semibold text-green-500">Accepted</p>
+                  {% else %}
+                    <p class="font-semibold text-red-500">Declined</p>
+                  {% endif %}
+                </div>
+
               {% else %}
                 <!-- Buttons put in a flex div so that they will have the same width -->
                 <div class="flex flex-col">
