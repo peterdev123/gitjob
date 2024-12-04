@@ -32,23 +32,27 @@ GitJob is designed for:
    - Build a profile, change your profile picture, and showcase your skills and experiences.
    - Job Seekers: Upload resumes and track applications.  
 
-5. **Job Posting**  
+4. **Job Posting**  
    - Employers can post, edit, and manage job listings.  
    - Include job descriptions, salary, qualifications, and more.
 
-6. **Communication**  
+5. **Communication**  
    - Built-in messaging system for seamless interaction between Job Seekers and Employers.  
    - Secure and efficient exchange of application details or interview schedules.
 
-7. **Notifications**  
-   - Stay informed with real-time updates on applications, messages, and job matches.  
+6. **Notifications**
+   - Stay informed with real-time updates on applications, messages, and job matches.
+  
+7. **Resume Management**  
+   - Job Seekers can create, upload, and manage their resumes.  
+   - Employers can view and manage received resumes efficiently.
 
-8. **Analytics & Insights**  
-   - Job Seekers: Track profile views and application performance.  
-   - Employers: Monitor job post engagement and applicant trends.
+8. **Business Manager Job Management**  
+   - Business Managers can manage job postings, view applications, and oversee job-related activities.
+   - Application Review and ability to accept and decline applicants
 
-9. **Admin Management**  
-   - Platform moderation, system reports, and user account management for smooth operations.
+9. **Application Tracking**  
+   - Employers and Job Seekers can track the status of job applications throughout the hiring process.  
 
 ---
 
@@ -80,19 +84,51 @@ The following are the main dependencies used in this project:
 | **[Django Channels](https://channels.readthedocs.io/)** | 4.0.0       | For handling WebSocket communication in Django.   |
 | **[Gunicorn](https://gunicorn.org/)**       | 20.1.0       | A WSGI HTTP server for deployment.                |
 
+### Prerequisites 
 
-### How to Install Dependencies
+- Python 3.10+
+- Django 5.1.3
+- Virtualenv (optional but recommended)
 
-To install the required dependencies for this project, run the following command:
+### Installation
 
-```bash
-pip install -r requirements.txt
-```
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/peterdev123/gitjob
+    cd gitjob
+    ```
+
+2. Create and activate a virtual environment:
+    ```bash
+    python -m venv venv
+    source venv/bin/activate # On Windows, use `venv\Scripts\activate`
+    ```
+
+3. Install Dependencies
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. Apply database migrations:
+    ```bash
+    python manage.py migrate
+    ```
+5. Run the development server:
+    ```bash
+    python manage.py runserver
+    ```
 
 ---
 
 ## 📚 Additional Resources  
 
+- [**Functional Requirement**](https://docs.google.com/document/d/1fcx8BHp9ccuUfAcsaLhkx3L7eIFhfOtr_9duQsFDgOA/edit?usp=sharing)
 - [**Entity Relationship Diagram**](https://lucid.app/lucidchart/6c527eae-3cc6-407e-8ef6-0ecba46eb37c/edit?viewport_loc=-1882%2C-1298%2C3840%2C1671%2C0_0&invitationId=inv_894d479b-e733-49bf-8c37-298976aa3fb8)
 - [**Prototype Design (UI/UX)**](https://www.figma.com/design/zC0gbD7fisGipgOS7K6W2g/GitJob?node-id=0-1&node-type=canvas&t=40YWGSSwfbB7TT9I-0)
 - [**Gantt Chart**](https://cebuinstituteoftechnology-my.sharepoint.com/:x:/g/personal/petersylvan_vecina_cit_edu/EcUw6xP8iK1Lvx9Bf4JHa9YBhHT8QiszbE-izXa9qI0MFQ?e=Ybr9rf)
+
+---
+
+## 📜 License  
+
+This project is open-source and licensed under the **MIT License**.  
