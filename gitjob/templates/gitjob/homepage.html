@@ -51,19 +51,17 @@
                   type="number"
                   class="input-min w-full h-10 text-s font-bold text-center border-0 outline-none"
                   value="0"
-                />
+                  style="width: 70px;"
+                />                              
               </div>
-              <div
-                class="separator w-28 text-s font-bold flex items-center justify-center"
-              >
-                -
-              </div>
+              <div class="separator w-28 text-s font-bold flex items-center justify-center">-</div>
               <div class="field flex items-center">
                 <input
-                  type="number"
-                  class="input-max w-full h-10 text-s font-bold text-center border-0 outline-none"
-                  value="100000"
-                />
+                type="number"
+                class="input-max w-full h-10 text-s font-bold text-center border-0 outline-none"
+                value="100000"
+                style="width: 70px;"
+              />
               </div>
             </div>
             <div class="slider relative h-1 bg-gray-300 rounded-md">
@@ -178,11 +176,8 @@
                   <p class="text-xs absolute bottom-2">Open until:</p>
                   <p class="text-xs absolute bottom-2 right-5">{{ job_posting.hiring_deadline }}</p>
                 </div>
-                <div class="flex justify-between ml-3">
-                  <div class="flex flex-col">
-                    <p class="font-bold">₱{{ job_posting.min_salary }} - ₱{{ job_posting.max_salary }}</p>
-                    <p class="text-xs">per month</p>
-                  </div>
+                <div class="flex justify-between">
+                  <p class="font-bold ml-3">₱{{ job_posting.min_salary }} - ₱{{ job_posting.max_salary }}</p>
                   <a href="{% url 'job_posting' id=job_posting.id %}" class="mr-3">
                     <button class="w-20 h-8 bg-black text-white rounded-2xl hover:scale-105 hover:shadow-md active:scale-95 active:shadow-sm">Details</button>
                   </a>
