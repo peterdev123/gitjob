@@ -97,7 +97,6 @@ def job_posting_view(request, id):
             if job_application_form.is_valid():
                 resume = get_object_or_404(Resume, id=request.POST.get('resume_id'))
                 if request.POST.get('already_applied') == 'True':
-                    existing_application.email = request.POST.get('email')
                     existing_application.phone_number = request.POST.get('phone_number')
                     existing_application.cover_letter = request.POST.get('cover_letter')
                     existing_application.resume = resume
