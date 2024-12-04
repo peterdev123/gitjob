@@ -55,40 +55,40 @@
                     <div class="flex gap-10 mt-6">
                         <div class="w-[40%] flex flex-col gap-3">
                             <div class="flex items-center">
-                                <img src="{% static 'images/email.png' %}" class="profile_detail_icon">
+                                <img src="{% static 'images/email.png' %}" class="profile_detail_icon" title="Email">
                                 <h1 class="text-sm font-medium">{{ user.email }}</h1>
                             </div>
                             {% if user.country %}
                             <div class="flex items-center">
-                                <img src="{% static 'images/location.png' %}" class="profile_detail_icon">
+                                <img src="{% static 'images/location.png' %}" class="profile_detail_icon" title="Country">
                                 <h1 class="text-sm font-medium">{{ user.country }}</h1>
                             </div>
                             {% endif %}
     
                             {% if user.home_address %}
                             <div class="flex items-center">
-                                <img src="{% static 'images/home.png' %}" class="profile_detail_icon">
+                                <img src="{% static 'images/home.png' %}" class="profile_detail_icon" title="Home Address">
                                 <h1 class="text-sm font-medium">{{ user.home_address }}</h1>
                             </div>
                             {% endif %}
     
                             {% if user.phone_number %}
                             <div class="flex items-center">
-                                <img src="{% static 'images/phone.png' %}" class="profile_detail_icon">
+                                <img src="{% static 'images/phone.png' %}" class="profile_detail_icon" title="Phone Number">
                                 <p class="text-sm font-medium">{{ user.phone_number }}</p>
                             </div>
                             {% endif %}
     
                             {% if user.birthdate %}
                             <div class="flex items-center">
-                                <img src="{% static 'images/calendar.png' %}" class="profile_detail_icon">
+                                <img src="{% static 'images/calendar.png' %}" class="profile_detail_icon" title="Birthdate">
                                 <p class="text-sm font-medium">{{ user.birthdate }}</p>
                             </div>
                             {% endif %}
                             
                             {% if user.gender %}
                             <div class="flex items-center">
-                                <img src="{% static 'images/gender.png' %}" class="profile_detail_icon">
+                                <img src="{% static 'images/gender.png' %}" class="profile_detail_icon" title="Gender">
                                 <p class="text-sm font-medium">{{ user.gender }}</p>
                             </div>
                             {% endif %}
@@ -97,7 +97,7 @@
                         <div>
                             {% if user.description %}
                             <div class="flex items-center">
-                                <img src="{% static 'images/info.png' %}" class="profile_detail_icon">
+                                <img src="{% static 'images/info.png' %}" class="profile_detail_icon" title="Description">
                                 <p class="text-sm font-medium">{{ user.description }}</p>
                             </div>
                             {% endif %}
