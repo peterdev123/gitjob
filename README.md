@@ -122,10 +122,10 @@ The following are the main dependencies used in this project:
 
 ## 📚 Additional Resources  
 
-- [**Functional Requirement**](https://docs.google.com/document/d/1fcx8BHp9ccuUfAcsaLhkx3L7eIFhfOtr_9duQsFDgOA/edit?usp=sharing)
-- [**Entity Relationship Diagram**](https://lucid.app/lucidchart/6c527eae-3cc6-407e-8ef6-0ecba46eb37c/edit?viewport_loc=-1882%2C-1298%2C3840%2C1671%2C0_0&invitationId=inv_894d479b-e733-49bf-8c37-298976aa3fb8)
-- [**Prototype Design (UI/UX)**](https://www.figma.com/design/zC0gbD7fisGipgOS7K6W2g/GitJob?node-id=0-1&node-type=canvas&t=40YWGSSwfbB7TT9I-0)
-- [**Gantt Chart**](https://cebuinstituteoftechnology-my.sharepoint.com/:x:/g/personal/petersylvan_vecina_cit_edu/EcUw6xP8iK1Lvx9Bf4JHa9YBhHT8QiszbE-izXa9qI0MFQ?e=Ybr9rf)
+- [**Functional Requirement**](https://github.com/peterdev123/gitjob/blob/main/Functional%20Requirement%20Document.pdf)
+- [**Entity Relationship Diagram**](https://github.com/peterdev123/gitjob/blob/main/Gitjob%20ERD.pdf)
+- [**Prototype Design (UI/UX)**](https://github.com/peterdev123/gitjob/blob/main/GitJob%20UI.pdf)
+- [**Gantt Chart**](https://github.com/peterdev123/gitjob/blob/main/Gitjob%20Gantt%20Chart.pdf)
 
 ---
 
