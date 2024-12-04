@@ -18,12 +18,13 @@ from .models import Notification
 from django.urls import reverse
 
 
-
 def hero(request):
-    
     return render(request, 'gitjob/hero.html')
 
 def homepage(request):
+    if not request.user.is_authenticated:
+        return render(request, 'gitjob/homepage.html')
+
     applied_job_ids = JobApplication.objects.filter(applicant=request.user).values('job_post')
 
     # get all JobPosts that still hiring
