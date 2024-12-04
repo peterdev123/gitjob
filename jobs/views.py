@@ -113,7 +113,9 @@ def job_posting_view(request, id):
                     messages.info(request, "Successfully filed a job application form!")
                 
             else:
-                messages.error(request, "Error: Form submitted is not valid!")
+                for field, errors in job_application.errors.items():
+                    for error in errors:
+                        messages.error(request, f"{field.capitalize()}: {error}")
 
         elif request.POST.get('form_type') == 'cancel_application':
             existing_application.delete()

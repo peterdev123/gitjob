@@ -22,6 +22,10 @@ def login_view(request):
                 return redirect('/home/')
             else:
                 messages.info(request, "Incorrect credentials")
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field.capitalize()}: {error}")
     else:
         form = LoginForm()
     return render(request, 'users/login.html', {"form": form})
@@ -63,6 +67,11 @@ def register_view(request):
                         return redirect('/home/')
                     else:
                         messages.info(request, "Error: Cannot log in registered account...")
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field.capitalize()}: {error}")
+                
 
     else:
         form = RegisterForm()
@@ -128,7 +137,9 @@ def profile_view(request, username):
                 user.save()
                 messages.info(request, "Profile picture successfully updated")
             else:
-                print(profile_pic_upload_form.errors)
+                for field, errors in profile_pic_upload_form.errors.items():
+                    for error in errors:
+                        messages.error(request, f"{field.capitalize()}: {error}")
         elif request.POST.get('form_type') == 'edit_skills_form':
             skills_json_input = request.POST.get('skills_json')
             try:

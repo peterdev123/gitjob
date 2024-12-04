@@ -4,6 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (messageBox) {
         setTimeout(function() {
             messageBox.style.display = 'none';  // Completely hide after fade-out
-        }, 3000);  // Fully hidden after 3 seconds
+        }, 5000);  // Fully hidden after 3 seconds
     }
 });
