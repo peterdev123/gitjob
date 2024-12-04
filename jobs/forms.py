@@ -11,8 +11,8 @@ class JobApplicationForm(forms.ModelForm):
                 'name': 'phone_number',
                 'placeholder': '0912345...',
                 'type': 'tel',
-                'pattern': '^09[0-9]{9}$',
-                'title': 'Enter a valid 11-digit cellphone number starting with 09',
+                'pattern': '^9[0-9]{9}$',
+                'title': 'Enter a valid 10-digit cellphone number starting with 9',
                 'required': True
             }),
             'cover_letter': forms.Textarea(attrs={

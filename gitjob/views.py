@@ -36,6 +36,7 @@ def homepage(request):
         .order_by('-date_time_added')
     for job_posting in job_postings:
         job_posting.tags = job_posting.tags.split(',')
+        job_posting.tags = filter(None, job_posting.tags)
         job_posting.color = get_job_field_color(job_posting.job_field)
     return render(request, 'gitjob/homepage.html', {'job_postings': job_postings})
 

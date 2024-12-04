@@ -53,6 +53,7 @@ def job_posting_view(request, id):
     job_posting = JobPost.objects.get(id=id)
     # Need to change this on create
     job_posting.tags = job_posting.tags.split(',')
+    job_posting.tags = filter(None, job_posting.tags)
 
     applied_job_ids = JobApplication.objects.filter(applicant=request.user).values('job_post')
 
@@ -69,6 +70,8 @@ def job_posting_view(request, id):
     
     for other_job_posting in other_job_postings:
         other_job_posting.tags = other_job_posting.tags.split(',')
+        other_job_posting.tags = filter(None, other_job_posting.tags)
+
         other_job_posting.color = get_job_field_color(other_job_posting.job_field)
         print(other_job_posting.job_field)
     handleResumeUploadForm(request)
@@ -154,4 +157,7 @@ def job_application_history_view(request):
     job_applications = request.user.job_applications.all().order_by('-datetime_updated')
     for application in job_applications:
         application.job_post.tags = application.job_post.tags.split(',')
+        application.job_post.tags = filter(None, application.job_post.tags)
+
+        
     return render(request, 'jobs/job_application_history.html', {'job_applications': job_applications})
