@@ -109,6 +109,14 @@ def profile_view(request, username):
             edit_profile_form = EditProfileForm(request.POST, instance=user)
             if edit_profile_form.is_valid():
                 edit_profile_form.save()
+            else:
+                # Reset the user instance to its original state
+                # avoid giving it invalid username
+                user.refresh_from_db()
+
+                for field, errors in edit_profile_form.errors.items():
+                    for error in errors:
+                        messages.error(request, f"{field.capitalize()}: {error}")
         elif request.POST.get('form_type') == 'profile_pic_upload_form':
             profile_pic_upload_form = ProfilePicUploadForm(request.POST, request.FILES)
             print(request.FILES)

@@ -215,7 +215,9 @@
                     <div class="m-0 flex flex-col flex-1 min-w-[250px]">
                         <label for="id_username" class="font-semibold">Username</label>
                         <input type="text" name="username" id="id_username" class="profile_edit_input" 
-                            value="{{ user.username }}">
+                            value="{{ user.username }}"
+                            title="Enter a valid username. This value may contain only letters, numbers, and @/./+/-/_ characters."
+                            required>
                     </div>
                     <div class="m-0 flex flex-col flex-1 min-w-[250px]">
                         <label for="id_phone_number" class="font-semibold">Phone Number</label>
